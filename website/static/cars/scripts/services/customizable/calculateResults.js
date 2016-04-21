@@ -63,7 +63,7 @@
         var results_CS = calculateValue(which, item);
 
         item.Combined_Type = 'PHEV';
-        return configValues.cd_share * results_CD + (1-configValues.cd_share) * results_CS;
+        return configValues.cd_share/100 * results_CD + (1-configValues.cd_share/100) * results_CS;
 
       } else {
         return calculateValue(which, item);

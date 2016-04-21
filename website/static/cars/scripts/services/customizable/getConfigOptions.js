@@ -288,6 +288,7 @@
         max: 10,
         default: 3.14,
         stepSize: 0.01,
+        unit: "$/gal"
       });
 
       conditions.push({
@@ -299,39 +300,43 @@
         max: 10,
         default: 3.39,
         stepSize: 0.01,
+        unit: "$/gal"
       });
 
       conditions.push({
         isSlider: true,
         key: "price_Electricity",
-        title: "Electricity Price",
+        title: "El. Price",
         help: "The price of electricity at the outlet in cents / kWh. The highest monthly inflation-corrected average during the past 10 years was 13.3 cents / kWh, the lowest monthly average was 10.3 cents / kWh.",
         min: 0,
         max: 30,
         default: 12.1,
         stepSize: 0.1,
+        unit: "$/kWh"
       });
 
       conditions.push({
         isSlider: true,
         key: "electricity_ghg_veh",
-        title: "Electricity (vehicle cycle)",
+        title: "El. Production",
         help: "GHG emission intensity of electricity production and distribution for the electricity used to produce materials.",
         min: 0,
         max: 1000,
         default: 623,
-          stepSize: 1,
+        stepSize: 1,
+        unit: "gCO2/kWh"
       });
 
       conditions.push({
         isSlider: true,
         key: "electricity_ghg_fuel",
-        title: "Electricity (fuel cycle)",
+        title: "El. Charging",
         help: "GHG emission intensity of electricity production and distribution for the electricity used to produce fuels and charge vehicles.",
         min: 0,
         max: 1000,
         default: 623,
-          stepSize: 1,
+        stepSize: 1,
+        unit: "gCO2/kWh"
       });
 
       settings.push({
@@ -371,6 +376,7 @@
         max: 20,
         default: 10,
         stepSize: 1,
+        unit: "%"
       });
 
       patterns.push({
@@ -382,6 +388,7 @@
           max: 20,
           default: 10,
           stepSize: 5,
+          unit: "years"
       });
 
       patterns.push({
@@ -393,6 +400,7 @@
           max: 40,
           default: 25,
           stepSize: 5,
+          unit: "1000 km"
       });
 
       /*patterns.push({
@@ -409,12 +417,13 @@
       patterns.push({
           isSlider: true,
           key: "cd_share",
-          title: "PHEV share of CD",
+          title: "PHEV utility",
           help: "Fraction of distance that PHEV drive in charge-depleting (CD) mode (using electricity).",
           min: 0,
-          max: 1,
-          default: 0.57,
-          stepSize: 0.01,
+          max: 100,
+          default: 57,
+          stepSize: 1,
+          unit: "%"
       });
 
       settings.push({
