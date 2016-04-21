@@ -492,7 +492,7 @@
       if (configValues.area != 'none') {
         return rScale(Math.sqrt(d.Area)) + (parentClass == 'highlight' ? 2 : 0)
       } else {
-        return Math.max(5, Math.round((width+height)/200)) + (parentClass == 'highlight' ? 2 : 0);
+        return Math.max(5, Math.round((width+height)/150)) + (parentClass == 'highlight' ? 2 : 0);
       }
     }
 
