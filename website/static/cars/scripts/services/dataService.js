@@ -23,6 +23,7 @@
     function loadData() {
 
       var t0 = performance.now();
+      loadComplete = 0;
 
       files.forEach(function(file) {
 

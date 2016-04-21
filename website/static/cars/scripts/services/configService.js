@@ -12,6 +12,7 @@
     var api = {
       getSettingObject: getSettingObject,
       getCurrentOptionObject: getCurrentOptionObject,
+      checkIfDataMustBeReloaded: checkIfDataMustBeReloaded,
       getSettings: getSettings,
       setSettings: setSettings,
       getKeyValuePairs: getKeyValuePairs
@@ -66,7 +67,13 @@
     }
 
     // used in d3PlotService. not very elegant currently, may need to update
-    function getCurrentOptionObject(key) {
+    function getCurrentOptionObject(key, object) {
+
+      // if settings object from which to fetch option object is undefined, use current settings
+      // the second argument is passed in function checkIfDataMustBeReloaded()
+      if (object !== undefined) {
+        object = settings;
+      }
 
       var returnItem = {};
 
@@ -84,6 +91,16 @@
 
       return returnItem;
 
+    }
+
+    function checkIfDataMustBeReloaded(newVals, oldVals) {
+      console.log(getCurrentOptionObject('modelFilter', newVals))
+      console.log(getCurrentOptionObject('modelFilter', oldVals))
+      if (getCurrentOptionObject('modelFilter', newVals) !== getCurrentOptionObject('modelFilter', oldVals)) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
     // getter for settings
