@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='cars/css/main.js') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='cars/css/svg.js') }}">
   </head>
+  {% raw %}
   <body ng-app="interactiveCostCarbonApp" ng-cloak>
 
       <div id="app" ng-controller="mainCtrl">
@@ -98,6 +99,7 @@
 
       </div>
     </div>
+    {% endraw %}
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
     <script src="{{ url_for('static', filename='cars/scripts/app.js') }}"></script>
