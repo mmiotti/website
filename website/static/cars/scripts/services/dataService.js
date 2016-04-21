@@ -26,7 +26,7 @@
 
       files.forEach(function(file) {
 
-  		  d3.csv('scripts/data/'+file+'.csv', function(d) {
+  		  d3.csv('static/cars/scripts/data/'+file+'.csv', function(d) {
 
   		    return d;
 
