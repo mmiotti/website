@@ -487,6 +487,10 @@
           {
               'key': 'FCV',
               'title': 'FCV'
+          },
+          {
+              'key': 'all',
+              'title': 'All'
           }
         ]
       });
