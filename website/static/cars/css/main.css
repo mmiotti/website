@@ -57,7 +57,9 @@ button.empty_store {
 	float: right;
 	height: 100%;
 	padding-bottom: 30px;
-	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 #interface-bar h1 {
