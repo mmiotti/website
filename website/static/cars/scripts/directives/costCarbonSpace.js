@@ -26,6 +26,9 @@
           d3PlotService.renderPlot(
             dataService.getResults()
           );
+          // store current data of model filter, to be used for comparison when variable 'settings' changes
+          // this is a bit of a hack, but works well for now
+          scope.previousModelFilter = configService.getCurrentOptionObject('modelFilter');
         })
 
         // when window is resized, "refresh" so that watch (below) is triggered
@@ -62,17 +65,24 @@
         scope.$watch('settings', function(newVals, oldVals) {
 
           //var t0 = performance.now();
+          if (newVals != oldVals) {
 
-          // pass new values to config service
-          configService.setSettings(newVals);
+            // pass new values to config service
+            configService.setSettings(newVals);
 
-          // trigger plot-update function with new results
-          d3PlotService.updatePlot(
-            dataService.getResults()
-          );
+            if (scope.previousModelFilter.key !== configService.getCurrentOptionObject('modelFilter').key) {
+              // reload data (which then triggers plot-update as well)
+              dataService.loadData();
+            } else {
+              // trigger plot-update function with new results, but without reloading data
+              d3PlotService.updatePlot(
+                dataService.getResults()
+              );
+            }
+
+          }
 
           //console.log("Time to recalculate: " + Math.round(performance.now() - t0) + " milliseconds.")
-
           return true;
 
         }, true);
