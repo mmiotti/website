@@ -19,8 +19,7 @@
 
 
     // set up variables
-    var svg, uiInfo, prevLegend, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, rScale, xAxis, yAxis, d3cardinalLine;
-
+    var svg, mouseEvent, uiInfo, lastTouchStart, prevLegend, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, rScale, xAxis, yAxis, d3cardinalLine;
 
     // initiate plot (only done at the very beginning of script
     // this function is NOT executed when window is resized
@@ -62,6 +61,20 @@
         'legend': [],
         'highlightedCars': []
       }
+
+      mouseEvent = {
+        'MOUSE_OVER': 'touchstart',
+        'MOUSE_OUT': 'touchend',
+        'MOUSE_CLICK': 'click',
+      }
+
+      // mouseEvent = {
+      //   'MOUSE_OVER': 'mouseover',
+      //   'MOUSE_OUT': 'mouseout',
+      //   'MOUSE_CLICK': 'click',
+      // }
+
+      lastTouchStart = 0;
 
     }
 
@@ -142,14 +155,24 @@
         .attr("id", function(d) {
           return "circle" + d.Id;
         })
-        .on("click", function(d) {
-          return toggleHighlight(d); 
+        // .on(mouseEvent.MOUSE_CLICK, function(d) {
+        //   return toggleHighlight(d); 
+        // })
+        // .on(mouseEvent.MOUSE_OVER, function(d) {
+        //   return tooltipShow(xScale(d.X), yScale(d.Y), d);
+        // })
+        // .on(mouseEvent.MOUSE_OUT, function(d) {
+        //   return tooltipHide();
+        // })
+        .on('touchstart', function(d) {
+          lastTouchStart = d3.event.timeStamp;
         })
-        .on("mouseover", function(d) {
-          return tooltipShow(xScale(d.X), yScale(d.Y), d);
-        })
-        .on("mouseout", function(d) {
-          return tooltipHide();
+        .on('touchend', function(d) {
+          if ((d3.event.timeStamp - lastTouchStart) > 1000) {
+            return toggleHighlight(d)
+          } else {
+            return tooltipToggle(xScale(d.X), yScale(d.Y), d);
+          }
         })
 
       // set up circles (data points)
@@ -199,7 +222,7 @@
       // update circle groups
       var group = svg.selectAll("g")
         .data(results)
-        .on("mouseover", function(d) {
+        .on(mouseEvent.MOUSE_OVER, function(d) {
           return tooltipShow(xScale(d.X), yScale(d.Y), d);
         })
         .call(animateCircleGroups)
@@ -483,6 +506,17 @@
         var configValues
         return colorsAndStyles.getDataColor(d, configValues);
       }
+    }
+
+
+    function tooltipToggle(X, Y, d) {
+
+      if (tooltip.style("visibility") == "visible") {
+        tooltipHide();
+      } else {
+        tooltipShow(X, Y, d);
+      }
+
     }
 
 
