@@ -18,9 +18,10 @@
                 <h1>Search for a Car</h1>
 
                 <input ng-model="search" type="text" style="margin-bottom: 5px; width: 150px;">
+                <span id="clear-search" ng-show="showList()" ng-click="clearSearch()">X</span>
 
                 <div ng-show="showList()">
-                    <div style="margin-bottom:3px; cursor: pointer;" ng-repeat="item in vehicleList | filter:search" ng-click="highlight(item.id)">{{item.name}}</div>
+                    <p style="cursor: pointer;" ng-repeat="item in vehicleList | filter:search" ng-click="highlight(item.id)">{{item.name}}</p>
                 </div>
 
             </div>
@@ -29,8 +30,9 @@
 
                 <h1>Highlighted Cars</h1>
 
-                <p ng-repeat="car in uiInfo.highlightedCars" ng-click="highlight(car.id)">
+                <p ng-repeat="car in uiInfo.highlightedCars">
                     <span style="display:block;width: 16px;height: 16px;background-color: #f00; color:#fff;border-radius:8px; margin-right: 8px; text-align: center; float: left;">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} {{car.trim}} ({{car.powertrain}})
+                    <span class="highlighted-clear" ng-click="highlight(car.id)">X</span>
                 </p>
 
             </div>
