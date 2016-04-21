@@ -29,7 +29,7 @@
     sliderInstance.prototype.initiate = function(element, condition) {
 
       var margin = {top: 0, right: 20, bottom: 0, left: 20},
-          width = 160 - margin.left - margin.right,
+          width = 150 - margin.left - margin.right,
           height = 40 - margin.bottom - margin.top;
 
       this.x = d3.scale.linear()

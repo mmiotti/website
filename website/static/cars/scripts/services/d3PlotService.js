@@ -19,14 +19,14 @@
 
 
     // set up variables
-    var svg, mouseEvent, uiInfo, lastTouchStart, prevLegend, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, rScale, xAxis, yAxis, d3cardinalLine;
+    var svg, uiInfo, prevLegend, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, rScale, xAxis, yAxis, d3cardinalLine;
 
     // initiate plot (only done at the very beginning of script
     // this function is NOT executed when window is resized
     function initiate(element) {
   	
-      d3.select(element)
-        .style("position", "fixed");
+      // d3.select(element)
+      //   .style("position", "fixed");
 
       // set up svg
       svg = d3.select(element)
@@ -37,6 +37,9 @@
       tooltip = d3.select(element)
         .append("div")
         .style(colorsAndStyles.getCss('tooltip'))
+        .on('click', function(d) {
+          return tooltipHide();
+        })
 
       // set up tooltip "components"
       tooltipTitle = tooltip.append("span");
@@ -62,20 +65,6 @@
         'highlightedCars': []
       }
 
-      mouseEvent = {
-        'MOUSE_OVER': 'touchstart',
-        'MOUSE_OUT': 'touchend',
-        'MOUSE_CLICK': 'click',
-      }
-
-      // mouseEvent = {
-      //   'MOUSE_OVER': 'mouseover',
-      //   'MOUSE_OUT': 'mouseout',
-      //   'MOUSE_CLICK': 'click',
-      // }
-
-      lastTouchStart = 0;
-
     }
 
 
@@ -93,8 +82,8 @@
 
       // calculate width, height, and padding of figure
       width = boxProperties.width-interfaceProperties.width;
-      height = Math.min(Math.round(width/3*2), boxProperties.height-20);
-      padding = {top: 20, right: 30, bottom: 60, left: 70};
+      height = Math.min(Math.round(width/3*2), boxProperties.height);
+      padding = {top: 20, right: 27, bottom: 60, left: 63};
 
       // set scales
       updateScales(results, configValues);
@@ -200,11 +189,17 @@
         .attr("fill", "#fff")
         .style("pointer-events", "none");
 
+      for (var i = 0; i < uiInfo.highlightedCars.length; i++) {
+        addHighlightStyle(uiInfo.highlightedCars[i]['id'], i+1, configValues)
+      }
+
       // finally, plot axes above everything else
       appendAxes();
 
-      uiInfo.legend = colorsAndStyles.getLegend(configValues)
-      $rootScope.$broadcast('uiInfo:changed', uiInfo);
+      $timeout(function() {
+        uiInfo.legend = colorsAndStyles.getLegend(configValues);
+        $rootScope.$broadcast('uiInfo:changed', uiInfo);
+      })
 
     }
 
@@ -226,7 +221,7 @@
       // update circle groups
       var group = svg.selectAll("g")
         .data(results)
-        .on(mouseEvent.MOUSE_OVER, function(d) {
+        .on('mouseover', function(d) {
           return tooltipShow(xScale(d.X), yScale(d.Y), d);
         })
         .call(animateCircleGroups)
@@ -535,8 +530,8 @@
 
       // move around tooltip, and fill with information
       tooltip
-        .style("top", Math.round(Y)+"px")
-        .style("left", Math.round(X+10)+"px")
+        .style("top", Math.round(Y+10)+"px")
+        .style("left", Math.round(X+30)+"px")
         .style("visibility", "visible");
 
       tooltipTitle
@@ -554,22 +549,27 @@
       // for each circle that is "linked" to the one currently selected...
       for (var i = 0; i < d.Links.length; i++) {
 
-        // highlight linked circles
-        if (svg.select("#circle" + d.Links[i]).attr("class") !== "highlight") {
-          svg.select("#circle" + d.Links[i]).select("circle")
-            .style("stroke", "#aaa")
-            .style("stroke-width", "2");
+        // if element exists (it may not exist because it is filtered out in the data generation process)
+        if (!svg.select("#circle" + d.Links[i]).empty()) {
+
+          // highlight linked circles
+          if (svg.select("#circle" + d.Links[i]).attr("class") !== "highlight") {
+            svg.select("#circle" + d.Links[i]).select("circle")
+              .style("stroke", "#aaa")
+              .style("stroke-width", "2");
+          }
+
+          var coords = d3.transform(svg.select("#circle" + d.Links[i]).attr("transform"));
+
+          // draw line between selected circle and linked circles
+          svg.select("#line" + i)
+            .attr("x1", X)
+            .attr("x2", coords.translate[0])
+            .attr("y1", Y)
+            .attr("y2", coords.translate[1])
+            .style("visibility", "visible");
+
         }
-
-        var coords = d3.transform(svg.select("#circle" + d.Links[i]).attr("transform"));
-
-        // draw line between selected circle and linked circles
-        svg.select("#line" + i)
-          .attr("x1", X)
-          .attr("x2", coords.translate[0])
-          .attr("y1", Y)
-          .attr("y2", coords.translate[1])
-          .style("visibility", "visible");
 
       }
 
@@ -602,15 +602,15 @@
       var configValues = configService.getKeyValuePairs();
 
       if (svg.select("#circle" + d.Id).attr("class") == "highlight") {
-        addHighlight(d, configValues)
-      } else {
         removeHighlight(d, configValues)
+      } else {
+        addHighlight(d, configValues)
       }
 
     }
 
 
-    function addHighlight(d, configValues) {
+    function removeHighlight(d, configValues) {
 
       svg.select("#circle" + d.Id).attr("class", "no-highlight");
 
@@ -648,22 +648,11 @@
     }
 
 
-    function removeHighlight(d, configValues) {
+    function addHighlight(d, configValues) {
 
       animateClick(d.Id)
 
-      svg.select("#circle" + d.Id).attr("class", "highlight");
-
-      svg.select("#circle" + d.Id).select("circle")
-        .attr("r", function(d) {
-          return getCircleRadius(d, d3.select(this.parentNode).attr("class"), configValues);
-        })
-        .attr("fill", function(d) {
-          return getCircleColor(d, d3.select(this.parentNode).attr("class"), configValues)
-        });       
-
-      svg.select("#circle" + d.Id).select("text")
-        .text(uiInfo.highlightedCars.length+1)
+      addHighlightStyle(d.Id, uiInfo.highlightedCars.length+1, configValues)
 
       uiInfo.highlightedCars.push({
         'id': d.Id,
@@ -679,6 +668,26 @@
       $timeout(function() {
         $rootScope.$broadcast('uiInfo:changed', uiInfo);
       })
+
+    }
+
+
+    // add styling to (currently non-highlighted) dot
+    // this is triggered both by regular highlight function as well as directly by window-resizing (through renderPlot)
+    function addHighlightStyle(id, ui_index, configValues) {
+
+      svg.select("#circle" + id).attr("class", "highlight");
+
+      svg.select("#circle" + id).select("circle")
+        .attr("r", function(d) {
+          return getCircleRadius(d, d3.select(this.parentNode).attr("class"), configValues);
+        })
+        .attr("fill", function(d) {
+          return getCircleColor(d, d3.select(this.parentNode).attr("class"), configValues)
+        });
+
+      svg.select("#circle" + id).select("text")
+        .text(ui_index)
 
     }
 
