@@ -3,8 +3,8 @@
     <meta charset="utf-8">
     <title>Interactive cost-carbon space of 2014 light-duty vehicles in the U.S. market</title>
     <meta name="description" content="Interactive cost-carbon curve (alpha)">
-    <link rel="stylesheet" href="{{ url_for('static', filename='cars/css/main.js') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='cars/css/svg.js') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cars/css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cars/css/svg.css') }}">
   </head>
   {% raw %}
   <body ng-app="interactiveCostCarbonApp" ng-cloak>
@@ -103,6 +103,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
     <script src="{{ url_for('static', filename='cars/scripts/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/d3Service.js') }}"></script>
     <script src="{{ url_for('static', filename='cars/scripts/services/customizable/calculateResults.js') }}"></script>
     <script src="{{ url_for('static', filename='cars/scripts/services/customizable/getConfigOptions.js') }}"></script>
     <script src="{{ url_for('static', filename='cars/scripts/services/customizable/getCsvList.js') }}"></script>
