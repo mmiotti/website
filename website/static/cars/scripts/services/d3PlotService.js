@@ -368,7 +368,7 @@
     }
 
     // draw the shaded areas beneath the group of points belonging to a given category
-    function drawShadedAreas(results, configValues, isUpdate = false) {
+    function drawShadedAreas(results, configValues, isUpdate) {
 
       // update shaded areas
       if (configValues.shadedAreas != 'none') {
