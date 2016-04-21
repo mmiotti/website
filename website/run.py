@@ -12,5 +12,5 @@ def load_cars():
     return render_template('cars.html')
 
 if __name__ == '__main__':
-	#app.debug = True
+    app.debug = True
     app.run()
