@@ -113,6 +113,9 @@
         .attr("width", width - padding.left - padding.right)
         .attr("height", height - padding.top - padding.bottom)
         .style("fill","#fff")
+        .on('click', function(d) {
+          return tooltipHide();
+        })
 
       svg.append("circle")
         .attr("id", "clickAnimationCircle")
@@ -155,26 +158,26 @@
         .attr("id", function(d) {
           return "circle" + d.Id;
         })
-        // .on(mouseEvent.MOUSE_CLICK, function(d) {
-        //   return toggleHighlight(d); 
-        // })
-        // .on(mouseEvent.MOUSE_OVER, function(d) {
-        //   return tooltipShow(xScale(d.X), yScale(d.Y), d);
-        // })
-        // .on(mouseEvent.MOUSE_OUT, function(d) {
-        //   return tooltipHide();
-        // })
-        .on('touchstart', function(d) {
-          lastTouchStart = d3.event.timeStamp;
+        .on('click', function(d) {
+          return toggleHighlight(d); 
         })
-        .on('touchend', function(d) {
-          d3.event.preventDefault();
-          if ((d3.event.timeStamp - lastTouchStart) > 1000) {
-            return toggleHighlight(d)
-          } else {
-            return tooltipToggle(xScale(d.X), yScale(d.Y), d);
-          }
+        .on('mouseover', function(d) {
+          return tooltipShow(xScale(d.X), yScale(d.Y), d);
         })
+        .on('mouseout', function(d) {
+          return tooltipHide();
+        })
+        // .on('touchstart', function(d) {
+        //   lastTouchStart = d3.event.timeStamp;
+        // })
+        // .on('touchend', function(d) {
+        //   d3.event.preventDefault();
+        //   if ((d3.event.timeStamp - lastTouchStart) > 1000) {
+        //     return toggleHighlight(d)
+        //   } else {
+        //     return tooltipToggle(xScale(d.X), yScale(d.Y), d);
+        //   }
+        // })
 
       // set up circles (data points)
       groups
