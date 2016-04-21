@@ -82,7 +82,7 @@
 
       // calculate width, height, and padding of figure
       width = boxProperties.width-interfaceProperties.width;
-      height = Math.min(Math.round(width/3*2), boxProperties.height);
+      height = Math.min(Math.round(width/4*3), boxProperties.height);
       padding = {top: 20, right: 27, bottom: 60, left: 63};
 
       // set scales
