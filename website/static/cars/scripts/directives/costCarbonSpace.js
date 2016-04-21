@@ -19,10 +19,9 @@
         // set up cost carbon plot
         d3PlotService.initiate(element[0]);
 
-        //scope.highlighted = d3PlotService.highlighted;
-
         // the data (see controller) is not immediately available. once data is loaded, calculate results and render plot
         scope.$on('data:loaded', function(event) {
+
           d3PlotService.renderPlot(
             dataService.getResults()
           );
