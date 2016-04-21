@@ -426,6 +426,31 @@
 
       filters.push({
         'isSelect': true,
+        'key': 'modelFilter',
+        'value': 'similar-extreme',
+        'title': 'Models shown',
+        'options': [
+          {
+              'key': 'all',
+              'title': 'Show all'
+          },
+          {
+              'key': 'similar',
+              'title': 'Hide similar'
+          },
+          {
+              'key': 'similar-extreme',
+              'title': 'Hide similar and extreme'
+          },
+          {
+              'key': 'similar-extreme-plus',
+              'title': 'Hide similar and extreme (more)'
+          },
+        ]
+      });
+
+      filters.push({
+        'isSelect': true,
         'key': 'powertrainFilter',
         'value': 'none',
         'title': 'Filter by Powertrain',
