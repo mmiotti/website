@@ -168,6 +168,7 @@
           lastTouchStart = d3.event.timeStamp;
         })
         .on('touchend', function(d) {
+          d3.event.preventDefault();
           if ((d3.event.timeStamp - lastTouchStart) > 1000) {
             return toggleHighlight(d)
           } else {
