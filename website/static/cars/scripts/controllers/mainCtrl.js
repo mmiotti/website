@@ -35,8 +35,11 @@
     }
 
     $scope.highlight = function(id) {
-      //$scope.search = '';
       d3PlotService.triggerToggleHighlight(id);
+    }
+
+    $scope.clearSearch = function() {
+      $scope.search = '';
     }
 
     // svg is only downloable if <a> tag supports download attribute (depends on browser)
