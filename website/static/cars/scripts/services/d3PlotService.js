@@ -179,15 +179,20 @@
         .attr("id", function(d) {
           return "circle" + d.Id;
         })
+        .on('click', function(d) {
+          return tooltipToggle(xScale(d.X), yScale(d.Y), d);
+        })
         // .on('click', function(d) {
         //   return toggleHighlight(d); 
         // })
-        .on('mouseover', function(d) {
-          return tooltipShow(xScale(d.X), yScale(d.Y), d);
-        })
-        .on('mouseout', function(d) {
-          return tooltipHide();
-        })
+        // .on('mouseover', function(d) {
+        //   return tooltipShow(xScale(d.X), yScale(d.Y), d);
+        // })
+        // .on('mouseout', function(d) {
+        //   return tooltipHide();
+        // })
+
+
         // .on('touchstart', function(d) {
         //   lastTouchStart = d3.event.timeStamp;
         // })
