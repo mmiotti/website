@@ -16,6 +16,157 @@
       'content': [],
     }
 
+    $scope.quickSettings = [
+      {
+        'key': 'average_us',
+        'title': 'Average Vehicle / US / Average Fuel Prices',
+        'settings': [{
+          'key': 'price_Gasoline',
+          'value': 3.1,
+        },
+        {
+          'key': 'price_Diesel',
+          'value': 3.3,
+        },
+        {
+          'key': 'price_Electricity',
+          'value': 12,
+        },
+        {
+          'key': 'electricity_ghg_fuel',
+          'value': 600,
+        },
+        {
+          'key': 'refunds',
+          'value': "federal",
+        },
+        {
+          'key': 'drivecycle',
+          'value': "Combined",
+        }]
+      },
+      {
+        'key': 'current_us',
+        'title': 'Average Vehicle / US / Current Fuel Prices',
+        'settings': [{
+          'key': 'price_Gasoline',
+          'value': 2.1,
+        },
+        {
+          'key': 'price_Diesel',
+          'value': 2.1,
+        },
+        {
+          'key': 'price_Electricity',
+          'value': 12,
+        },
+        {
+          'key': 'electricity_ghg_fuel',
+          'value': 600,
+        },
+        {
+          'key': 'refunds',
+          'value': "federal",
+        },
+        {
+          'key': 'drivecycle',
+          'value': "Combined",
+        }]
+      },
+      // {
+      //   'key': 'average_europe',
+      //   'title': 'Average Vehicle / Norway / Typical Fuel Prices',
+      //   'settings': [{
+      //     'key': 'price_Gasoline',
+      //     'value': 8,
+      //   },
+      //   {
+      //     'key': 'price_Diesel',
+      //     'value': 8,
+      //   },
+      //   {
+      //     'key': 'price_Electricity',
+      //     'value': 0.25,
+      //   },
+      //   {
+      //     'key': 'electricity_ghg_fuel',
+      //     'value': 736,
+      //   },
+      //   {
+      //     'key': 'refunds',
+      //     'value': "none",
+      //   },
+      //   {
+      //     'key': 'drivecycle',
+      //     'value': "Combined",
+      //   }]
+      // },
+      {
+        'key': 'urban_ca',
+        'title': 'Primary Vehicle in Household / Urban California',
+        'settings': [{
+          'key': 'price_Gasoline',
+          'value': 3.6,
+        },
+        {
+          'key': 'price_Diesel',
+          'value': 3.7,
+        },
+        {
+          'key': 'price_Electricity',
+          'value': 18,
+        },
+        {
+          'key': 'electricity_ghg_fuel',
+          'value': 299,
+        },
+        {
+          'key': 'distance_per_year',
+          'value': 25,
+        },
+        {
+          'key': 'refunds',
+          'value': "both",
+        },
+        {
+          'key': 'drivecycle',
+          'value': "City",
+        }]
+      },
+      {
+        'key': 'rural_mro',
+        'title': 'Secondary Vehicle in Household / Rural Midwest',
+        'settings': [{
+          'key': 'price_Gasoline',
+          'value': 2.8,
+        },
+        {
+          'key': 'price_Diesel',
+          'value': 3.0,
+        },
+        {
+          'key': 'price_Electricity',
+          'value': 10,
+        },
+        {
+          'key': 'electricity_ghg_fuel',
+          'value': 900,
+        },
+        {
+          'key': 'distance_per_year',
+          'value': 10,
+        },
+        {
+          'key': 'refunds',
+          'value': "federal",
+        },
+        {
+          'key': 'drivecycle',
+          'value': "Highway",
+        }]
+      }
+    ];
+
     $scope.storageBoxes = {
       'box0': angular.copy(defaultStorageSettings),
       'box1': angular.copy(defaultStorageSettings),
@@ -46,6 +197,18 @@
     $scope.canDownload = ("download" in document.createElement("a"));
 
     $scope.hideUpload = true;
+
+    $scope.applyQuickSettings = function(quicksettings_key) {
+      for (var i = 0; i < $scope.quickSettings.length; i++) {
+        if ($scope.quickSettings[i]['key'] == quicksettings_key) {
+          for (var j = 0; j < $scope.quickSettings[i]['settings'].length; j++) {
+            configService.applySettingByKey($scope.quickSettings[i]['settings'][j]['key'],
+              $scope.quickSettings[i]['settings'][j]['value'])
+          }
+          break;
+        }
+      }
+    }
 
     $scope.storeSettings = function() {
 
