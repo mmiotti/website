@@ -613,10 +613,10 @@
       tooltip
         .style("top", Math.round(Y+10)+"px")
         .style("left", Math.round(X+33)+"px")
-        .style("visibility", "visible");
+        .style("visibility", "visible")
         .on('click', function(d_t) {
           return toggleHighlight(d); 
-        })
+        });
 
       tooltipTitle
         .text(d.Make + " " + d.Model + " ");
