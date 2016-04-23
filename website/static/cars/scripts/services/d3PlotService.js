@@ -614,7 +614,7 @@
         .style("top", Math.round(Y+10)+"px")
         .style("left", Math.round(X+33)+"px")
         .style("visibility", "visible")
-        .on('click', function(d_t) {
+        .on('click', function() {
           return toggleHighlight(d); 
         });
 
