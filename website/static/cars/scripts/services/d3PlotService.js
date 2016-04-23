@@ -19,7 +19,7 @@
 
 
     // set up variables
-    var svg, uiInfo, targets, prevLegend, smallTooltip, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, yMin, yMax, xMin, xMax, rScale, xAxis, yAxis, d3cardinalLine;
+    var svg, uiInfo, targets, prevLegend, smallTooltip, transitionSpeed, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, yMin, yMax, xMin, xMax, rScale, xAxis, yAxis, d3cardinalLine;
 
     // initiate plot (only done at the very beginning of script
     // this function is NOT executed when window is resized
@@ -74,6 +74,8 @@
       }
 
       targets = [200, 120, 50]
+
+      transitionSpeed = 800;
 
     }
 
@@ -281,7 +283,7 @@
     function animateCircleGroups(selection) {
       selection
         .transition()
-        .duration(500)
+        .duration(transitionSpeed)
           .attr("transform", function(d){return "translate("+Math.round(xScale(d.X))+","+Math.round(yScale(d.Y))+")"})
     }
 
@@ -290,7 +292,7 @@
     function animateCircles(selection, configValues) {
       selection
         .transition()
-        .duration(500)
+        .duration(transitionSpeed)
           .attr("r", function(d) {
             return getCircleRadius(d, d3.select(this.parentNode).attr("class"), configValues);
           })
@@ -368,7 +370,7 @@
               .attr("x1", xScale(xMin))
               .attr("x2", xScale(xMax))
               .transition()
-              .duration(500)
+              .duration(transitionSpeed)
               .attr("y1", yScale(targets[i]))
               .attr("y2", yScale(targets[i]))
           } else {
@@ -379,7 +381,7 @@
               .attr("y2", yScale(yMin))
               .style("visibility", "visible")
               .transition()
-              .duration(500)
+              .duration(transitionSpeed)
               .attr("y1", yScale(targets[i]))
               .attr("y2", yScale(targets[i]))
           }
@@ -403,14 +405,14 @@
       svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + (height - padding.bottom) + ")")
-        //.transition().duration(500)
+        //.transition().duration(transitionSpeed)
         .call(xAxis);
       
       // Create Y axis
       svg.append("g")
         .attr("class", "y axis")
         .attr("transform", "translate(" + padding.left + ",0)")
-        //.transition().duration(500)
+        //.transition().duration(transitionSpeed)
         .call(yAxis);
 
       svg.selectAll(".x.axis").selectAll("line")
@@ -528,7 +530,7 @@
 
       svg.select('#path' + pathId)
         .transition()
-        .duration(500)
+        .duration(transitionSpeed)
         .attr("colorkey", colorKey)
         .attr('d', function(d) {
           return d3cardinalLine(hull) + 'Z'
@@ -547,7 +549,7 @@
         })
         .style('fill',colorsAndStyles.getDataColorByKey(colorKey, configValues))
         .transition()
-        .duration(500)
+        .duration(transitionSpeed)
         .style("visibility","visible");
 
     }
