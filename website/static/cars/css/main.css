@@ -155,7 +155,7 @@ button.empty_store {
 
 .interface-group input {
 	position: absolute;
-	right: 145px;
+	right: 135px;
 	top: 5px;
 }
 
@@ -164,13 +164,13 @@ button.empty_store {
 	position: absolute;
 	top: 3px;
 	right: 0;
-	width: 180px;
+	width: 170px;
 	height: 30px;
 }
 
 .interface-group .config-slider {
 	position: absolute;
-	right: 0;
+	right: -15px;
 	top: 4px;
 }
 
@@ -189,11 +189,11 @@ button.empty_store {
 
 .highlighted-dot {
 	display: block;
-	width: 14px;
-	height: 14px;
+	width: 16px;
+	height: 16px;
 	background-color: #f00;
 	color: #fff;
-	border-radius: 7px;
+	border-radius: 8px;
 	margin-right: 8px;
 	text-align: center;
 	float: left;
