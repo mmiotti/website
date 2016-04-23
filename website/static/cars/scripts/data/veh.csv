@@ -57,8 +57,8 @@ Toyota Highlander,Toyota,Highlander,,146127,ICEV,ICEV,4134,4509,SUV,Mid-size,,,,
 Kia Soul,Kia,Soul,,145316,ICEV,ICEV,2714,2879,Sedan/Hatchback,Compact,,,,,,,,,,14900,20500,Base,4dr Hatchback,14900,24,30,,,6-spd manual w/overdrive,4,130
 Kia Optima,Kia,Optima,,145244,ICEV,ICEV,3237,3468,Sedan/Hatchback,Mid-size,,,,,,,,,,21500,35300,LX,4dr Sedan,21500,23,34,,,6-spd automatic w/overdrive,4,192
 Kia Optima,Kia,Optima,,145244,ICEV,ICEV,3237,3468,Sedan/Hatchback,Mid-size,,,,,,,,,,21500,35300,SX Turbo,4dr Sedan,27500,20,31,,,6-spd automatic w/overdrive,4,274
-BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,34750,i,4dr Rear-wheel Drive Sedan,32750,24,36,,,8-spd automatic w/overdrive,4,180
-BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,34750,i,2dr Rear-wheel Drive Convertible,54900,20,30,,,8-spd automatic w/overdrive,6,300
+BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,54900,i,4dr Rear-wheel Drive Sedan,32750,24,36,,,8-spd automatic w/overdrive,4,180
+BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,54900,i,2dr Rear-wheel Drive Convertible,54900,20,30,,,8-spd automatic w/overdrive,6,300
 Chevrolet Impala,Chevrolet,Impala,,140280,ICEV,ICEV,3679,3785,Sedan/Hatchback,Full-size,,,,,,,,,,26860,35905,LS ECO,4dr Sedan,29135,25,35,,,6-spd automatic w/overdrive,4,182
 Chevrolet Impala,Chevrolet,Impala,,140280,ICEV,ICEV,3679,3785,Sedan/Hatchback,Full-size,,,,,,,,,,26860,35905,LT w/2LT,4dr Sedan,30085,19,29,,,6-spd automatic w/overdrive,6,305
 Nissan Versa,Nissan,Versa,,139781,ICEV,ICEV,2437,2498,Sedan/Hatchback,Subcompact,,,,,,,,,,11990,16890,1.6 S+,4dr Sedan,13790,31,40,,,Xtronic 2-spd CVT w/overdrive,4,109
