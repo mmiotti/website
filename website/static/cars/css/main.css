@@ -155,7 +155,7 @@ button.empty_store {
 
 .interface-group input {
 	position: absolute;
-	right: 135px;
+	right: 145px;
 	top: 5px;
 }
 
@@ -164,13 +164,13 @@ button.empty_store {
 	position: absolute;
 	top: 3px;
 	right: 0;
-	width: 170px;
+	width: 180px;
 	height: 30px;
 }
 
 .interface-group .config-slider {
 	position: absolute;
-	right: -15px;
+	right: 0;
 	top: 4px;
 }
 
