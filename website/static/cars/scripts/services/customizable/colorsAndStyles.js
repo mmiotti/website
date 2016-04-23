@@ -58,7 +58,7 @@
         'padding': '5px 10px',
         'width': '220px'
       },
-      'areaTooltip': {
+      'smallTooltip': {
         'position': 'absolute',
         'visibility': 'hidden',
         'background-color': 'rgba(0, 0, 0, 0.8)',
@@ -146,6 +146,9 @@
     // check whether data point is currently filtered
     function isFiltered(d, configValues) {
 
+      if (configValues.highlightFilter !== 'none') {
+        return true;
+      }
       if (configValues.powertrainFilter !== 'none' && configValues.powertrainFilter !== d.Powertrain) {
         return true;
       }

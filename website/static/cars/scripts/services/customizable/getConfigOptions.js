@@ -258,27 +258,6 @@
           ]
       });
 
-      /*conditions.push({
-          'isSelect': true,
-          'key': 'fuel_prices',
-          'value': 'Avg',
-          'title': 'Fuel prices',
-          'options': [
-              {
-                  'key': 'Avg',
-                  'title': '10-year average'
-              },
-              {
-                  'key': 'Min',
-                  'title': '10-year min (monthly)'
-              },
-              {
-                  'key': 'Max',
-                  'title': '10-year max (monthly)'
-              }
-          ]
-      });*/
-
       conditions.push({
         isSlider: true,
         key: "price_Gasoline",
@@ -286,8 +265,8 @@
         help: "The price of non-premium gasoline in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $4.47/gallon, the lowest monthly average $1.86/gallon.",
         min: 0,
         max: 10,
-        default: 3.14,
-        stepSize: 0.01,
+        default: 3.1,
+        stepSize: 0.1,
         unit: "$/gal"
       });
 
@@ -298,8 +277,8 @@
         help: "The price of diesel in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $5.17/gallon, the lowest monthly average $1.94/gallon.",
         min: 0,
         max: 10,
-        default: 3.39,
-        stepSize: 0.01,
+        default: 3.3,
+        stepSize: 0.1,
         unit: "$/gal"
       });
 
@@ -310,8 +289,8 @@
         help: "The price of electricity at the outlet in cents / kWh. The highest monthly inflation-corrected average during the past 10 years was 13.3 cents / kWh, the lowest monthly average was 10.3 cents / kWh.",
         min: 0,
         max: 30,
-        default: 12.1,
-        stepSize: 0.1,
+        default: 12,
+        stepSize: 1,
         unit: "$/kWh"
       });
 
@@ -322,8 +301,8 @@
         help: "GHG emission intensity of electricity production and distribution for the electricity used to produce materials.",
         min: 0,
         max: 1000,
-        default: 623,
-        stepSize: 1,
+        default: 600,
+        stepSize: 50,
         unit: "gCO2/kWh"
       });
 
@@ -334,8 +313,8 @@
         help: "GHG emission intensity of electricity production and distribution for the electricity used to produce fuels and charge vehicles.",
         min: 0,
         max: 1000,
-        default: 623,
-        stepSize: 1,
+        default: 600,
+        stepSize: 50,
         unit: "gCO2/kWh"
       });
 
@@ -397,10 +376,10 @@
           title: "Annual distance",
           help: "Annual driving distance in 1000 km.",
           min: 10,
-          max: 40,
-          default: 25,
+          max: 30,
+          default: 20,
           stepSize: 5,
-          unit: "1000 km"
+          unit: "1000km"
       });
 
       /*patterns.push({
@@ -421,8 +400,8 @@
           help: "Fraction of distance that PHEV drive in charge-depleting (CD) mode (using electricity).",
           min: 0,
           max: 100,
-          default: 57,
-          stepSize: 1,
+          default: 60,
+          stepSize: 10,
           unit: "%"
       });
 
@@ -460,6 +439,23 @@
 
       filters.push({
         'isSelect': true,
+        'key': 'highlightFilter',
+        'value': 'none',
+        'title': 'Filter not Highlighted',
+        'options': [
+          {
+              'key': 'none',
+              'title': 'No'
+          },
+          {
+              'key': 'highlight',
+              'title': 'Yes'
+          }
+        ]
+      });
+
+      filters.push({
+        'isSelect': true,
         'key': 'powertrainFilter',
         'value': 'none',
         'title': 'Filter by Powertrain',
@@ -487,10 +483,6 @@
           {
               'key': 'FCV',
               'title': 'FCV'
-          },
-          {
-              'key': 'all',
-              'title': 'All'
           }
         ]
       });

@@ -30,7 +30,7 @@
 
         if (configValues['modelFilter'] == 'similar-extreme-plus') {
           var mpg_diff_filter = 4;
-          var mspr_diff_filter = 4000;
+          var mspr_diff_filter = 2000;
         } else if (configValues['modelFilter'] !== 'all') {
           var mpg_diff_filter = 2;
           var mspr_diff_filter = 1000;
