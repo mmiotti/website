@@ -19,7 +19,7 @@
 
 
     // set up variables
-    var svg, uiInfo, targets, prevLegend, smallTooltip, transitionSpeed, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, yMin, yMax, xMin, xMax, rScale, xAxis, yAxis, d3cardinalLine;
+    var svg, uiInfo, targets, prevLegend, prevTooltipId, smallTooltip, transitionSpeed, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, yMin, yMax, xMin, xMax, rScale, xAxis, yAxis, d3cardinalLine;
 
     // initiate plot (only done at the very beginning of script
     // this function is NOT executed when window is resized
@@ -596,10 +596,11 @@
 
     function tooltipToggle(X, Y, d) {
 
-      if (tooltip.style("visibility") == "visible") {
+      if (tooltip.style("visibility") == "visible" && prevTooltipId == d.Id) {
         tooltipHide();
       } else {
         tooltipShow(X, Y, d);
+        prevTooltipId = d.Id;
       }
 
     }
