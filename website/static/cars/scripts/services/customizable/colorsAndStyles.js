@@ -15,7 +15,7 @@
         'HEV': '#e64d71',
         'PHEV': '#a7052b',
         'BEV': '#f7cb00',
-        'FCV': '#489fe1',
+        // 'FCV': '#489fe1',
       },
       'Subclass': {
         'Subcompact': '#bbd8ff',
