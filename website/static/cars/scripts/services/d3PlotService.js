@@ -134,7 +134,7 @@
         .style("stroke", "#ccc")
         .style("stroke-width", "1")
         .style("stroke-dasharray", "5,5")
-        .style("visibility","hidden")
+        .style("visibility","visible")
         // .on('mouseover', function(d) {
         //   var coordinates = [0, 0];
         //   coordinates = d3.mouse(this);
