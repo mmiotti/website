@@ -37,6 +37,10 @@
           'value': 600,
         },
         {
+          'key': 'distance_per_year',
+          'value': 20,
+        },
+        {
           'key': 'refunds',
           'value': "federal",
         },
@@ -63,6 +67,10 @@
         {
           'key': 'electricity_ghg_fuel',
           'value': 600,
+        },
+        {
+          'key': 'distance_per_year',
+          'value': 20,
         },
         {
           'key': 'refunds',
