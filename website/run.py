@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def load_website():
-    return render_template('index.html')
+    return render_template('page.html')
 
 @app.route('/cars')
 def load_cars():
