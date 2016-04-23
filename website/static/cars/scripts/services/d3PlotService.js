@@ -149,7 +149,7 @@
 
       // add proxies for the paths that can be used to draw the shaded areas
       // we need to add those here because they have to appear below (i.e., be drawn before) the circles and lines
-      svg.selectAll("path.links")
+      svg.selectAll("path")
         .data([[0],[1],[2],[3],[4],[5],[6]])
         .enter()
         .append("path")
@@ -162,7 +162,7 @@
 
       // add proxies for the lines between "linked" points that appear on mouse-over
       // we need to add those here because they have to appear below (i.e., be drawn before) the circles
-      svg.selectAll("line")
+      svg.selectAll("line.links")
         .data([[0],[1],[2],[3],[4]])
         .enter()
         .append("line")
