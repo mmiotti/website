@@ -682,8 +682,7 @@
 
 
     function triggerToggleHighlight(id) {
-      var path = svg.select("#circle" + id);
-      path.on('click').call(path.node(), path.datum());
+      toggleHighlight(svg.select("#circle" + id).datum());
     }
 
 
