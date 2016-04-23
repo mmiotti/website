@@ -45,9 +45,6 @@
       tooltip = d3.select(element)
         .append("div")
         .style(colorsAndStyles.getCss('tooltip'))
-        .on('click', function(d) {
-          return tooltipHide();
-        })
 
       // set up tooltip "components"
       tooltipTitle = tooltip.append("span");
@@ -182,9 +179,9 @@
         .attr("id", function(d) {
           return "circle" + d.Id;
         })
-        .on('click', function(d) {
-          return toggleHighlight(d); 
-        })
+        // .on('click', function(d) {
+        //   return toggleHighlight(d); 
+        // })
         .on('mouseover', function(d) {
           return tooltipShow(xScale(d.X), yScale(d.Y), d);
         })
@@ -617,6 +614,9 @@
         .style("top", Math.round(Y+10)+"px")
         .style("left", Math.round(X+33)+"px")
         .style("visibility", "visible");
+        .on('click', function(d_t) {
+          return toggleHighlight(d); 
+        })
 
       tooltipTitle
         .text(d.Make + " " + d.Model + " ");
