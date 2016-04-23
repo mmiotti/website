@@ -13,6 +13,7 @@
       getSettingObject: getSettingObject,
       getCurrentOptionObject: getCurrentOptionObject,
       checkIfDataMustBeReloaded: checkIfDataMustBeReloaded,
+      applySettingByKey: applySettingByKey,
       getSettings: getSettings,
       setSettings: setSettings,
       getKeyValuePairs: getKeyValuePairs
@@ -49,7 +50,8 @@
        
     }
 
-    // used in d3PlotService. not very elegant currently, may need to update
+    // get the setting object of a given key
+    // not very elegant currently, may need to update
     function getSettingObject(key) {
 
       var returnItem = {};
@@ -66,7 +68,9 @@
 
     }
 
-    // used in d3PlotService. not very elegant currently, may need to update
+    
+    // get the object of the currently selected option for a given key
+    // not very elegant currently, may need to update
     function getCurrentOptionObject(key, object) {
 
       // if settings object from which to fetch option object is undefined, use current settings
@@ -93,9 +97,23 @@
 
     }
 
+    // set the setting of a specific key to a new value
+    // not very elegant currently, may need to update
+    function applySettingByKey(key, value) {
+
+      settings.forEach(function(settingGroup) {
+        settingGroup.settings.forEach(function(item) {
+          if (item.key === key) {
+            item.value = value;
+          }
+        });
+      });
+
+    }
+
+    // check if data must be reloaded from scratch after changing settings
+    // currently, this is the case when the selection of car models (through modelFilter) is changed
     function checkIfDataMustBeReloaded(newVals, oldVals) {
-      console.log(getCurrentOptionObject('modelFilter', newVals))
-      console.log(getCurrentOptionObject('modelFilter', oldVals))
       if (getCurrentOptionObject('modelFilter', newVals) !== getCurrentOptionObject('modelFilter', oldVals)) {
         return true;
       } else {

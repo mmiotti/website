@@ -19,7 +19,7 @@
 
 
     // set up variables
-    var svg, uiInfo, prevLegend, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, rScale, xAxis, yAxis, d3cardinalLine;
+    var svg, uiInfo, targets, prevLegend, smallTooltip, tooltip, tooltipTitle, tooltipSubtitle, tooltipInfoFirst, tooltipInfoSecond, width, height, padding, xScale, yScale, yMin, yMax, xMin, xMax, rScale, xAxis, yAxis, d3cardinalLine;
 
     // initiate plot (only done at the very beginning of script
     // this function is NOT executed when window is resized
@@ -32,6 +32,14 @@
       svg = d3.select(element)
         .append("svg")
         .attr("id","svg");
+
+      // set up small tooltip
+      smallTooltip = d3.select(element)
+        .append("div")
+        .style(colorsAndStyles.getCss('smallTooltip'))
+        .on('click', function(d) {
+          return smallTooltipToggle();
+        })
 
       // set up tooltip
       tooltip = d3.select(element)
@@ -65,6 +73,8 @@
         'highlightedCars': []
       }
 
+      targets = [200, 120, 50]
+
     }
 
 
@@ -82,7 +92,7 @@
 
       // calculate width, height, and padding of figure
       width = boxProperties.width-interfaceProperties.width;
-      height = Math.min(Math.round(width/4*3), boxProperties.height);
+      height = Math.min(Math.round(width/3*2.2), boxProperties.height - 40);
       padding = {top: 20, right: 27, bottom: 60, left: 63};
 
       // set scales
@@ -106,15 +116,38 @@
           return tooltipHide();
         })
 
+      // add circle used for animation that is triggered when car is added to highlighted selection
       svg.append("circle")
         .attr("id", "clickAnimationCircle")
         .style("visibility", "hidden")
         .attr("fill", "#f00")
         .style('opacity','0.10')
 
+      // add lines that are used to display targets
+      svg.selectAll("line.targets")
+        .data([[0],[1],[2]])
+        .enter()
+        .append("line")
+        .attr("id", function(d) { return "target" + d })
+        .style("stroke", "#ccc")
+        .style("stroke-width", "1")
+        .style("stroke-dasharray", "5,5")
+        .style("visibility","hidden")
+        // .on('mouseover', function(d) {
+        //   var coordinates = [0, 0];
+        //   coordinates = d3.mouse(this);
+        //   var x = coordinates[0];
+        //   return smallTooltipToggle(xScale(xMax-(xMax-xMin)/15), yScale(targets[d]+10), "20" + parseInt(d+3) + "0 Target");
+        // })
+        // .on('mouseout', function(d) {
+        //   return smallTooltipToggle();
+        // });
+
+      updateTargets(configValues);
+
       // add proxies for the paths that can be used to draw the shaded areas
       // we need to add those here because they have to appear below (i.e., be drawn before) the circles and lines
-      svg.selectAll("path")
+      svg.selectAll("path.links")
         .data([[0],[1],[2],[3],[4],[5],[6]])
         .enter()
         .append("path")
@@ -230,6 +263,8 @@
       group.select("circle")
         .call(animateCircles, configValues)
 
+      updateTargets(configValues);
+
       // finally, plot axes above everything else
       appendAxes();
 
@@ -277,20 +312,20 @@
 
       // get lower axis limits, depending on configuration
       if (configValues.axisLimits == 'dynamic') {
-        var xMin = Math.max(0, xExtent[0] - xPadding);
-        var yMin = Math.max(0, yExtent[0] - yPadding);
+        xMin = Math.max(0, xExtent[0] - xPadding);
+        yMin = Math.max(0, yExtent[0] - yPadding);
       } else {
-        var xMin = 0;
-        var yMin = 0;
+        xMin = 0;
+        yMin = 0;
       }
 
       // get upper axis limits, depending on configuration
       if (configValues.axisLimits == 'dynamic' || configValues.axisLimits == 'hybrid') {
-        var xMax = xExtent[1] + xPadding;
-        var yMax = yExtent[1] + yPadding;
+        xMax = xExtent[1] + xPadding;
+        yMax = yExtent[1] + yPadding;
       } else {
-        var xMax = configService.getCurrentOptionObject('xAxis').maxLim;
-        var yMax = configService.getCurrentOptionObject('yAxis').maxLim;
+        xMax = configService.getCurrentOptionObject('xAxis').maxLim;
+        yMax = configService.getCurrentOptionObject('yAxis').maxLim;
       }
 
       // set up scale of x axis
@@ -322,6 +357,37 @@
         .ticks(5)
         .outerTickSize(0);
 
+    }
+
+
+    function updateTargets(configValues) {
+      for (var i = 0; i <= 2; i++) {
+        if (configValues['yAxis'] == 'ghg_total' && targets[i] > yMin) {
+          if (d3.select("#target"+i).style("visibility") == "visible") {
+            d3.select("#target"+i)
+              .attr("x1", xScale(xMin))
+              .attr("x2", xScale(xMax))
+              .transition()
+              .duration(500)
+              .attr("y1", yScale(targets[i]))
+              .attr("y2", yScale(targets[i]))
+          } else {
+            d3.select("#target"+i)
+              .attr("x1", xScale(xMin))
+              .attr("x2", xScale(xMax))
+              .attr("y1", yScale(yMin))
+              .attr("y2", yScale(yMin))
+              .style("visibility", "visible")
+              .transition()
+              .duration(500)
+              .attr("y1", yScale(targets[i]))
+              .attr("y2", yScale(targets[i]))
+          }
+        } else {
+          d3.select("#target"+i)
+            .style("visibility", "hidden")
+        }
+      }
     }
 
 
@@ -508,6 +574,22 @@
     }
 
 
+    function smallTooltipToggle(X, Y, text) {
+
+      if (smallTooltip.style("visibility") == "hidden") {
+        smallTooltip
+          .style("top", Math.round(Y)+"px")
+          .style("left", Math.round(X)+"px")
+          .style("visibility", "visible")
+          .text(text);
+      } else {
+        smallTooltip
+          .style("visibility", "hidden");
+      }
+
+    }
+
+
     function tooltipToggle(X, Y, d) {
 
       if (tooltip.style("visibility") == "visible") {
@@ -531,7 +613,7 @@
       // move around tooltip, and fill with information
       tooltip
         .style("top", Math.round(Y+10)+"px")
-        .style("left", Math.round(X+30)+"px")
+        .style("left", Math.round(X+33)+"px")
         .style("visibility", "visible");
 
       tooltipTitle
