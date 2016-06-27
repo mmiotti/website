@@ -19,7 +19,7 @@
     $scope.quickSettings = [
       {
         'key': 'average_us',
-        'title': 'Average Vehicle / US / Average Fuel Prices',
+        'title': 'Average US background conditions',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 3.1,
@@ -37,10 +37,6 @@
           'value': 600,
         },
         {
-          'key': 'distance_per_year',
-          'value': 20,
-        },
-        {
           'key': 'refunds',
           'value': "federal",
         },
@@ -51,7 +47,7 @@
       },
       {
         'key': 'current_us',
-        'title': 'Average Vehicle / US / Current Fuel Prices',
+        'title': 'Average US conditions with current fuel prices',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 2.1,
@@ -69,10 +65,6 @@
           'value': 600,
         },
         {
-          'key': 'distance_per_year',
-          'value': 20,
-        },
-        {
           'key': 'refunds',
           'value': "federal",
         },
@@ -81,37 +73,9 @@
           'value': "Combined",
         }]
       },
-      // {
-      //   'key': 'average_europe',
-      //   'title': 'Average Vehicle / Norway / Typical Fuel Prices',
-      //   'settings': [{
-      //     'key': 'price_Gasoline',
-      //     'value': 8,
-      //   },
-      //   {
-      //     'key': 'price_Diesel',
-      //     'value': 8,
-      //   },
-      //   {
-      //     'key': 'price_Electricity',
-      //     'value': 0.25,
-      //   },
-      //   {
-      //     'key': 'electricity_ghg_fuel',
-      //     'value': 736,
-      //   },
-      //   {
-      //     'key': 'refunds',
-      //     'value': "none",
-      //   },
-      //   {
-      //     'key': 'drivecycle',
-      //     'value': "Combined",
-      //   }]
-      // },
       {
         'key': 'urban_ca',
-        'title': 'Primary Vehicle in Household / Urban California',
+        'title': 'Average California background conditions',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 3.6,
@@ -129,10 +93,6 @@
           'value': 299,
         },
         {
-          'key': 'distance_per_year',
-          'value': 25,
-        },
-        {
           'key': 'refunds',
           'value': "both",
         },
@@ -143,7 +103,7 @@
       },
       {
         'key': 'rural_mro',
-        'title': 'Secondary Vehicle in Household / Rural Midwest',
+        'title': 'Average Midwest background conditions',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 2.8,
@@ -159,10 +119,6 @@
         {
           'key': 'electricity_ghg_fuel',
           'value': 900,
-        },
-        {
-          'key': 'distance_per_year',
-          'value': 10,
         },
         {
           'key': 'refunds',
@@ -183,7 +139,11 @@
       'box4': angular.copy(defaultStorageSettings),
     }
 
+    // initiate settings
     $scope.settings = configService.getSettings();
+
+    // set initial tab
+    $scope.tab = 'legend';
 
     $scope.$on('data:loaded', function(event) {
       $scope.vehicleList = dataService.getVehicleList();
@@ -194,7 +154,23 @@
     }
 
     $scope.highlight = function(id) {
-      d3PlotService.triggerToggleHighlight(id);
+      d3PlotService.triggerToggleCarOnList(id);
+    }
+
+    $scope.highlightDot = function(id) {
+      d3PlotService.highlightDot(id);
+    }
+
+    $scope.dehighlightDot = function(id) {
+      d3PlotService.dehighlightDot(id);
+    }
+
+    $scope.highlightHull = function(id) {
+      d3PlotService.highlightHull(id);
+    }
+
+    $scope.dehighlightHull = function(id) {
+      d3PlotService.dehighlightHull(id);
     }
 
     $scope.clearSearch = function() {
@@ -218,22 +194,21 @@
       }
     }
 
+    $scope.changeTab = function(tab_name) {
+      $scope.tab = tab_name;
+    }
+
     $scope.storeSettings = function() {
 
       if (storeOnClick === false) {
-
         storeOnClick = true;
-
         for (var i = 0; i < 5; ++i) {
           $scope.storageBoxes['box' + i]['disabled'] = false;
           $scope.storageBoxes['box' + i]['state'] += "_store";
         }
-
       } else {
-
         storeOnClick = false;
         cleanUpStorageBoxStatus();
-
       }
 
     }
@@ -277,59 +252,59 @@
 
     }
 
-    $scope.toggleUpload = function() {
-      $scope.hideUpload = $scope.hideUpload === false ? true: false;
-    }
+  //   $scope.toggleUpload = function() {
+  //     $scope.hideUpload = $scope.hideUpload === false ? true: false;
+  //   }
 
-    $scope.downloadSettings = function() {
+  //   $scope.downloadSettings = function() {
 
-    }
+  //   }
 
-    $scope.uploadSettings = function() {
+  //   $scope.uploadSettings = function() {
 
-    }
+  //   }
 
-    $scope.saveSvg = function(mode) {
+  //   $scope.saveSvg = function(mode) {
 
-      // get svg element.
-      var svg = document.getElementById("svg");
+  //     // get svg element.
+  //     var svg = document.getElementById("svg");
 
-      // get svg source.
-      var serializer = new XMLSerializer();
-      var source = serializer.serializeToString(svg);
+  //     // get svg source.
+  //     var serializer = new XMLSerializer();
+  //     var source = serializer.serializeToString(svg);
 
-      // add name spaces.
-      if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
-          source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
-      }
-      if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
-          source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
-      }
+  //     // add name spaces.
+  //     if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+  //         source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+  //     }
+  //     if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+  //         source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+  //     }
 
-      // add xml declaration
-      source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+  //     // add xml declaration
+  //     source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
 
-      // convert svg source to URI data scheme.
-      var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+  //     // convert svg source to URI data scheme.
+  //     var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
 
-      // redirect to downloadable file
-      if (mode == 'download') {
+  //     // redirect to downloadable file
+  //     if (mode == 'download') {
 
-        var anchor = angular.element('<a/>');
-        anchor.attr({
-            href: url,
-            target: '_blank',
-            download: 'costcarbon.svg'
-        })[0].click();
+  //       var anchor = angular.element('<a/>');
+  //       anchor.attr({
+  //           href: url,
+  //           target: '_blank',
+  //           download: 'costcarbon.svg'
+  //       })[0].click();
 
-      // open file in new tab
-      } else if (mode == 'open') {
+  //     // open file in new tab
+  //     } else if (mode == 'open') {
 
-        $window.open(url, '_blank');
+  //       $window.open(url, '_blank');
 
-      }
+  //     }
 
-		}
+		// }
 
   }
 

@@ -70,7 +70,7 @@
             configService.setSettings(newVals);
 
             if (scope.previousModelFilter.key !== configService.getCurrentOptionObject('modelFilter').key) {
-              // reload data (which then triggers plot-update as well)
+              // reload data (which then triggers plot update below as well)
               dataService.loadData();
             } else {
               // trigger plot-update function with new results, but without reloading data

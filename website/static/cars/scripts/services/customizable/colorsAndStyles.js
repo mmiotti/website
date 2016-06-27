@@ -15,7 +15,7 @@
         'HEV': '#e64d71',
         'PHEV': '#a7052b',
         'BEV': '#f7cb00',
-        // 'FCV': '#489fe1',
+        'FCV': '#489fe1',
       },
       'Subclass': {
         'Subcompact': '#bbd8ff',
@@ -72,7 +72,6 @@
 
     // set up api ("public functions")
     var api = {
-      getDataColorKeys: getDataColorKeys,
       getDataColor: getDataColor,
       getDataColorByKey: getDataColorByKey,
       getLegend: getLegend,
@@ -81,22 +80,6 @@
     };
 
     return api;
-
-
-    // get all keys belonging to currently selected field by which color is determined
-    function getDataColorKeys(configValues) {
-
-      var keys = []
-
-      for (var key in dataColors[configValues.legendColorField]) {
-        if (dataColors[configValues.legendColorField].hasOwnProperty(key)) {
-          keys.push(key)
-        }
-      }
-
-      return keys
-
-    }
 
 
     // get color of data point or shade
@@ -122,13 +105,17 @@
     function getLegend(configValues) {
 
       var legend = []
+      var id = 0
 
       for (var key in dataColors[configValues.legendColorField]) {
         if (dataColors[configValues.legendColorField].hasOwnProperty(key)) {
           legend.push({
             'text': dataColorTexts.hasOwnProperty(key) ? dataColorTexts[key] : key,
-            'color': dataColors[configValues.legendColorField][key]
+            'color': dataColors[configValues.legendColorField][key],
+            'id': id,
+            'key': key,
           })
+          id++
         }
       }
 

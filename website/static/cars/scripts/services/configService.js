@@ -16,7 +16,7 @@
       applySettingByKey: applySettingByKey,
       getSettings: getSettings,
       setSettings: setSettings,
-      getKeyValuePairs: getKeyValuePairs
+      getKeyValuePairs: getKeyValuePairs,
     };
 
     initializeSliderValues();
@@ -147,6 +147,8 @@
       configValues['trim'] = 'Trim1';
       configValues['price_Electricity'] = configValues['price_Electricity']*32.2*3.78/3.6/100;
       configValues['price_Gasoline_Premium'] = 1.1 * configValues['price_Gasoline'];
+      configValues['price_H2_Gas_SMR'] = configValues['price_H2']/120.1*32.2*3.78;
+      configValues['price_H2_Gas_Electrolysis'] = configValues['price_H2']/120.1*32.2*3.78;
 
       return configValues;
 

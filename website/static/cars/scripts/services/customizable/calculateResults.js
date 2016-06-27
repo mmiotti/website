@@ -79,12 +79,13 @@
         case 'costs_msrp':
           return getMsrp(item);
         case 'costs_fuel':
-          return getFuelCosts(item);
+          return getFuelCosts(item) * configValues['distance_per_year'] * configValues['lifetime'] * 1000;
         case 'costs_total':
-          return getTotalCosts(item);
+          return getTotalCosts(item) * configValues['distance_per_year'] * configValues['lifetime'] * 1000;
         case 'ghg_veh':
-          return getVehGhgEmissions(item);
+          return getVehGhgEmissions(item) / 1000;
         case 'ghg_fuel':
+          // return getFuelGhgEmissions(item) * configValues['distance_per_year'] * configValues['lifetime'] / 1000;
           return getFuelGhgEmissions(item);
         case 'ghg_total':
           return getTotalGhgEmissions(item);
@@ -209,6 +210,9 @@
         case 'PHEV_CD':
         case 'BEV':
           prop = 'Electricity';
+          break;
+        case 'FCV':
+          prop = configValues['hydrogen_pathway'];
           break;
         default:
           prop = item.Fueltype;

@@ -22,7 +22,7 @@
 
       axisOptions.push({
           'key': 'costs_msrp',
-          'title': 'Costs - MSRP',
+          'title': 'Vehicle costs (MSRP minus tax refunds)',
           'group': 'Costs',
           'unit': 'US$',
           'maxLim': 70000
@@ -30,41 +30,41 @@
 
       axisOptions.push({
           'key': 'costs_fuel',
-          'title': 'Costs - Fuel',
+          'title': 'Fuel costs',
           'group': 'Costs',
-          'unit': 'US$ / km',
+          'unit': 'US$',
           'maxLim': 0.15
       });
 
       axisOptions.push({
           'key': 'costs_total',
-          'title': 'Costs - Total',
+          'title': 'Vehicle, fuel, and maintenance costs',
           'group': 'Costs',
-          'unit': 'US$ / km',
+          'unit': 'US$',
           'maxLim': 0.5
       });
 
       axisOptions.push({
           'key': 'ghg_veh',
-          'title': 'GHG - Vehicle cycle',
+          'title': 'Vehicle cycle emissions',
           'group': 'Greenhouse gas emissions',
-          'unit': 'kgCO2eq',
-          'maxLim': 20000
+          'unit': 'tCO₂eq',
+          'maxLim': 20
       });
 
       axisOptions.push({
           'key': 'ghg_fuel',
-          'title': 'GHG - Fuel Cycle',
+          'title': 'Fuel Cycle emissions',
           'group': 'Greenhouse gas emissions',
-          'unit': 'gCO2eq / km',
+          'unit': 'gCO₂eq / km',
           'maxLim': 500
       });
 
       axisOptions.push({
           'key': 'ghg_total',
-          'title': 'GHG - Total',
+          'title': 'Total lifecycle emissions',
           'group': 'Greenhouse gas emissions',
-          'unit': 'gCO2eq / km',
+          'unit': 'gCO₂eq / km',
           'maxLim': 500
       });
 
@@ -228,7 +228,8 @@
 
       settings.push({
           title: 'Data and Display',
-          settings: dataAndDisplay
+          settings: dataAndDisplay,
+          showIf: 'display',
       });
 
       var conditions = [];
@@ -263,8 +264,8 @@
         key: "price_Gasoline",
         title: "Gasoline Price",
         help: "The price of non-premium gasoline in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $4.47/gallon, the lowest monthly average $1.86/gallon.",
-        min: 0,
-        max: 10,
+        min: 1,
+        max: 9,
         default: 3.1,
         stepSize: 0.1,
         unit: "$/gal"
@@ -275,8 +276,8 @@
         key: "price_Diesel",
         title: "Diesel Price",
         help: "The price of diesel in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $5.17/gallon, the lowest monthly average $1.94/gallon.",
-        min: 0,
-        max: 10,
+        min: 1,
+        max: 9,
         default: 3.3,
         stepSize: 0.1,
         unit: "$/gal"
@@ -297,30 +298,60 @@
       conditions.push({
         isSlider: true,
         key: "electricity_ghg_veh",
-        title: "El. Production",
-        help: "GHG emission intensity of electricity production and distribution for the electricity used to produce materials.",
+        title: "El. Prod.",
+        help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
         min: 0,
         max: 1000,
-        default: 600,
-        stepSize: 50,
-        unit: "gCO2/kWh"
+        default: 620,
+        stepSize: 20,
+        unit: "gCO₂/kWh"
       });
 
       conditions.push({
         isSlider: true,
         key: "electricity_ghg_fuel",
-        title: "El. Charging",
-        help: "GHG emission intensity of electricity production and distribution for the electricity used to produce fuels and charge vehicles.",
+        title: "El. Charge",
+        help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
         min: 0,
         max: 1000,
-        default: 600,
-        stepSize: 50,
-        unit: "gCO2/kWh"
+        default: 620,
+        stepSize: 20,
+        unit: "gCO₂/kWh"
+      });
+
+      conditions.push({
+        isSlider: true,
+        key: "price_H2",
+        title: "Hydrogen Price",
+        help: "The price of hydrogen in $ / kg.",
+        min: 0,
+        max: 12,
+        default: 4,
+        stepSize: 1,
+        unit: "$/kg"
+      });
+
+      conditions.push({
+          'isSelect': true,
+          'key': 'hydrogen_pathway',
+          'value': 'H2_Gas_SMR',
+          'title': 'Hydrogen production',
+          'options': [
+              {
+                  'key': 'H2_Gas_SMR',
+                  'title': 'Steam Methane Reforming'
+              },
+              {
+                  'key': 'H2_Gas_Electrolysis',
+                  'title': 'Electrolysis'
+              },
+          ]
       });
 
       settings.push({
           title: 'Background conditions',
-          settings: conditions
+          settings: conditions,
+          showIf: 'settings',
       });
 
       var patterns = [];
@@ -352,8 +383,8 @@
         title: "Discount rate",
         help: "Annual rate at which future monetary flows are discouted, in % p.a.",
         min: 0,
-        max: 20,
-        default: 10,
+        max: 16,
+        default: 8,
         stepSize: 1,
         unit: "%"
       });
@@ -363,22 +394,22 @@
           key: "lifetime",
           title: "Lifetime",
           help: "Total vehicle lifetime in years.",
-          min: 5,
-          max: 20,
-          default: 10,
-          stepSize: 5,
+          min: 4,
+          max: 24,
+          default: 14,
+          stepSize: 2,
           unit: "years"
       });
 
       patterns.push({
           isSlider: true,
           key: "distance_per_year",
-          title: "Annual distance",
+          title: "Annual dist.",
           help: "Annual driving distance in 1000 km.",
-          min: 10,
+          min: 6,
           max: 30,
-          default: 20,
-          stepSize: 5,
+          default: 18,
+          stepSize: 2,
           unit: "1000km"
       });
 
@@ -406,8 +437,9 @@
       });
 
       settings.push({
-          title: 'User patterns',
-          settings: patterns
+          title: 'Usage conditions',
+          settings: patterns,
+          showIf: 'settings',
       });
 
       var filters = [];
@@ -555,7 +587,33 @@
 
       settings.push({
           title: 'Filters',
-          settings: filters
+          settings: filters,
+          showIf: 'display',
+      });
+
+      var controlMode = []
+
+      controlMode.push({
+        'isSelect': true,
+        'key': 'controlMode',
+        'value': 'mouse',
+        'title': '',
+        'options': [
+          {
+              'key': 'mouse',
+              'title': 'Mouse control'
+          },
+          {
+              'key': 'touch',
+              'title': 'Touch control'
+          },
+        ]
+      });
+
+      settings.push({
+          title: 'Control Mode',
+          settings: controlMode,
+          showIf: 'control',
       });
 
       return settings

@@ -12,7 +12,11 @@
       initiate: initiate,
       renderPlot: renderPlot,
       updatePlot: updatePlot,
-      triggerToggleHighlight: triggerToggleHighlight
+      triggerToggleCarOnList: triggerToggleCarOnList,
+      highlightDot: highlightDot,
+      dehighlightDot: dehighlightDot,
+      highlightHull: highlightHull,
+      dehighlightHull: dehighlightHull
     };
 
     return api;
@@ -77,22 +81,24 @@
     }
 
 
-    // render plot (clears all previous information and re-draws data from scratch
-    // this function IS executed when window is resized
+    // render plot (clears all previous information and re-draws data from scratch)
+    // this function IS executed when window is resized or when configService.checkIfDataMustBeReloaded() results in true
     function renderPlot(results) {
 
       if (results.length == 0) {
         return;
       }
-
+      
       var configValues = configService.getKeyValuePairs();
+      var controlMode = configValues['controlMode']
+
       var boxProperties = d3.select("#main").node().getBoundingClientRect();
       var interfaceProperties = d3.select("#interface-bar").node().getBoundingClientRect();
 
       // calculate width, height, and padding of figure
       width = boxProperties.width-interfaceProperties.width;
-      height = Math.min(Math.round(width/3*2.2), boxProperties.height - 40);
-      padding = {top: 20, right: 27, bottom: 60, left: 63};
+      height = Math.min(Math.round(width/3*2.2), boxProperties.height - 60);
+      padding = {top: 40, right: 27, bottom: 60, left: 60};
 
       // set scales
       updateScales(results, configValues);
@@ -120,7 +126,7 @@
         .attr("id", "clickAnimationCircle")
         .style("visibility", "hidden")
         .attr("fill", "#f00")
-        .style('opacity','0.10')
+        .style('opacity','0.15')
 
       // add lines that are used to display targets
       svg.selectAll("line.targets")
@@ -128,19 +134,19 @@
         .enter()
         .append("line")
         .attr("id", function(d) { return "target" + d })
-        .style("stroke", "#ccc")
-        .style("stroke-width", "1")
-        .style("stroke-dasharray", "5,5")
+        .style("stroke", "#dfdfdf")
+        .style("stroke-width", "6")
+        // .style("stroke-dasharray", "5,5")
         .style("visibility","visible")
-        // .on('mouseover', function(d) {
-        //   var coordinates = [0, 0];
-        //   coordinates = d3.mouse(this);
-        //   var x = coordinates[0];
-        //   return smallTooltipToggle(xScale(xMax-(xMax-xMin)/15), yScale(targets[d]+10), "20" + parseInt(d+3) + "0 Target");
-        // })
-        // .on('mouseout', function(d) {
-        //   return smallTooltipToggle();
-        // });
+        .on('mouseover', function(d) {
+          var coordinates = [0, 0];
+          coordinates = d3.mouse(this);
+          var x = coordinates[0];
+          return smallTooltipToggle(xScale(xMax)-75, yScale(targets[d]) - 13, "20" + (parseInt(d)+3) + "0 target");
+        })
+        .on('mouseout', function(d) {
+          return smallTooltipToggle();
+        });
 
       updateTargets(configValues);
 
@@ -179,19 +185,27 @@
         .attr("id", function(d) {
           return "circle" + d.Id;
         })
-        .on('click', function(d) {
-          return tooltipToggle(xScale(d.X), yScale(d.Y), d);
+        .on('mouseover', function(d) {
+          if (controlMode == 'mouse') {
+            return tooltipShow(xScale(d.X), yScale(d.Y), d);
+          } else {
+            return;
+          }
         })
-        // .on('click', function(d) {
-        //   return toggleHighlight(d); 
-        // })
-        // .on('mouseover', function(d) {
-        //   return tooltipShow(xScale(d.X), yScale(d.Y), d);
-        // })
-        // .on('mouseout', function(d) {
-        //   return tooltipHide();
-        // })
-
+        .on('mouseout', function(d) {
+          if (controlMode == 'mouse') {
+            return tooltipHide();
+          } else {
+            return;
+          }
+        })
+        .on('click', function(d) {
+          if (controlMode == 'mouse') {
+            return toggleCarOnList(d); 
+          } else {
+            return tooltipToggle(xScale(d.X), yScale(d.Y), d);
+          }
+        });
 
         // .on('touchstart', function(d) {
         //   lastTouchStart = d3.event.timeStamp;
@@ -199,7 +213,7 @@
         // .on('touchend', function(d) {
         //   d3.event.preventDefault();
         //   if ((d3.event.timeStamp - lastTouchStart) > 1000) {
-        //     return toggleHighlight(d)
+        //     return toggleCarOnList(d)
         //   } else {
         //     return tooltipToggle(xScale(d.X), yScale(d.Y), d);
         //   }
@@ -249,6 +263,7 @@
       }
 
       var configValues = configService.getKeyValuePairs();
+      var controlMode = configValues['controlMode']
 
       updateScales(results, configValues);
 
@@ -259,7 +274,25 @@
       var group = svg.selectAll("g")
         .data(results)
         .on('mouseover', function(d) {
-          return tooltipShow(xScale(d.X), yScale(d.Y), d);
+          if (controlMode == 'mouse') {
+            return tooltipShow(xScale(d.X), yScale(d.Y), d);
+          } else {
+            return;
+          }
+        })
+        .on('mouseout', function(d) {
+          if (controlMode == 'mouse') {
+            return tooltipHide();
+          } else {
+            return;
+          }
+        })
+        .on('click', function(d) {
+          if (controlMode == 'mouse') {
+            return toggleCarOnList(d); 
+          } else {
+            return tooltipToggle(xScale(d.X), yScale(d.Y), d);
+          }
         })
         .call(animateCircleGroups)
 
@@ -366,16 +399,20 @@
 
     function updateTargets(configValues) {
       for (var i = 0; i <= 2; i++) {
+        // if y axis is set to total GHG emissions (to which targets apply) and target falls within box
         if (configValues['yAxis'] == 'ghg_total' && targets[i] > yMin) {
+          var yValue = yScale(targets[i])
+          // if already visible, directly animate to position
           if (d3.select("#target"+i).style("visibility") == "visible") {
             d3.select("#target"+i)
               .attr("x1", xScale(xMin))
               .attr("x2", xScale(xMax))
               .transition()
               .duration(transitionSpeed)
-              .attr("y1", yScale(targets[i]))
-              .attr("y2", yScale(targets[i]))
+              .attr("y1", yValue)
+              .attr("y2", yValue)
           } else {
+            // if not visible already, first set y values to ymin, and then animate to position
             d3.select("#target"+i)
               .attr("x1", xScale(xMin))
               .attr("x2", xScale(xMax))
@@ -384,12 +421,19 @@
               .style("visibility", "visible")
               .transition()
               .duration(transitionSpeed)
-              .attr("y1", yScale(targets[i]))
-              .attr("y2", yScale(targets[i]))
+              .attr("y1", yValue)
+              .attr("y2", yValue)
           }
         } else {
-          d3.select("#target"+i)
-            .style("visibility", "hidden")
+          // if currently visible, directly animate to position
+          if (d3.select("#target"+i).style("visibility") == "visible") {
+            d3.select("#target"+i)
+              .transition()
+              .duration(transitionSpeed)
+              .attr("y1", yScale(yMin))
+              .attr("y2", yScale(yMin))
+              .each("end", function(d) { d3.select("#target"+d).style("visibility", "hidden"); });
+          }
         }
       }
     }
@@ -466,16 +510,20 @@
       if (configValues.shadedAreas != 'none') {
 
         d3cardinalLine.interpolate(configValues.shadedAreas);
-        var colorKeyList = colorsAndStyles.getDataColorKeys(configValues)
+        var legend = colorsAndStyles.getLegend(configValues)
         var hull = []
         var colorKey = ''
+        var pathId = 0
 
         // loop through all proxies that can be used to draw shaded areas
-        for (var pathId = 0; pathId <= 6; ++pathId) {
+        for (var i = 0; i < 7; ++i) {
 
-          colorKey = colorKeyList[pathId]
-          if (pathId < colorKeyList.length) {
+          // if hull is part of legend
+          if (i < legend.length) {
+            colorKey = legend[i]['key']
+            pathId = legend[i]['id']
             hull = convexHullService.calculateHull(results, configValues, colorKey);
+          // otherwise, make hull empty (and make path invisible below)
           } else {
             hull = []
           }
@@ -621,7 +669,7 @@
         .style("left", Math.round(X+33)+"px")
         .style("visibility", "visible")
         .on('click', function() {
-          return toggleHighlight(d); 
+          return toggleCarOnList(d); 
         });
 
       tooltipTitle
@@ -681,25 +729,59 @@
     }
 
 
-    function triggerToggleHighlight(id) {
-      toggleHighlight(svg.select("#circle" + id).datum());
+    function triggerToggleCarOnList(id) {
+      toggleCarOnList(svg.select("#circle" + id).datum());
     }
 
 
-    function toggleHighlight(d) {
+    function highlightDot(id) {
+
+      var coords = d3.transform(svg.select("#circle" + id).attr("transform"));
+
+      svg.select("#clickAnimationCircle")
+        .attr("cx", coords.translate[0])
+        .attr("cy", coords.translate[1])
+        .attr("r", 50)
+        .style("visibility", "visible");
+
+    }
+
+
+    function dehighlightDot(id) {
+
+      svg.select("#clickAnimationCircle")
+        .style("visibility", "hidden")   
+
+    }
+
+
+    function highlightHull(id) {
+      svg.select('#path' + id)
+        .style('opacity', '0.35');
+    }
+
+
+    function dehighlightHull(id) {
+      svg.select('#path' + id)
+        .style('opacity', '0.15');
+    }
+
+
+    function toggleCarOnList(d) {
 
       var configValues = configService.getKeyValuePairs();
 
       if (svg.select("#circle" + d.Id).attr("class") == "highlight") {
-        removeHighlight(d, configValues)
+        removeCarFromList(d, configValues)
+        dehighlightDot(d.Id)
       } else {
-        addHighlight(d, configValues)
+        addCarToList(d, configValues)
       }
 
     }
 
 
-    function removeHighlight(d, configValues) {
+    function removeCarFromList(d, configValues) {
 
       svg.select("#circle" + d.Id).attr("class", "no-highlight");
 
@@ -737,7 +819,7 @@
     }
 
 
-    function addHighlight(d, configValues) {
+    function addCarToList(d, configValues) {
 
       animateClick(d.Id)
 
