@@ -282,6 +282,7 @@ button.empty_store {
 }
 
 #headerbar-menu a {
+	cursor: pointer;
 	color: #fff;
 	text-decoration: none;
 	display: block;
