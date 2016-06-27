@@ -79,9 +79,10 @@
         case 'costs_msrp':
           return getMsrp(item);
         case 'costs_fuel':
-          return getFuelCosts(item) * configValues['distance_per_year'] * configValues['lifetime'] * 1000;
+          // return getFuelCosts(item) * configValues['distance_per_year'] * configValues['lifetime'] * 1000;
+          return getFuelCosts(item);
         case 'costs_total':
-          return getTotalCosts(item) * configValues['distance_per_year'] * configValues['lifetime'] * 1000;
+          return getTotalCosts(item);
         case 'ghg_veh':
           return getVehGhgEmissions(item) / 1000;
         case 'ghg_fuel':

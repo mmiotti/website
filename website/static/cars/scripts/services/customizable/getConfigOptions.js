@@ -25,14 +25,14 @@
           'title': 'Vehicle costs (MSRP minus tax refunds)',
           'group': 'Costs',
           'unit': 'US$',
-          'maxLim': 70000
+          'maxLim': 70
       });
 
       axisOptions.push({
           'key': 'costs_fuel',
           'title': 'Fuel costs',
           'group': 'Costs',
-          'unit': 'US$',
+          'unit': 'US$ / km',
           'maxLim': 0.15
       });
 
@@ -40,7 +40,7 @@
           'key': 'costs_total',
           'title': 'Vehicle, fuel, and maintenance costs',
           'group': 'Costs',
-          'unit': 'US$',
+          'unit': 'US$ / km',
           'maxLim': 0.5
       });
 
