@@ -19,7 +19,7 @@
     $scope.quickSettings = [
       {
         'key': 'average_us',
-        'title': 'Average US background conditions',
+        'title': 'Average US (2004-2013)',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 3.1,
@@ -39,15 +39,11 @@
         {
           'key': 'refunds',
           'value': "federal",
-        },
-        {
-          'key': 'drivecycle',
-          'value': "Combined",
         }]
       },
       {
         'key': 'current_us',
-        'title': 'Average US conditions with current fuel prices',
+        'title': 'Average US (Using May 2016 fuel prices)',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 2.1,
@@ -67,15 +63,11 @@
         {
           'key': 'refunds',
           'value': "federal",
-        },
-        {
-          'key': 'drivecycle',
-          'value': "Combined",
         }]
       },
       {
         'key': 'urban_ca',
-        'title': 'Average California background conditions',
+        'title': 'Average California (2004-2013)',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 3.6,
@@ -95,15 +87,11 @@
         {
           'key': 'refunds',
           'value': "both",
-        },
-        {
-          'key': 'drivecycle',
-          'value': "City",
         }]
       },
       {
         'key': 'rural_mro',
-        'title': 'Average Midwest background conditions',
+        'title': 'Average Midwest (2004-2013)',
         'settings': [{
           'key': 'price_Gasoline',
           'value': 2.8,
@@ -123,10 +111,6 @@
         {
           'key': 'refunds',
           'value': "federal",
-        },
-        {
-          'key': 'drivecycle',
-          'value': "Highway",
         }]
       }
     ];

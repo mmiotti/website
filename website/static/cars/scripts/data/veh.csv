@@ -183,6 +183,8 @@ Ford Fusion Energi,Ford,Fusion,Energi,11550,PHEV,PHEV,3913,,Sedan/Hatchback,Mid-
 Ford C-Max Energi,Ford,C-Max,Energi,8433,PHEV,PHEV,3859,,Sedan/Hatchback,Compact,,4007,1500,,,7.6,,0.14,,31635,31635,SEL,4dr Hatchback,31635,40,36,95,81,2-spd CVT w/overdrive,4,141
 Nissan Leaf,Nissan,Leaf,,30200,BEV,BEV,3256,3340,Sedan/Hatchback,Compact,,7500,2500,,,24,,,,28980,35020,S,4dr Hatchback,28980,126,101,,,1-spd automatic,0,107
 Tesla Model S,Tesla,Model,S,16550,BEV,BEV,4647,,Sedan/Hatchback,Full-size,luxury,7500,2500,,,60,,,,69900,93400,Base,4dr Sedan,69900,94,97,,,1-spd automatic,0,302
+Tesla Model 3,Tesla,Model,3,0,BEV,BEV,3573,,Sedan/Hatchback,Compact,,7500,2500,,,55,,,,35000,35000,[estimate!],4dr Sedan,35000,125,125,,,1-spd automatic,0,0
+Chevrolet Bolt,Chevrolet,Bolt,,0,BEV,BEV,3443,,Sedan/Hatchback,Subcompact,,7500,2500,,,60,,,,37500,37500,[estimate!],4dr Sedan,37500,115,115,,,1-spd automatic,0,201
 BMW i3,BMW,i3,,6092,BEV,BEV,2799,3064,Sedan/Hatchback,Subcompact,,7500,2500,,,22,,,0.5,41350,45200,Base,4dr Rear-wheel Drive Hatchback,41350,137,111,,,1-spd automatic,0,170
 Smart Fortwo electric drive,Smart,Fortwo,electric drive,2594,BEV,BEV,2138,,Sedan/Hatchback,Subcompact,,7500,2500,,,17.6,,,,25000,28000,passion,2dr Coupe,25000,122,93,,,1-spd automatic,0,74
 Ford Focus Electric,Ford,Focus,Electric,1964,BEV,BEV,3640,,Sedan/Hatchback,Compact,,7500,2500,,,23,,,,29170,29170,Base,4dr Hatchback,29170,110,99,,,1-spd automatic,0,143
@@ -208,4 +210,4 @@ Lexus RX 450h,Lexus,RX,450h,9351,HEV,HEV,4520,4652,SUV,Mid-size ,luxury,,,,60,,,
 Lexus RX 450h,Lexus,RX,450h,9351,HEV,HEV,4520,4652,SUV,Mid-size ,luxury,,,,60,,,,,46410,47810,Base,4dr All-wheel Drive,47810,28,30,,,2-spd CVT w/overdrive,6,245
 Honda Civic Hybrid,Honda,Civic,Hybrid,5070,HEV,HEV,2879,,Sedan/Hatchback,Mid-size,,,,,40,,,,,24635,24635,Base,4dr Sedan,24635,44,47,,,2-spd CVT w/overdrive,4,90
 Volkswagen Jetta Hybrid,Volkswagen,Jetta,Hybrid,1939,HEV,HEV,3311,,Sedan/Hatchback,Compact,,,,,40,,,,,25560,31895,Base,4dr Sedan,25560,42,48,,,7-spd auto-shift manual w/overdrive,4,150
-Toyota Mirai,Toyota,Mirai,,1,FCV,FCV,4079,,Sedan/Hatchback,Mid-size,,7500,5000,H2_Gas,40,,90,,,57500,57500,,,57500,59,61,,,1-speed direct drive,,151
+Toyota Mirai,Toyota,Mirai,,0,FCV,FCV,4079,,Sedan/Hatchback,Mid-size,,7500,5000,H2_Gas,40,,90,,,57500,57500,,,57500,59,61,,,1-speed direct drive,,151

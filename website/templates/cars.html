@@ -14,7 +14,7 @@
         <div id="headerbar">
             <div id="headerbar-innerwrapper">
                 <div id="headerbar-logo">
-                    <span id="logo-title">GreenCarMap</span>
+                    <span id="logo-title">MyGreenCar</span>
                 </div>
 
                 <div id="headerbar-startmenu" ng-repeat="settingGroup in settings | filter: { showIf: 'control' }">
@@ -44,6 +44,17 @@
 
         <aside id="interface-bar">
 
+            <div class="group" ng-show="uiInfo.highlightedCars.length" style="padding-bottom: 5px;">
+
+                <h1>Highlighted Cars</h1>
+
+                <p class="highlighted-car-entry" ng-repeat="car in uiInfo.highlightedCars" ng-mouseover="highlightDot(car.id)" ng-mouseleave="dehighlightDot(car.id)">
+                    <span class="highlighted-dot">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} {{car.trim}} ({{car.powertrain}})
+                    <span class="highlighted-clear" ng-click="highlight(car.id)">X</span>
+                </p>
+
+            </div>
+
             <div class="group" ng-show="tab == 'legend'" style="padding-bottom: 5px;">
 
                 <h1>Search for a Car</h1>
@@ -54,17 +65,6 @@
                 <div ng-show="showList()">
                     <p class="quicksetting-paragraph" ng-repeat="item in vehicleList | filter:search" ng-click="highlight(item.id)">{{item.name}}</p>
                 </div>
-
-            </div>
-
-            <div class="group" ng-show="uiInfo.highlightedCars.length" style="padding-bottom: 5px;">
-
-                <h1>Highlighted Cars</h1>
-
-                <p class="highlighted-car-entry" ng-repeat="car in uiInfo.highlightedCars" ng-mouseover="highlightDot(car.id)" ng-mouseleave="dehighlightDot(car.id)">
-                    <span class="highlighted-dot">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} {{car.trim}} ({{car.powertrain}})
-                    <span class="highlighted-clear" ng-click="highlight(car.id)">X</span>
-                </p>
 
             </div>
 
@@ -80,7 +80,7 @@
 
             <div class="group" ng-show="quickSettings && tab == 'settings'" style="padding-bottom: 5px;">
 
-                <h1>Quick Apply</h1>
+                <h1>Quick Apply Background Conditions</h1>
 
                 <p class="quicksetting-paragraph" ng-repeat="quickSetting in quickSettings" ng-click="applyQuickSettings(quickSetting.key)"> {{quickSetting.title}} </p>
 
@@ -138,6 +138,14 @@
 
             <div ng-show="tab == 'about'">
 
+                <h1>Credits</h1>
+                <p>About section to be added</p>
+                <!--<p>MyGreenCar was created by Marco Miotti, Geoffrey J. Supran, and Jessika E. Trancik at the <a href="http://trancik.mit.edu">MIT Trancik Lab</a>, based on reference [1]. Vehicle specifications obtained from manufacturer websites and cars.com.</p>
+
+                <p>Programmed by <a href="http://marco.miotti.me">Marco Miotti</a> and powered by <a href="https://angularjs.org/">AngularJS</a> and <a href="https://d3js.org/">D3</a>.</p>
+
+                <p>[1]: M. Miotti, G.J. Supran, E.J. Kim, J.E. Trancik, Environmental Science &amp; Technology, 2016.</p>
+
                 <h1>Calculation of targets</h1>
                 <p>Placeholder for 'about' text</p>
 
@@ -154,7 +162,7 @@
                 <p>Placeholder for 'about' text</p>
 
                 <h1>Calculation of fuel cycle emissions</h1>
-                <p>Placeholder for 'about' text</p>
+                <p>Placeholder for 'about' text</p>-->
 
             </div>
 

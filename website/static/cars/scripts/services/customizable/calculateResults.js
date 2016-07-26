@@ -16,6 +16,7 @@
 
     return api;
 
+
     // calculate results based on input data and current state of config
     function calculate(myData) {
 
@@ -52,6 +53,7 @@
 
     }
 
+
     function calculateValueWrapper(which, item) {
 
       if (item.Powertrain === 'PHEV') {
@@ -71,6 +73,7 @@
 
     }
 
+
     function calculateValue(which, item) {
 
       var dataType = configValues[which];
@@ -79,14 +82,14 @@
         case 'costs_msrp':
           return getMsrp(item);
         case 'costs_fuel':
-          // return getFuelCosts(item) * configValues['distance_per_year'] * configValues['lifetime'] * 1000;
+          // return getFuelCosts(item) * configValues['distance_per_year'] * getUnitConversionFactor() * configValues['lifetime'] * 1000;
           return getFuelCosts(item);
         case 'costs_total':
           return getTotalCosts(item);
         case 'ghg_veh':
           return getVehGhgEmissions(item) / 1000;
         case 'ghg_fuel':
-          // return getFuelGhgEmissions(item) * configValues['distance_per_year'] * configValues['lifetime'] / 1000;
+          // return getFuelGhgEmissions(item) * configValues['distance_per_year'] * getUnitConversionFactor() * configValues['lifetime'] / 1000;
           return getFuelGhgEmissions(item);
         case 'ghg_total':
           return getTotalGhgEmissions(item);
@@ -104,6 +107,7 @@
 
     }
 
+
     function getMsrp(item) {
 
       return item[configValues.trim + "_MSRP"]
@@ -112,26 +116,39 @@
 
     }
 
-    function getFuelCosts(item) {
-      //return data.fuelCoeff[getFuelIndex(item)]['Price_' + configValues.fuel_prices]
-      //  * getGallonsPerMile(item) / 1.61;
-      return configValues['price_' + getFuelIndex(item)]
-        * getGallonsPerMile(item) / 1.61;
+
+    function getUnitConversionFactor() {
+      if (configValues['units'] == 'us') {
+        return 1;
+      } else {
+        return 1.61;
+      }
     }
 
-    function getMaintenanceCosts(item) {
-      return data.vehCoeff[getVehIndex(item, false)].Maintenance / (configValues.distance_per_year * 1000);
+
+    function getFuelCosts(item) {
+      //return data.fuelCoeff[getFuelIndex(item)]['Price_' + configValues.fuel_prices]
+      //  * getGallonsPerMile(item) * getUnitConversionFactor();
+      return configValues['price_' + getFuelIndex(item)]
+        * getGallonsPerMile(item) / getUnitConversionFactor();
     }
+
+
+    function getMaintenanceCosts(item) {
+      return data.vehCoeff[getVehIndex(item, false)].Maintenance / (configValues.distance_per_year * getUnitConversionFactor() * 1000);
+    }
+
 
     function getTotalCosts(item) {
 
       var averageDiscountFactor =  getAverageDiscountFactor(configValues.discount_rate/100, configValues.lifetime);
 
-      return getMsrp(item) / (configValues.lifetime * configValues.distance_per_year * 1000)
+      return getMsrp(item) / (configValues.lifetime * configValues.distance_per_year * getUnitConversionFactor() * 1000)
         + getFuelCosts(item) * averageDiscountFactor
         + getMaintenanceCosts(item) * averageDiscountFactor;
 
     }
+
 
     function getVehGhgEmissions(item) {
 
@@ -155,6 +172,7 @@
 
     }
 
+
     function getFuelGhgEmissions(item) {
 
       var fuelIndex = getFuelIndex(item);
@@ -165,22 +183,26 @@
         + data.fuelCoeff[fuelIndex].X3 * gallonsPerMile * configValues.electricity_ghg_fuel
         + data.fuelCoeff[fuelIndex].X4 * 1.000
         + data.fuelCoeff[fuelIndex].X5 * gallonsPerMile
-        + data.fuelCoeff[fuelIndex].X6 * gallonsPerMile * configValues.electricity_ghg_fuel) / 1.61;
+        + data.fuelCoeff[fuelIndex].X6 * gallonsPerMile * configValues.electricity_ghg_fuel) / getUnitConversionFactor();
 
     }
+
 
     function getTotalGhgEmissions(item) {
-      return getVehGhgEmissions(item) * 1000 / (configValues.lifetime * configValues.distance_per_year * 1000)
+      return getVehGhgEmissions(item) * 1000 / (configValues.lifetime * configValues.distance_per_year * getUnitConversionFactor() * 1000)
         + getFuelGhgEmissions(item);
     }
+
 
     function getHorsepower(item) {
       return item[configValues.trim + "_HP"]*1.000;
     }
 
+
     function getPowerToWeightRatio(item) {
       return getHorsepower(item)/getVehCurbWeight(item);
     }
+
 
     function getVehIndex(item, includeEcoinvent) {
 
@@ -191,6 +213,7 @@
       }
 
     }
+
 
     function getFuelIndex(item) {
 
@@ -228,6 +251,7 @@
 
     }
 
+
     function getGreetClass(item) {
 
       switch (item.Class) {
@@ -240,6 +264,7 @@
       }
 
     }
+
 
     function getGallonsPerMile(item) {
 
@@ -265,15 +290,11 @@
       //if (item.Combined_Type == 'PHEV_CD' || item.Combined_Type == 'BEV') {
       //  chargingEfficiency = configValues.charge_efficiency;
       //}
-
-      switch (configValues.drivecycle) {
-        case 'Combined':
-          return (0.55/mpg.City + 0.45/mpg.Highway)/chargingEfficiency;
-        default:
-          return 1/(mpg[configValues.drivecycle]*chargingEfficiency);
-      }
+      
+      return ((configValues.cityshare/100)/mpg.City + (1-configValues.cityshare/100)/mpg.Highway);
 
     }
+
 
     function getAverageDiscountFactor(rate, lifetime) {
       
@@ -285,6 +306,7 @@
       }
 
     }
+
 
     function getVehCurbWeight(item) {
 

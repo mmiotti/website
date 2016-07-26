@@ -74,7 +74,7 @@
         'highlightedCars': []
       }
 
-      targets = [200, 120, 50]
+      targets = [200*1.61, 120*1.61, 50*1.61]
 
       transitionSpeed = 800;
 
@@ -245,7 +245,7 @@
       }
 
       // finally, plot axes above everything else
-      appendAxes();
+      appendAxes(configValues);
 
       $timeout(function() {
         uiInfo.legend = colorsAndStyles.getLegend(configValues);
@@ -303,7 +303,7 @@
       updateTargets(configValues);
 
       // finally, plot axes above everything else
-      appendAxes();
+      appendAxes(configValues);
 
       // update legend (without timeout, the $apply called by $broadcast will run into active $digest's while dragging a slider)
       $timeout(function() {
@@ -397,11 +397,20 @@
     }
 
 
+    function getUnitConversionFactor(configValues) {
+      if (configValues['units'] == 'us') {
+        return 1;
+      } else {
+        return 1.61;
+      }
+    }
+
+
     function updateTargets(configValues) {
       for (var i = 0; i <= 2; i++) {
         // if y axis is set to total GHG emissions (to which targets apply) and target falls within box
         if (configValues['yAxis'] == 'ghg_total' && targets[i] > yMin) {
-          var yValue = yScale(targets[i])
+          var yValue = yScale(targets[i] / getUnitConversionFactor(configValues))
           // if already visible, directly animate to position
           if (d3.select("#target"+i).style("visibility") == "visible") {
             d3.select("#target"+i)
@@ -439,7 +448,7 @@
     }
 
 
-    function appendAxes() {
+    function appendAxes(configValues) {
 
       svg.selectAll(".axis")
         .remove();
@@ -486,12 +495,25 @@
       var xSettings = configService.getCurrentOptionObject('xAxis');
       var ySettings = configService.getCurrentOptionObject('yAxis');
 
+      if (xSettings.hasOwnProperty('unit_si') && xSettings.hasOwnProperty('unit_us')) {
+        var x_unit = xSettings['unit_' + configValues['units']]
+      } else {
+        var x_unit = xSettings.unit
+      }
+
+      if (ySettings.hasOwnProperty('unit_si') && ySettings.hasOwnProperty('unit_us')) {
+        var y_unit = ySettings['unit_' + configValues['units']]
+      } else {
+        var y_unit = ySettings.unit
+      }
+
       svg.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "middle")
         .attr("x", Math.round((width-padding.left-padding.right)/2) + padding.left)
         .attr("y", height - 15)
-        .text(xSettings.title + " in " + xSettings.unit);
+        .text(xSettings.title + " in " + x_unit)
+        .style("font-size", "14px");
 
       svg.append("text")
         .attr("class", "y label")
@@ -499,7 +521,8 @@
         .attr("x", -Math.round((height-padding.top-padding.bottom)/2) - padding.top)
         .attr("y", 15)
         .attr("transform", "rotate(-90)")
-        .text(ySettings.title + " in " + ySettings.unit);
+        .text(ySettings.title + " in " + y_unit)
+        .style("font-size", "14px");
 
     }
 

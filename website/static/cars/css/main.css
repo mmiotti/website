@@ -347,6 +347,7 @@ button.empty_store {
 }
 
 #copyright {
+	display: none;
 	color: #aaa;
 	position: fixed;
 	bottom: 0;

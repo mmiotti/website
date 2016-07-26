@@ -32,15 +32,17 @@
           'key': 'costs_fuel',
           'title': 'Fuel costs',
           'group': 'Costs',
-          'unit': 'US$ / km',
+          'unit_si': 'US$ / km',
+          'unit_us': 'US$ / mile',
           'maxLim': 0.15
       });
 
       axisOptions.push({
           'key': 'costs_total',
-          'title': 'Vehicle, fuel, and maintenance costs',
+          'title': 'User costs (vehicle, fuel, and maintenance)',
           'group': 'Costs',
-          'unit': 'US$ / km',
+          'unit_si': 'US$ / km',
+          'unit_us': 'US$ / mile',
           'maxLim': 0.5
       });
 
@@ -54,17 +56,19 @@
 
       axisOptions.push({
           'key': 'ghg_fuel',
-          'title': 'Fuel Cycle emissions',
+          'title': 'Greenhouse gas emissions (fuel)',
           'group': 'Greenhouse gas emissions',
-          'unit': 'gCO₂eq / km',
+          'unit_si': 'gCO₂eq / km',
+          'unit_us': 'gCO₂eq / mile',
           'maxLim': 500
       });
 
       axisOptions.push({
           'key': 'ghg_total',
-          'title': 'Total lifecycle emissions',
+          'title': 'Greenhouse gas emissions (lifecycle)',
           'group': 'Greenhouse gas emissions',
-          'unit': 'gCO₂eq / km',
+          'unit_si': 'gCO₂eq / km',
+          'unit_us': 'gCO₂eq / mile',
           'maxLim': 500
       });
 
@@ -149,6 +153,23 @@
               }
           ]
       });*/
+
+      dataAndDisplay.push({
+          'isSelect': true,
+          'key': 'units',
+          'value': 'us',
+          'title': 'Units',
+          'options': [
+              {
+                  'key': 'us',
+                  'title': 'U.S.'
+              },
+              {
+                  'key': 'si',
+                  'title': 'SI / International'
+              },
+          ]
+      });
 
       dataAndDisplay.push({
           'isSelect': true,
@@ -357,25 +378,37 @@
       var patterns = [];
 
       patterns.push({
-          'isSelect': true,
-          'key': 'drivecycle',
-          'value': 'Combined',
-          'title': 'Drivecycle',
-          'options': [
-              {
-                  'key': 'Combined',
-                  'title': 'Combined (55/45)'
-              },
-              {
-                  'key': 'City',
-                  'title': 'City (FTP75)'
-              },
-              {
-                  'key': 'Highway',
-                  'title': 'Highway (HWFET)'
-              }
-          ]
+        isSlider: true,
+        key: "cityshare",
+        title: "City driving",
+        help: "The fraction of the distance that is driven in the EPA city cycle (as opposed to the EPA highway cycle) in %",
+        min: 0,
+        max: 100,
+        default: 55,
+        stepSize: 5,
+        unit: "%"
       });
+
+      // patterns.push({
+      //     'isSelect': true,
+      //     'key': 'drivecycle',
+      //     'value': 'Combined',
+      //     'title': 'Drivecycle',
+      //     'options': [
+      //         {
+      //             'key': 'Combined',
+      //             'title': 'Combined (55/45)'
+      //         },
+      //         {
+      //             'key': 'City',
+      //             'title': 'City (FTP75)'
+      //         },
+      //         {
+      //             'key': 'Highway',
+      //             'title': 'Highway (HWFET)'
+      //         }
+      //     ]
+      // });
 
       patterns.push({
         isSlider: true,
@@ -405,12 +438,12 @@
           isSlider: true,
           key: "distance_per_year",
           title: "Annual dist.",
-          help: "Annual driving distance in 1000 km.",
-          min: 6,
-          max: 30,
-          default: 18,
-          stepSize: 2,
-          unit: "1000km"
+          help: "Annual driving distance in 1000 miles.",
+          min: 4,
+          max: 18,
+          default: 11,
+          stepSize: 1,
+          unit: "1000mi"
       });
 
       /*patterns.push({
