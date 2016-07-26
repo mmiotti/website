@@ -48,7 +48,7 @@
 
       axisOptions.push({
           'key': 'ghg_veh',
-          'title': 'Vehicle cycle emissions',
+          'title': 'Greenhouse gas emissions (vehicle)',
           'group': 'Greenhouse gas emissions',
           'unit': 'tCO₂eq',
           'maxLim': 20
