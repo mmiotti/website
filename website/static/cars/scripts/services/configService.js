@@ -14,6 +14,7 @@
       getCurrentOptionObject: getCurrentOptionObject,
       checkIfDataMustBeReloaded: checkIfDataMustBeReloaded,
       applySettingByKey: applySettingByKey,
+      applySettingsByKey: applySettingsByKey,
       getSettings: getSettings,
       setSettings: setSettings,
       getKeyValuePairs: getKeyValuePairs,
@@ -105,6 +106,23 @@
         settingGroup.settings.forEach(function(item) {
           if (item.key === key) {
             item.value = value;
+          }
+        });
+      });
+
+    }
+
+    // apply all key value pair settings in keyValuePairs
+    // if forceDefaults is true, the default values will be applied to all settings that don't appear
+    // inside the keyValuePairs
+    function applySettingsByKey(keyValuePairs, forceDefaults) {
+
+      settings.forEach(function(settingGroup) {
+        settingGroup.settings.forEach(function(item) {
+          if (keyValuePairs.hasOwnProperty(item.key)) {
+            item.value = keyValuePairs[item.key];
+          } else if (forceDefaults == true) {
+            item.value = item.default;
           }
         });
       });

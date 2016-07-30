@@ -108,7 +108,7 @@
       dataAndDisplay.push({
           'isSelect': true,
           'key': 'xAxis',
-          'value': 'costs_total',
+          'default': 'costs_total',
           'title': 'X-Axis',
           'options': axisOptions
       });
@@ -116,7 +116,7 @@
       dataAndDisplay.push({
           'isSelect': true,
           'key': 'yAxis',
-          'value': 'ghg_total',
+          'default': 'ghg_total',
           'title': 'Y-Axis',
           'options': axisOptions
       });
@@ -124,7 +124,7 @@
       dataAndDisplay.push({
           'isSelect': true,
           'key': 'area',
-          'value': 'none',
+          'default': 'none',
           'title': 'Circle area',
           'options': axisOptions
       });
@@ -132,7 +132,7 @@
       /*dataAndDisplay.push({
           'isSelect': true,
           'key': 'shadedAreas',
-          'value': 'cardinal-closed',
+          'default': 'cardinal-closed',
           'title': 'Shaded area',
           'options': [
               {
@@ -157,7 +157,7 @@
       dataAndDisplay.push({
           'isSelect': true,
           'key': 'units',
-          'value': 'us',
+          'default': 'us',
           'title': 'Units',
           'options': [
               {
@@ -174,7 +174,7 @@
       dataAndDisplay.push({
           'isSelect': true,
           'key': 'axisLimits',
-          'value': 'dynamic',
+          'default': 'dynamic',
           'title': 'Axis Limits',
           'options': [
               {
@@ -195,7 +195,7 @@
       dataAndDisplay.push({
           'isSelect': true,
           'key': 'legendColorField',
-          'value': 'Combined_Type',
+          'default': 'Combined_Type',
           'title': 'Circle Colors',
           'options': [
               {
@@ -216,7 +216,7 @@
       /*dataAndDisplay.push({
           'isSelect': true,
           'key': 'trim',
-          'value': 'Trim1',
+          'default': 'Trim1',
           'title': 'Trim',
           'options': [
               {
@@ -233,7 +233,7 @@
       /*dataAndDisplay.push({
           'isSelect': true,
           'key': 'inventory_source',
-          'value': 'GREET',
+          'default': 'GREET',
           'title': 'Inventories',
           'options': [
               {
@@ -250,7 +250,7 @@
       settings.push({
           title: 'Data and Display',
           settings: dataAndDisplay,
-          showIf: 'display',
+          showIf: 'settings',
       });
 
       var conditions = [];
@@ -258,7 +258,7 @@
       conditions.push({
           'isSelect': true,
           'key': 'refunds',
-          'value': 'federal',
+          'default': 'federal',
           'title': 'Tax refunds',
           'options': [
               {
@@ -355,7 +355,7 @@
       conditions.push({
           'isSelect': true,
           'key': 'hydrogen_pathway',
-          'value': 'H2_Gas_SMR',
+          'default': 'H2_Gas_SMR',
           'title': 'Hydrogen production',
           'options': [
               {
@@ -392,7 +392,7 @@
       // patterns.push({
       //     'isSelect': true,
       //     'key': 'drivecycle',
-      //     'value': 'Combined',
+      //     'default': 'Combined',
       //     'title': 'Drivecycle',
       //     'options': [
       //         {
@@ -480,7 +480,7 @@
       filters.push({
         'isSelect': true,
         'key': 'modelFilter',
-        'value': 'similar-extreme',
+        'default': 'similar-extreme',
         'title': 'Models shown',
         'options': [
           {
@@ -505,7 +505,7 @@
       filters.push({
         'isSelect': true,
         'key': 'highlightFilter',
-        'value': 'none',
+        'default': 'none',
         'title': 'Filter not Highlighted',
         'options': [
           {
@@ -522,7 +522,7 @@
       filters.push({
         'isSelect': true,
         'key': 'powertrainFilter',
-        'value': 'none',
+        'default': 'none',
         'title': 'Filter by Powertrain',
         'options': [
           {
@@ -555,7 +555,7 @@
       filters.push({
         'isSelect': true,
         'key': 'sizeFilter',
-        'value': 'none',
+        'default': 'none',
         'title': 'Filter by Size',
         'options': [
           {
@@ -584,7 +584,7 @@
       filters.push({
         'isSelect': true,
         'key': 'typeFilter',
-        'value': 'none',
+        'default': 'none',
         'title': 'Filter by Type',
         'options': [
           {
@@ -593,11 +593,7 @@
           },
           {
               'key': 'hatchback',
-              'title': 'Hatchback'
-          },
-          {
-              'key': 'sedan',
-              'title': 'Sedan'
+              'title': 'Sedan/Hatchback'
           },
           {
               'key': 'suv',
@@ -621,7 +617,7 @@
       settings.push({
           title: 'Filters',
           settings: filters,
-          showIf: 'display',
+          showIf: 'settings',
       });
 
       var controlMode = []
@@ -629,7 +625,7 @@
       controlMode.push({
         'isSelect': true,
         'key': 'controlMode',
-        'value': 'mouse',
+        'default': 'mouse',
         'title': '',
         'options': [
           {
@@ -647,6 +643,12 @@
           title: 'Control Mode',
           settings: controlMode,
           showIf: 'control',
+      });
+
+      settings.forEach(function(settingGroup) {
+        settingGroup.settings.forEach(function(item) {
+          item.value = item.default;
+        });
       });
 
       return settings

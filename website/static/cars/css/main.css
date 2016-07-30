@@ -63,6 +63,7 @@ button.empty_store {
 	max-width: 1600px;
 	max-height: 1000px;
 	margin: 0 auto;
+	position: relative;
 }
 
 #interface-bar {
@@ -82,6 +83,165 @@ button.empty_store {
 	font-size: 1em;
 	text-transform: uppercase;
 	font-weight: normal;
+}
+
+#tourbox {
+	position: relative;
+	border-radius: 4px;
+	background-color: #7caa45;
+	padding: 55px 15px 3px 15px;
+	height: 60px;
+	line-height: 1.5em;
+	width: 100%;
+	color: #fff;
+	cursor: pointer;
+	-webkit-transition: background-color 0.5s, height 0.5s;
+	-moz-transition: background-color 0.5s, height 0.5s;
+	transition: background-color 0.5s, height 0.5s;
+}
+
+#tourbox_clickbox {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+}
+
+#tourbox_icon {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: auto;
+	width: 40px;
+	height: 40px;
+	background: url('../img/icons_tour.svg') no-repeat;
+	background-position: 0% 0%;
+	background-size: 100% auto;
+	-webkit-transition: height 0.5s, width 0.5s, top 0.5s, left 0.5s;
+	-moz-transition: height 0.5s, width 0.5s, top 0.5s, left 0.5s;
+	transition: height 0.5s, width 0.5s, top 0.5s, left 0.5s;
+}
+
+#tourbox_header {
+	position: absolute;
+	top: 21px;
+	left: 65px;
+	font-weight: bold;
+	-webkit-transition: top 0.5s, left 0.5s;
+	-moz-transition: top 0.5s, left 0.5s;
+	transition: top 0.5s, left 0.5s;
+}
+
+#tourbox_progress {
+	display: none;
+	width: 310px;
+	height: 4px;
+	position: absolute;
+	top: 35px;
+	left: 15px;
+	background-color: #666;
+}
+
+#tourbox_progress_inner {
+	display: block;
+	width: 10%;
+	height: 100%;
+	background-color: #7caa45;
+}
+
+#tourbox_prev,
+#tourbox_next {
+	display: none;
+	height: 25px;
+	line-height: 24px;
+	width: 50%;
+	background-color: transparent;
+	position: absolute;
+	bottom: 0;
+	padding: 1px 15px;
+	cursor: pointer;
+}
+
+#tourbox_prev {
+	border-radius: 0 4px 0 4px;
+	left: 0;
+}
+
+#tourbox_next {
+	border-radius: 4px 0 4px 0;
+	right: 0;
+	text-align: right;
+}
+
+.tourbox_marker {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0.2;
+	background-color: #f00;
+}
+
+#tourbox_marker_center {
+	left: 60px;
+	top: 60px;
+}
+
+#tourbox_marker_xaxis {
+	left: 60px;
+	height: 60px;
+}
+
+#tourbox_marker_yaxis {
+	left: 0;
+	width: 60px;
+	top: 60px;
+}
+
+#tourbox_marker_targets {
+	left: 60px;
+	height: 200px;
+}
+
+#tourbox_prev:hover,
+#tourbox_next:hover {
+	background-color: #666;
+}
+
+#tourbox_prev.disabled,
+#tourbox_next.disabled {
+	display: none;
+}
+
+#tourbox.active {
+	background-color: #444;
+	cursor: default;
+	padding-bottom: 40px;
+	height: 275px;
+}
+
+#tourbox.active #tourbox_icon {
+	top: 10px;
+	left: 307px;
+	width: 18px;
+	height: 18px;
+	background-position: 0 100%;
+	cursor: pointer;
+}
+
+#tourbox.active #tourbox_header {
+	top: 12px;
+	left: 15px;
+}
+
+#tourbox.active #tourbox_progress,
+#tourbox.active #tourbox_prev,
+#tourbox.active #tourbox_next {
+	display: block;
+}
+
+#tourbox.active .highlight {
+	color: #aaee58;
 }
 
 .additional-info-wrapper {
@@ -255,7 +415,7 @@ button.empty_store {
 	position: absolute;
 	width: 300px;
 	right: 365px;
-	top: 8px;
+	top: 6px;
 	text-align: right;
 }
 
@@ -344,23 +504,6 @@ button.empty_store {
 	text-align: center;
 	float: left;
 	margin-top: -1px;
-}
-
-#copyright {
-	display: none;
-	color: #aaa;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	padding: 7px 20px;
-	border-top: 1px solid #eee;
-	background-color: #fff;
-	font-size: 0.9em;
-}
-
-#copyright a {
-	color: #aaa;
 }
 
 [ng-cloak] {

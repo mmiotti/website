@@ -17,41 +17,56 @@
                     <span id="logo-title">MyGreenCar</span>
                 </div>
 
-                <div id="headerbar-startmenu" ng-repeat="settingGroup in settings | filter: { showIf: 'control' }">
+                <div id="headerbar-startmenu">
+                    <a style="text-decoration:none; display:block; float:right; line-height:22px; height:24px; padding:2px 8px; border-radius: 0 4px 4px 0;background-color: #444;">Touch control</a>
+                    <a style="text-decoration:none; display:block; float:right; line-height:22px; height:24px; padding:2px 8px; border-radius: 4px 0 0 4px; background-color: #eee; color: #000;">Mouse control</a>
+                </div>
+
+                <!--<div id="headerbar-startmenu" ng-repeat="settingGroup in settings | filter: { showIf: 'control' }">
 
                     <span ng-repeat="setting in settingGroup.settings">
                         <select ng-if="setting.isSelect" ng-model="setting.value" ng-options="option.key as option.title group by option.group for option in setting.options"></select>
                     </span>
 
-                </div>
-
-<!--                 <div id="headerbar-startmenu">
-                    <a href="#" id="headerbar-tutorial">Tutorial</a>
-                    <select id="headerbar-controlmode" ng-model="uiOptions.controlMode.value" ng-options="option.key as option.title for option in uiOptions.controlMode.options">
-                    </select>
-                </div> -->
-
+                </div>-->
 
                 <!-- Todo: look at ng active or something (error class, active class?) -->
                 <div id="headerbar-menu">
-                    <a ng-class="tab == 'legend' ? 'active' : ''" ng-click="changeTab('legend')">Legend</a>
-                    <a ng-class="tab == 'settings' ? 'active' : ''" ng-click="changeTab('settings')">Conditions</a>
-                    <a ng-class="tab == 'display' ? 'active' : ''" ng-click="changeTab('display')">Plot config</a>
-                    <a ng-class="tab == 'about' ? 'active' : ''" ng-click="changeTab('about')">About</a>
+                    <a ng-class="tab == 'legend' ? 'active' : ''" ng-click="changeTab('legend')">Main Panel</a>
+                    <a ng-class="tab == 'settings' ? 'active' : ''" ng-click="changeTab('settings')">Custom Parameters</a>
+                    <a ng-class="tab == 'about' ? 'active' : ''" ng-click="changeTab('about')">Credits &amp; Info</a>
                 </div>
             </div>
         </div>
 
         <aside id="interface-bar">
 
-            <div class="group" ng-show="uiInfo.highlightedCars.length" style="padding-bottom: 5px;">
+            <div class="group" ng-show="tab == 'legend'" style="padding-top: 20px; padding-bottom: 5px;">
 
-                <h1>Highlighted Cars</h1>
+                <div id="tourbox_marker_center" class="tourbox_marker" ng-if="tour.index == 2" ng-style="{width: (appDim.width-87)+'px', height: (appDim.height-100)+'px'}"></div>
+                <div id="tourbox_marker_xaxis" class="tourbox_marker" ng-if="tour.index == 3" ng-style="{top: (appDim.height-40)+'px', width: (appDim.width-87)+'px'}"></div>
+                <div id="tourbox_marker_yaxis" class="tourbox_marker" ng-if="tour.index == 3" ng-style="{height: (appDim.height-100)+'px'}"></div>
+                <div id="tourbox_marker_targets" class="tourbox_marker" ng-if="tour.index == 4" ng-style="{width: (appDim.width-87)+'px', top: (appDim.height-240)+'px'}"></div>
 
-                <p class="highlighted-car-entry" ng-repeat="car in uiInfo.highlightedCars" ng-mouseover="highlightDot(car.id)" ng-mouseleave="dehighlightDot(car.id)">
-                    <span class="highlighted-dot">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} {{car.trim}} ({{car.powertrain}})
-                    <span class="highlighted-clear" ng-click="highlight(car.id)">X</span>
-                </p>
+                <div id="tourbox" ng-class="tour.active == true ? 'active' : ''">
+                    <div id="tourbox_clickbox" ng-click="toggleTour()" ng-show="tour.active == false"></div>
+                    <a id="tourbox_icon" ng-click="toggleTour()"></a>
+                    <span id="tourbox_header" ng-click="toggleTour()">{{tour.title}}</span>
+                    <span id="tourbox_progress"><span id="tourbox_progress_inner" ng-style="{width: (tour.index-1)*10+'%'}"></span></span>
+                    <a id="tourbox_prev" ng-click="tourPrev()" ng-show="tour.index > 1">&lt; Previous</a>
+                    <a id="tourbox_next" ng-click="tourNext()" ng-show="tour.index < 11">Next &gt;</a>
+                    <span class="tourbox_text" ng-if="tour.index == 1">This tour will take your through the basics of the MyGreenCar web app. <span class="highlight">To start, click the 'Next &gt;' button</span> below.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 2">The plot area on the left shows more than 100 of the most popular vehicle models sold in the U.S. in 2014, and some even future ones (such as the Tesla Model 3). You can <span class="highlight">move your mouse (touch control mode: finger) over each point</span> to get information on the respective car. The car <span class="highlight">colors</span> represent different technologies, as indicated by the legend below. The <span class="highlight">shaded areas</span> encompass all cars of a given technology.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 3">The <span class="highlight">x axis</span> represents the combined costs of the vehicle purchasing price, fuel or charging costs, and regular maintenance costs, broken down on each mile driven. The <span class="highlight">y axis</span> represents the greenhouse gas emissions per mile driven, including emissions from the production and distribution of the fuel and of the car itself.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 4">In the lower area of the chart, you will notice some <span class="highlight">horizontal lines</span>. These represent <span class="highlight">greenhouse gas emission targets</span> that are estimated to be consistent with the goal of limiting the global mean temperature increase to 2°C. Moving your mouse (touch control mode: finger) over a target will tell you which year it corresponds to.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 5">The result you see on the left corresponds to the <span class="highlight">default parameter values</span>. The default parameter values are set to represent the <span class="highlight">average U.S.</span> driving behavior, the average U.S. electricity mix, and 10-year average fuel and electricity prices for the U.S.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 6">With the <span class="highlight">current (May 2016), relatively low gasoline and diesel prices</span>, gasoline powererd cars looks slightly better in comparison when compared to hybrid and electric cars. The difference compared to the default values is not that large, however. Tipp: switch back between 10-year average and current fuel prices by using the 'Previous' and 'Next' buttons below.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 7">The average kWh produced in California emits less than half of the greenhouse gas emissions than the average kWh in the U.S., and it shows. If we apply a <span class="highlight">relatively clean electricity mix</span>, such as the one found in California, the advantage in emissions of electric vehicles becomes much larger.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 8">Back to the <span class="highlight">default values</span>, for now.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 9">Once we <span class="highlight">turn off the federal tax refunds</span> that can be found on electric vehicles, they become much more expensive in comparison, and are no longer fully competitive with gasoline powered cars. Some specific electric vehicles, such as the Nissan Leaf, however, are still comparable in price compared to vehicle of the same class.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 10">To verify that, we can <span class="highlight">filter</span> cars such that <span class="highlight">only compact cars</span> (not including compact SUVs or pickups) remain fully visible.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 11">This concludes the introductory tour. Was that fun? <span class="highlight">Go to the 'Custom Parameters' tab and start playing around</span> with the different parameters yourself!</span>
+                </div>
 
             </div>
 
@@ -68,6 +83,17 @@
 
             </div>
 
+            <div class="group" ng-show="uiInfo.highlightedCars.length" style="padding-bottom: 5px;">
+
+                <h1>Highlighted Cars</h1>
+
+                <p class="highlighted-car-entry" ng-repeat="car in uiInfo.highlightedCars" ng-mouseover="highlightDot(car.id)" ng-mouseleave="dehighlightDot(car.id)">
+                    <span class="highlighted-dot">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} {{car.trim}} ({{car.powertrain}})
+                    <span class="highlighted-clear" ng-click="highlight(car.id)">X</span>
+                </p>
+
+            </div>
+
             <div class="group" ng-show="uiInfo.legend.length && tab == 'legend'" style="padding-bottom: 5px;">
 
                 <h1>Legend</h1>
@@ -78,13 +104,13 @@
 
             </div>
 
-            <div class="group" ng-show="quickSettings && tab == 'settings'" style="padding-bottom: 5px;">
+            <!--<div class="group" ng-show="quickSettings && tab == 'settings'" style="padding-bottom: 5px;">
 
                 <h1>Quick Apply Background Conditions</h1>
 
                 <p class="quicksetting-paragraph" ng-repeat="quickSetting in quickSettings" ng-click="applyQuickSettings(quickSetting.key)"> {{quickSetting.title}} </p>
 
-            </div>
+            </div>-->
 
             <div class="group" ng-repeat="settingGroup in settings | filter: { showIf: tab }">
 
@@ -105,80 +131,31 @@
 
             </div>
 
-            <div ng-show="tab == 'settings'">
-
-                <h1>Store &amp; Load Conditions</h1>
-
-                <button type="button" ng-click="storeSettings()">Store</button>
-
-                <button type="button" class="{{storageBoxes.box0.state}}" ng-click="triggerStorageBox(0)" ng-disabled="storageBoxes.box0.disabled">1</button>
-                <button type="button" class="{{storageBoxes.box1.state}}" ng-click="triggerStorageBox(1)" ng-disabled="storageBoxes.box1.disabled">2</button>
-                <button type="button" class="{{storageBoxes.box2.state}}" ng-click="triggerStorageBox(2)" ng-disabled="storageBoxes.box2.disabled">3</button>
-                <button type="button" class="{{storageBoxes.box3.state}}" ng-click="triggerStorageBox(3)" ng-disabled="storageBoxes.box3.disabled">4</button>
-                <button type="button" class="{{storageBoxes.box4.state}}" ng-click="triggerStorageBox(4)" ng-disabled="storageBoxes.box4.disabled">5</button>
-                <button type="button" ng-click="clearStorage()">Clear</button>
-
-                <p>Click 'store' and then click on one of the five storage slots. Once you have stored settings, you can click on the corresponding slot at any time to load those settings.</p>
-
-                <!--|
-                <button type="button" ng-click="downloadSettings()">Download</button>
-                <button type="button" ng-click="toggleUpload()">Upload</button>
-
-                <div ng-hide="hideUpload" id="uploadBox">
-                    <input type="file" id="file" name="file">
-                    <button type="button" id="uploadBoxGoButton" ng-click="uploadSettings()">Go</button>
-                </div>-->
-                
-                <!--<h1>Save &amp; Export SVG</h1>
-
-                <button type="button" ng-click="saveSvg('download')" ng-enabled="{{canDownload}}">Download SVG</button>
-                <button type="button" ng-click="saveSvg('open')">Open SVG in new tab</button>-->
-
-            </div>
-
             <div ng-show="tab == 'about'">
 
                 <h1>Credits</h1>
-                <p>About section to be added</p>
-                <!--<p>MyGreenCar was created by Marco Miotti, Geoffrey J. Supran, and Jessika E. Trancik at the <a href="http://trancik.mit.edu">MIT Trancik Lab</a>, based on reference [1]. Vehicle specifications obtained from manufacturer websites and cars.com.</p>
 
-                <p>Programmed by <a href="http://marco.miotti.me">Marco Miotti</a> and powered by <a href="https://angularjs.org/">AngularJS</a> and <a href="https://d3js.org/">D3</a>.</p>
+                <p>MyGreenCar was created by Marco Miotti, Geoffrey J. Supran, and Jessika E. Trancik at the <a href="http://trancik.mit.edu">MIT Trancik Lab</a>, based on reference [1].</p>
+
+                <p>Programming and implementation by <a href="http://marco.miotti.me">Marco Miotti</a> using <a href="https://angularjs.org/">AngularJS</a> and <a href="https://d3js.org/">D3</a>.</p>
+
+                <p>Vehicle specifications obtained from manufacturer websites and cars.com.</p>
+
+                <!--<p>Information provided on this website are provided "as is" without warranty of any kind.</p>-->
+
+                <p>Details on the calculation of costs, greenhouse gas emissions, and emission targets can be found in the Supporting Information of reference [1].</p>
 
                 <p>[1]: M. Miotti, G.J. Supran, E.J. Kim, J.E. Trancik, Environmental Science &amp; Technology, 2016.</p>
-
-                <h1>Calculation of targets</h1>
-                <p>Placeholder for 'about' text</p>
-
-                <h1>Calculation of vehicle costs</h1>
-                <p>Placeholder for 'about' text</p>
-
-                <h1>Calculation of fuel costs</h1>
-                <p>Placeholder for 'about' text</p>
-
-                <h1>Calculation of maintenance costs</h1>
-                <p>Placeholder for 'about' text</p>
-
-                <h1>Calculation of vehicle cycle emissions</h1>
-                <p>Placeholder for 'about' text</p>
-
-                <h1>Calculation of fuel cycle emissions</h1>
-                <p>Placeholder for 'about' text</p>-->
 
             </div>
 
         </aside>
 
         <div id="main">
-
             <cost-carbon-space></cost-carbon-space>
-
         </div>
 
       </div>
-
-    <div id="copyright">
-        Developed by <a href="http://marco.miotti.me" target="_blank">Marco Miotti</a> at the <a href="http://trancik.mit.edu/" target="_blank">MIT Trancik Lab</a>. Method developed by <a href="" target="_blank">Miotti, Supran, Kim, and Trancik</a>. Vehicle specifications obtained from manufacturer websites and <a href="https://www.cars.com">cars.com</a>.
-    </div>
 
     </div>
     {% endraw %}

@@ -10,6 +10,7 @@
     // set up api ("public functions")
     var api = {
       initiate: initiate,
+      getAppDimensions: getAppDimensions,
       renderPlot: renderPlot,
       updatePlot: updatePlot,
       triggerToggleCarOnList: triggerToggleCarOnList,
@@ -81,6 +82,16 @@
     }
 
 
+    function getAppDimensions() {
+      var appDim = {}
+      appDim.main = d3.select("#main").node().getBoundingClientRect();
+      appDim.interface = d3.select("#interface-bar").node().getBoundingClientRect();
+      appDim.width = appDim.main.width-appDim.interface.width;
+      appDim.height = Math.min(Math.round(appDim.width/3*2.2), appDim.main.height - 60);
+      return appDim;
+    }
+
+
     // render plot (clears all previous information and re-draws data from scratch)
     // this function IS executed when window is resized or when configService.checkIfDataMustBeReloaded() results in true
     function renderPlot(results) {
@@ -91,13 +102,11 @@
       
       var configValues = configService.getKeyValuePairs();
       var controlMode = configValues['controlMode']
-
-      var boxProperties = d3.select("#main").node().getBoundingClientRect();
-      var interfaceProperties = d3.select("#interface-bar").node().getBoundingClientRect();
+      var appDim = getAppDimensions();
 
       // calculate width, height, and padding of figure
-      width = boxProperties.width-interfaceProperties.width;
-      height = Math.min(Math.round(width/3*2.2), boxProperties.height - 60);
+      width = appDim.width;
+      height = appDim.height;
       padding = {top: 40, right: 27, bottom: 60, left: 60};
 
       // set scales
