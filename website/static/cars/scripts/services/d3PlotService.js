@@ -13,11 +13,13 @@
       getAppDimensions: getAppDimensions,
       renderPlot: renderPlot,
       updatePlot: updatePlot,
+      removeAllCarsFromList: removeAllCarsFromList,
       triggerToggleCarOnList: triggerToggleCarOnList,
       highlightDot: highlightDot,
       dehighlightDot: dehighlightDot,
       highlightHull: highlightHull,
-      dehighlightHull: dehighlightHull
+      dehighlightHull: dehighlightHull,
+      applyTourHighlights: applyTourHighlights
     };
 
     return api;
@@ -76,18 +78,19 @@
       }
 
       targets = [200*1.61, 120*1.61, 50*1.61]
-
       transitionSpeed = 800;
 
     }
 
 
     function getAppDimensions() {
+      var maxAspectRatio = 1/1.5
+      var bottomPadding = 30
       var appDim = {}
       appDim.main = d3.select("#main").node().getBoundingClientRect();
       appDim.interface = d3.select("#interface-bar").node().getBoundingClientRect();
-      appDim.width = appDim.main.width-appDim.interface.width;
-      appDim.height = Math.min(Math.round(appDim.width/3*2.2), appDim.main.height - 60);
+      appDim.width = appDim.main.width-appDim.interface.width-2; // 2 is a safety margin to prevent some issues with Safari
+      appDim.height = Math.min(Math.round(appDim.width*maxAspectRatio), appDim.main.height - bottomPadding);
       return appDim;
     }
 
@@ -107,7 +110,7 @@
       // calculate width, height, and padding of figure
       width = appDim.width;
       height = appDim.height;
-      padding = {top: 40, right: 27, bottom: 60, left: 60};
+      padding = {top: 40, right: 27, bottom: 60, left: 80};
 
       // set scales
       updateScales(results, configValues);
@@ -121,6 +124,7 @@
 
       // set up background rectangle
       svg.append("rect")
+        .attr("id", "frame")
         .attr("x", padding.left)
         .attr("y", padding.top)
         .attr("width", width - padding.left - padding.right)
@@ -130,6 +134,49 @@
           return tooltipHide();
         })
 
+      // add groups to display targets
+      // group consist of lines and labels
+      var targetGroups = svg.selectAll("g.target")
+        .data([[0],[1],[2]])
+        .enter()
+        .append("g")
+        .attr("id", function(d) { return "target" + d })
+        .classed("target", true)
+        .style("visibility","visible")
+        .on('mouseover', function(d) {
+          return d3.select("#target"+d).select("text").style("visibility","visible");
+        })
+        .on('mouseout', function(d) {
+          return d3.select("#target"+d).select("text").style("visibility","hidden");
+        });
+
+      targetGroups
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", -20)
+        .attr("height", 40)
+        .attr("width", xScale(xMax)-xScale(xMin))
+        .style("fill", "white")
+        .style("fill-opacity", 0.0);
+
+      targetGroups
+        .append("line")
+        .style("stroke", "#000")
+        .style("stroke-width", "1")
+        .style("stroke-dasharray", "5,5")
+        .attr("x1", 0)
+        .attr("x2", xScale(xMax)-xScale(xMin));
+
+      targetGroups
+        .append("text")
+        .attr("dx", xScale(xMax)-xScale(xMin)-85)
+        .attr("dy", -7)
+        .text(function(d) { return "20" + (parseInt(d)+3) + "0 target" })
+        .style("font-size", "15px")
+        .style("visibility", "hidden");
+
+      updateTargets(configValues, false);
+
       // add circle used for animation that is triggered when car is added to highlighted selection
       svg.append("circle")
         .attr("id", "clickAnimationCircle")
@@ -137,59 +184,53 @@
         .attr("fill", "#f00")
         .style('opacity','0.15')
 
-      // add lines that are used to display targets
-      svg.selectAll("line.targets")
-        .data([[0],[1],[2]])
-        .enter()
-        .append("line")
-        .attr("id", function(d) { return "target" + d })
-        .style("stroke", "#dfdfdf")
-        .style("stroke-width", "6")
-        // .style("stroke-dasharray", "5,5")
-        .style("visibility","visible")
-        .on('mouseover', function(d) {
-          var coordinates = [0, 0];
-          coordinates = d3.mouse(this);
-          var x = coordinates[0];
-          return smallTooltipToggle(xScale(xMax)-75, yScale(targets[d]) - 13, "20" + (parseInt(d)+3) + "0 target");
-        })
-        .on('mouseout', function(d) {
-          return smallTooltipToggle();
-        });
-
-      updateTargets(configValues);
-
       // add proxies for the paths that can be used to draw the shaded areas
       // we need to add those here because they have to appear below (i.e., be drawn before) the circles and lines
-      svg.selectAll("path")
+      svg.selectAll("path.shadedArea")
         .data([[0],[1],[2],[3],[4],[5],[6]])
         .enter()
         .append("path")
         .attr("id", function(d) { return "path" + d; })
+        .classed("shadedArea", true)
         .style("visibility", "hidden")
         .style('opacity','0.15')
+        .on('mouseover', function(d) {
+          // highlightHull(d)
+          $timeout(function() {
+            uiInfo.legend[d].highlight = true;
+            $rootScope.$broadcast('uiInfo:changed', uiInfo);
+          })
+        })
+        .on('mouseout', function(d) {
+          // dehighlightHull(d)
+          $timeout(function() {
+            uiInfo.legend[d].highlight = false;
+            $rootScope.$broadcast('uiInfo:changed', uiInfo);
+          })
+        });
 
       // draw shaded areas
       drawShadedAreas(results, configValues, false)
 
       // add proxies for the lines between "linked" points that appear on mouse-over
       // we need to add those here because they have to appear below (i.e., be drawn before) the circles
-      svg.selectAll("line.links")
+      svg.selectAll("line.linkLine")
         .data([[0],[1],[2],[3],[4]])
         .enter()
         .append("line")
-        .attr("class","linkLine")
+        .classed("linkLine", true)
         .attr("id", function(d) { return "line" + d })
         .style("stroke", "#aaa")
         .style("stroke-width", "1.5")
         .style("visibility","hidden");
 
       // create groups that contains circles (data points) and text
-      var groups = svg.selectAll("g")
+      // text is necessary for the 'highlight car' feature
+      var groups = svg.selectAll("g.dataPoint")
         .data(results)
         .enter()
         .append("g")
-        .attr("class", "no-highlight")
+        .classed("dataPoint", true)
         .attr("transform", function(d){return "translate("+Math.round(xScale(d.X))+","+Math.round(yScale(d.Y))+")"})
         .attr("id", function(d) {
           return "circle" + d.Id;
@@ -232,10 +273,10 @@
       groups
         .append("circle")
         .attr("r", function(d) {
-          return getCircleRadius(d, d3.select(this.parentNode).attr("class"), configValues);
+          return getCircleRadius(d, d3.select(this.parentNode).classed("highlight"), configValues);
         })
         .attr("fill", function(d) {
-          return getCircleColor(d, d3.select(this.parentNode).attr("class"), configValues);
+          return getCircleColor(d, d3.select(this.parentNode).classed("highlight"), configValues);
         })
         .style("opacity", "0.8");
 
@@ -243,8 +284,8 @@
       groups
         .append("text")
         .attr("text-anchor", "middle")
-        .attr("dx", function(d){return 0})
-        .attr("dy", function(d){return 5})
+        .attr("dx", 0)
+        .attr("dy", 5)
         .text("")
         .attr("fill", "#fff")
         .style("pointer-events", "none");
@@ -280,7 +321,7 @@
       drawShadedAreas(results, configValues, true)
 
       // update circle groups
-      var group = svg.selectAll("g")
+      var group = svg.selectAll("g.dataPoint")
         .data(results)
         .on('mouseover', function(d) {
           if (controlMode == 'mouse') {
@@ -309,7 +350,7 @@
       group.select("circle")
         .call(animateCircles, configValues)
 
-      updateTargets(configValues);
+      updateTargets(configValues, true);
 
       // finally, plot axes above everything else
       appendAxes(configValues);
@@ -338,10 +379,10 @@
         .transition()
         .duration(transitionSpeed)
           .attr("r", function(d) {
-            return getCircleRadius(d, d3.select(this.parentNode).attr("class"), configValues);
+            return getCircleRadius(d, d3.select(this.parentNode).classed("highlight"), configValues);
           })
           .attr("fill", function(d) {
-            return getCircleColor(d, d3.select(this.parentNode).attr("class"), configValues);
+            return getCircleColor(d, d3.select(this.parentNode).classed("highlight"), configValues);
           });
     }
 
@@ -370,8 +411,8 @@
         xMax = xExtent[1] + xPadding;
         yMax = yExtent[1] + yPadding;
       } else {
-        xMax = configService.getCurrentOptionObject('xAxis').maxLim;
-        yMax = configService.getCurrentOptionObject('yAxis').maxLim;
+        xMax = configService.getCurrentOptionObject('xAxis').maxLim / getUnitConversionFactor(configValues);
+        yMax = configService.getCurrentOptionObject('yAxis').maxLim / getUnitConversionFactor(configValues);
       }
 
       // set up scale of x axis
@@ -415,45 +456,67 @@
     }
 
 
-    function updateTargets(configValues) {
+    function updateTargets(configValues, doAnimate) {
+      // go through each target line
       for (var i = 0; i <= 2; i++) {
         // if y axis is set to total GHG emissions (to which targets apply) and target falls within box
-        if (configValues['yAxis'] == 'ghg_total' && targets[i] > yMin) {
+        if (configValues['yAxis'] == 'ghg_total' && targets[i] / getUnitConversionFactor(configValues) > yMin) {
           var yValue = yScale(targets[i] / getUnitConversionFactor(configValues))
-          // if already visible, directly animate to position
-          if (d3.select("#target"+i).style("visibility") == "visible") {
-            d3.select("#target"+i)
-              .attr("x1", xScale(xMin))
-              .attr("x2", xScale(xMax))
-              .transition()
-              .duration(transitionSpeed)
-              .attr("y1", yValue)
-              .attr("y2", yValue)
+          if (doAnimate == true) {
+            // if already visible, directly animate to position
+            if (d3.select("#target"+i).style("visibility") == "visible") {
+              d3.select("#target"+i)
+                .transition()
+                .duration(transitionSpeed)
+                .attr("transform", "translate("+xScale(xMin)+","+yValue+")")
+            } else {
+              // if not visible already, first set y values to ymin, and then animate to position
+              d3.select("#target"+i)
+                .attr("transform", "translate("+xScale(xMin)+","+yScale(yMin)+")")
+                .style("visibility", "visible")
+                .transition()
+                .duration(transitionSpeed)
+                .attr("transform", "translate("+xScale(xMin)+","+yValue+")")
+            }
           } else {
-            // if not visible already, first set y values to ymin, and then animate to position
             d3.select("#target"+i)
-              .attr("x1", xScale(xMin))
-              .attr("x2", xScale(xMax))
-              .attr("y1", yScale(yMin))
-              .attr("y2", yScale(yMin))
-              .style("visibility", "visible")
-              .transition()
-              .duration(transitionSpeed)
-              .attr("y1", yValue)
-              .attr("y2", yValue)
+              .attr("transform", "translate("+xScale(xMin)+","+yValue+")")
           }
         } else {
-          // if currently visible, directly animate to position
+          // if currently visible
           if (d3.select("#target"+i).style("visibility") == "visible") {
-            d3.select("#target"+i)
-              .transition()
-              .duration(transitionSpeed)
-              .attr("y1", yScale(yMin))
-              .attr("y2", yScale(yMin))
-              .each("end", function(d) { d3.select("#target"+d).style("visibility", "hidden"); });
+            if (doAnimate == true) {
+              d3.select("#target"+i)
+                .transition()
+                .duration(transitionSpeed)
+                .attr("transform", "translate("+xScale(xMin)+","+yValue+")")
+                .each("end", function(d) { console.log(d); d3.select("#target"+d).style("visibility", "hidden"); });
+            } else {
+              d3.select("#target"+i)
+                .style("visibility", "hidden")
+            }
           }
         }
       }
+    }
+
+
+    function getAxisText(configValues, settingsObject) {
+
+      if (settingsObject.hasOwnProperty('unit_si') && settingsObject.hasOwnProperty('unit_us')) {
+        var unit = settingsObject['unit_' + configValues['units']]
+      } else {
+        var unit = settingsObject.unit
+      }
+
+      var label = settingsObject.axis_label;
+
+      if (label.includes('{{unit}}')) {
+        return label.replace('{{unit}}', unit);
+      } else {
+        return label + ' (' + unit + ')';
+      }
+
     }
 
 
@@ -504,36 +567,25 @@
       var xSettings = configService.getCurrentOptionObject('xAxis');
       var ySettings = configService.getCurrentOptionObject('yAxis');
 
-      if (xSettings.hasOwnProperty('unit_si') && xSettings.hasOwnProperty('unit_us')) {
-        var x_unit = xSettings['unit_' + configValues['units']]
-      } else {
-        var x_unit = xSettings.unit
-      }
-
-      if (ySettings.hasOwnProperty('unit_si') && ySettings.hasOwnProperty('unit_us')) {
-        var y_unit = ySettings['unit_' + configValues['units']]
-      } else {
-        var y_unit = ySettings.unit
-      }
-
       svg.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "middle")
         .attr("x", Math.round((width-padding.left-padding.right)/2) + padding.left)
         .attr("y", height - 15)
-        .text(xSettings.title + " in " + x_unit)
-        .style("font-size", "14px");
+        .text(getAxisText(configValues, xSettings))
+        .style("font-size", "15px");
 
       svg.append("text")
         .attr("class", "y label")
         .attr("text-anchor", "middle")
         .attr("x", -Math.round((height-padding.top-padding.bottom)/2) - padding.top)
-        .attr("y", 15)
+        .attr("y", 30)
         .attr("transform", "rotate(-90)")
-        .text(ySettings.title + " in " + y_unit)
-        .style("font-size", "14px");
+        .text(getAxisText(configValues, ySettings))
+        .style("font-size", "15px");
 
     }
+
 
     // draw the shaded areas beneath the group of points belonging to a given category
     function drawShadedAreas(results, configValues, isUpdate) {
@@ -638,21 +690,21 @@
 
 
     // get circle radius
-    function getCircleRadius(d, parentClass, configValues) {
+    function getCircleRadius(d, is_highlight, configValues) {
       if (configValues.area != 'none') {
-        return rScale(Math.sqrt(d.Area)) + (parentClass == 'highlight' ? 2 : 0)
+        return rScale(Math.sqrt(d.Area)) + (is_highlight ? 2 : 0)
       } else {
-        return Math.max(5, Math.round((width+height)/150)) + (parentClass == 'highlight' ? 2 : 0);
+        return Math.max(5, Math.round((width+height)/150)) + (is_highlight ? 2 : 0);
       }
     }
 
 
     // get circle color
-    function getCircleColor(d, parentClass, configValues) {
-      if (parentClass == 'highlight') {
+    function getCircleColor(d, is_highlight, configValues) {
+      if (is_highlight) {
         return '#f00';
       } else {
-        var configValues
+        // var configValues
         return colorsAndStyles.getDataColor(d, configValues);
       }
     }
@@ -698,7 +750,7 @@
       // move around tooltip, and fill with information
       tooltip
         .style("top", Math.round(Y+10)+"px")
-        .style("left", Math.round(X+33)+"px")
+        .style("left", Math.round(X+20)+"px")
         .style("visibility", "visible")
         .on('click', function() {
           return toggleCarOnList(d); 
@@ -723,7 +775,7 @@
         if (!svg.select("#circle" + d.Links[i]).empty()) {
 
           // highlight linked circles
-          if (svg.select("#circle" + d.Links[i]).attr("class") !== "highlight") {
+          if (svg.select("#circle" + d.Links[i]).classed("highlight") == false) {
             svg.select("#circle" + d.Links[i]).select("circle")
               .style("stroke", "#aaa")
               .style("stroke-width", "2");
@@ -751,8 +803,7 @@
       tooltip
           .style("visibility", "hidden");
 
-      //svg.selectAll("g[class=no-highlight]").select("circle")
-      svg.selectAll("g").select("circle")
+      svg.selectAll("g.dataPoint").select("circle")
         .style("stroke-width", "0");
 
       svg.selectAll("line.linkLine")
@@ -789,7 +840,7 @@
 
     function highlightHull(id) {
       svg.select('#path' + id)
-        .style('opacity', '0.35');
+        .style('opacity', '0.3');
     }
 
 
@@ -803,7 +854,7 @@
 
       var configValues = configService.getKeyValuePairs();
 
-      if (svg.select("#circle" + d.Id).attr("class") == "highlight") {
+      if (svg.select("#circle" + d.Id).classed("highlight")) {
         removeCarFromList(d, configValues)
         dehighlightDot(d.Id)
       } else {
@@ -813,13 +864,20 @@
     }
 
 
+    function removeAllCarsFromList() {
+      for (var i = uiInfo.highlightedCars.length; i > 0; i--) {
+        triggerToggleCarOnList(uiInfo.highlightedCars[0]['id'])
+      }
+    }
+
+
     function removeCarFromList(d, configValues) {
 
-      svg.select("#circle" + d.Id).attr("class", "no-highlight");
+      svg.select("#circle" + d.Id).classed("highlight", false);
 
       svg.select("#circle" + d.Id).select("circle")
         .attr("r", function(d) {
-          return getCircleRadius(d, d3.select(this.parentNode).attr("class"), configValues);
+          return getCircleRadius(d, d3.select(this.parentNode).classed("highlight"), configValues);
         })
         .attr("fill", function(d) {
           return colorsAndStyles.getDataColor(d, configValues);
@@ -856,6 +914,7 @@
       animateClick(d.Id)
 
       addHighlightStyle(d.Id, uiInfo.highlightedCars.length+1, configValues)
+      console.log(uiInfo.highlightedCars.length+1)
 
       uiInfo.highlightedCars.push({
         'id': d.Id,
@@ -879,14 +938,14 @@
     // this is triggered both by regular highlight function as well as directly by window-resizing (through renderPlot)
     function addHighlightStyle(id, ui_index, configValues) {
 
-      svg.select("#circle" + id).attr("class", "highlight");
+      svg.select("#circle" + id).classed("highlight", true);
 
       svg.select("#circle" + id).select("circle")
         .attr("r", function(d) {
-          return getCircleRadius(d, d3.select(this.parentNode).attr("class"), configValues);
+          return getCircleRadius(d, d3.select(this.parentNode).classed("highlight"), configValues);
         })
         .attr("fill", function(d) {
-          return getCircleColor(d, d3.select(this.parentNode).attr("class"), configValues)
+          return getCircleColor(d, d3.select(this.parentNode).classed("highlight"), configValues)
         });
 
       svg.select("#circle" + id).select("text")
@@ -908,6 +967,27 @@
         .duration(350)
         .attr("r", 80)
         .each("end", function(d) { svg.select("#clickAnimationCircle").style("visibility", "hidden") });    
+
+    }
+
+
+    function applyTourHighlights(index) {
+
+      // highlight main chart
+      if (index == 2) {
+        d3.select("#frame").style("fill", "#ffcdcc")
+      } else {
+        d3.select("#frame").style("fill", "white")
+      }
+
+      // highlight targets
+      if (index == 4) {
+        d3.selectAll(".target").select("rect").style("fill", "#ffcdcc")
+        d3.selectAll(".target").select("rect").style("fill-opacity", 1.0)
+      } else {
+        d3.selectAll(".target").select("rect").style("fill", "white")
+        d3.selectAll(".target").select("rect").style("fill-opacity", 0.0)
+      }
 
     }
 

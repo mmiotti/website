@@ -22,33 +22,37 @@
 
       axisOptions.push({
           'key': 'costs_msrp',
-          'title': 'Vehicle costs (MSRP minus tax refunds)',
+          'title': 'Vehicle costs',
+          'axis_label': 'Vehicle costs (MSRP in 1000 {{unit}} minus tax refunds)',
           'group': 'Costs',
           'unit': 'US$',
-          'maxLim': 70
+          'maxLim': 70000
       });
 
       axisOptions.push({
           'key': 'costs_fuel',
           'title': 'Fuel costs',
+          'axis_label': 'Fuel costs',
           'group': 'Costs',
           'unit_si': 'US$ / km',
           'unit_us': 'US$ / mile',
-          'maxLim': 0.15
+          'maxLim': 0.3
       });
 
       axisOptions.push({
           'key': 'costs_total',
-          'title': 'User costs (vehicle, fuel, and maintenance)',
+          'title': 'All costs',
+          'axis_label': 'Costs (vehicle, fuel, and maintenance {{unit}})',
           'group': 'Costs',
           'unit_si': 'US$ / km',
           'unit_us': 'US$ / mile',
-          'maxLim': 0.5
+          'maxLim': 0.6
       });
 
       axisOptions.push({
           'key': 'ghg_veh',
-          'title': 'Greenhouse gas emissions (vehicle)',
+          'axis_label': 'Greenhouse gas emissions (vehicle {{unit}})',
+          'title': 'Vehicle emissions',
           'group': 'Greenhouse gas emissions',
           'unit': 'tCO₂eq',
           'maxLim': 20
@@ -56,25 +60,28 @@
 
       axisOptions.push({
           'key': 'ghg_fuel',
-          'title': 'Greenhouse gas emissions (fuel)',
+          'axis_label': 'Greenhouse gas emissions (fuel {{unit}})',
+          'title': 'Fuel emissions',
           'group': 'Greenhouse gas emissions',
           'unit_si': 'gCO₂eq / km',
           'unit_us': 'gCO₂eq / mile',
-          'maxLim': 500
+          'maxLim': 800
       });
 
       axisOptions.push({
           'key': 'ghg_total',
-          'title': 'Greenhouse gas emissions (lifecycle)',
+          'axis_label': 'Greenhouse gas emissions (lifecycle {{unit}})',
+          'title': 'Lifecycle emissions',
           'group': 'Greenhouse gas emissions',
           'unit_si': 'gCO₂eq / km',
           'unit_us': 'gCO₂eq / mile',
-          'maxLim': 500
+          'maxLim': 800
       });
 
       axisOptions.push({
           'key': 'sales',
           'title': 'Sales',
+          'axis_label': 'Sales',
           'group': 'Other',
           'unit': 'units sold in 2014',
           'maxLim': 800000
@@ -82,17 +89,19 @@
 
       axisOptions.push({
           'key': 'horsepower',
-          'title': 'Horsepower',
+          'title': 'Power',
+          'axis_label': 'Power',
           'group': 'Other',
-          'unit': 'HP',
+          'unit': 'hp',
           'maxLim': 400
       });
 
       axisOptions.push({
           'key': 'power_to_weight',
-          'title': 'Power-to-weight Ratio',
+          'title': 'Power-to-weight ratio',
+          'axis_label': 'Power-to-weight ratio',
           'group': 'Other',
-          'unit': 'HP/kg',
+          'unit': 'hp/kg',
           'maxLim': 0.25
       });
 
@@ -109,7 +118,7 @@
           'isSelect': true,
           'key': 'xAxis',
           'default': 'costs_total',
-          'title': 'X-Axis',
+          'title': 'X-axis',
           'options': axisOptions
       });
 
@@ -117,7 +126,7 @@
           'isSelect': true,
           'key': 'yAxis',
           'default': 'ghg_total',
-          'title': 'Y-Axis',
+          'title': 'Y-axis',
           'options': axisOptions
       });
 
@@ -175,7 +184,7 @@
           'isSelect': true,
           'key': 'axisLimits',
           'default': 'dynamic',
-          'title': 'Axis Limits',
+          'title': 'Axis limits',
           'options': [
               {
                   'key': 'dynamic',
@@ -183,11 +192,11 @@
               },
               {
                   'key': 'hybrid',
-                  'title': 'Fixed lower limits (at 0)'
+                  'title': 'Lower limits fixed at 0'
               },
               {
                   'key': 'fixed',
-                  'title': 'Fixed'
+                  'title': 'Lower and upper limits fixed'
               }
           ]
       });
@@ -196,7 +205,8 @@
           'isSelect': true,
           'key': 'legendColorField',
           'default': 'Combined_Type',
-          'title': 'Circle Colors',
+          'title': 'Circle colors',
+          'help': 'To see the corresponding legend, go to the \'Main Panel\'',
           'options': [
               {
                   'key': 'Combined_Type',
@@ -267,7 +277,7 @@
               },
               {
                   'key': 'state',
-                  'title': 'Best State (e.g. CA)'
+                  'title': 'Best state (e.g. CA)'
               },
               {
                   'key': 'federal',
@@ -275,7 +285,7 @@
               },
               {
                   'key': 'both',
-                  'title': 'Federal and State'
+                  'title': 'Federal and best state'
               }
           ]
       });
@@ -283,7 +293,7 @@
       conditions.push({
         isSlider: true,
         key: "price_Gasoline",
-        title: "Gasoline Price",
+        title: "Gasoline price",
         help: "The price of non-premium gasoline in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $4.47/gallon, the lowest monthly average $1.86/gallon.",
         min: 1,
         max: 9,
@@ -295,7 +305,7 @@
       conditions.push({
         isSlider: true,
         key: "price_Diesel",
-        title: "Diesel Price",
+        title: "Diesel price",
         help: "The price of diesel in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $5.17/gallon, the lowest monthly average $1.94/gallon.",
         min: 1,
         max: 9,
@@ -307,7 +317,7 @@
       conditions.push({
         isSlider: true,
         key: "price_Electricity",
-        title: "El. Price",
+        title: "Electricity price",
         help: "The price of electricity at the outlet in cents / kWh. The highest monthly inflation-corrected average during the past 10 years was 13.3 cents / kWh, the lowest monthly average was 10.3 cents / kWh.",
         min: 0,
         max: 30,
@@ -319,7 +329,7 @@
       conditions.push({
         isSlider: true,
         key: "electricity_ghg_veh",
-        title: "El. Prod.",
+        title: "Electricity (industrial)",
         help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
         min: 0,
         max: 1000,
@@ -331,7 +341,7 @@
       conditions.push({
         isSlider: true,
         key: "electricity_ghg_fuel",
-        title: "El. Charge",
+        title: "Electricity (charging)",
         help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
         min: 0,
         max: 1000,
@@ -343,7 +353,7 @@
       conditions.push({
         isSlider: true,
         key: "price_H2",
-        title: "Hydrogen Price",
+        title: "Hydrogen price",
         help: "The price of hydrogen in $ / kg.",
         min: 0,
         max: 12,
@@ -380,7 +390,7 @@
       patterns.push({
         isSlider: true,
         key: "cityshare",
-        title: "City driving",
+        title: "City driving share",
         help: "The fraction of the distance that is driven in the EPA city cycle (as opposed to the EPA highway cycle) in %",
         min: 0,
         max: 100,
@@ -437,13 +447,13 @@
       patterns.push({
           isSlider: true,
           key: "distance_per_year",
-          title: "Annual dist.",
+          title: "Annual driving dist.",
           help: "Annual driving distance in 1000 miles.",
           min: 4,
           max: 18,
           default: 11,
           stepSize: 1,
-          unit: "1000mi"
+          unit: "1000 miles"
       });
 
       /*patterns.push({
@@ -460,7 +470,7 @@
       patterns.push({
           isSlider: true,
           key: "cd_share",
-          title: "PHEV utility",
+          title: "PHEV utility factor",
           help: "Fraction of distance that PHEV drive in charge-depleting (CD) mode (using electricity).",
           min: 0,
           max: 100,
@@ -477,47 +487,47 @@
 
       var filters = [];
 
-      filters.push({
-        'isSelect': true,
-        'key': 'modelFilter',
-        'default': 'similar-extreme',
-        'title': 'Models shown',
-        'options': [
-          {
-              'key': 'all',
-              'title': 'Show all'
-          },
-          {
-              'key': 'similar',
-              'title': 'Hide similar'
-          },
-          {
-              'key': 'similar-extreme',
-              'title': 'Hide similar and extreme'
-          },
-          {
-              'key': 'similar-extreme-plus',
-              'title': 'Hide similar and extreme (more)'
-          },
-        ]
-      });
+      // filters.push({
+      //   'isSelect': true,
+      //   'key': 'modelFilter',
+      //   'default': 'similar-extreme',
+      //   'title': 'Models shown',
+      //   'options': [
+      //     {
+      //         'key': 'all',
+      //         'title': 'Show all'
+      //     },
+      //     {
+      //         'key': 'similar',
+      //         'title': 'Hide similar'
+      //     },
+      //     {
+      //         'key': 'similar-extreme',
+      //         'title': 'Hide similar and extreme'
+      //     },
+      //     {
+      //         'key': 'similar-extreme-plus',
+      //         'title': 'Hide similar and extreme (more)'
+      //     },
+      //   ]
+      // });
 
-      filters.push({
-        'isSelect': true,
-        'key': 'highlightFilter',
-        'default': 'none',
-        'title': 'Filter not Highlighted',
-        'options': [
-          {
-              'key': 'none',
-              'title': 'No'
-          },
-          {
-              'key': 'highlight',
-              'title': 'Yes'
-          }
-        ]
-      });
+      // filters.push({
+      //   'isSelect': true,
+      //   'key': 'highlightFilter',
+      //   'default': 'none',
+      //   'title': 'Filter not highlighted',
+      //   'options': [
+      //     {
+      //         'key': 'none',
+      //         'title': 'No'
+      //     },
+      //     {
+      //         'key': 'highlight',
+      //         'title': 'Yes'
+      //     }
+      //   ]
+      // });
 
       filters.push({
         'isSelect': true,
@@ -597,7 +607,7 @@
           },
           {
               'key': 'suv',
-              'title': 'SUV'
+              'title': 'SUV/CUV'
           },
           {
               'key': 'pickup',

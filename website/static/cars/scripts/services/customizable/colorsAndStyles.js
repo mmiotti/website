@@ -114,6 +114,7 @@
             'color': dataColors[configValues.legendColorField][key],
             'id': id,
             'key': key,
+            'highlight': false
           })
           id++
         }

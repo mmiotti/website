@@ -78,6 +78,10 @@
         'settings': {}
       },
       {
+        'title': 'What does this tell us?',
+        'settings': {}
+      },
+      {
         'title': 'Current fuel prices',
         'settings': {
           'price_Gasoline': 2.1,
@@ -95,6 +99,12 @@
       {
         'title': 'Back to default',
         'settings': {}
+      },
+      {
+        'title': 'More tax refunds',
+        'settings': {
+          'refunds': 'both'
+        }
       },
       {
         'title': 'No tax refunds',
@@ -130,6 +140,7 @@
         $scope.tour.index = 0;
       }
       $scope.updateTourBox()
+      d3PlotService.applyTourHighlights($scope.tour.index);
     }
 
     $scope.tourPrev = function() {
@@ -149,21 +160,26 @@
       if ($scope.tour_data[$scope.tour.index].hasOwnProperty('settings')) {
         configService.applySettingsByKey($scope.tour_data[$scope.tour.index]['settings'], true);
       }
+      d3PlotService.applyTourHighlights($scope.tour.index);
+    }
+
+    $scope.setControlMode = function(value) {
+      configService.applySettingByKey('controlMode', value);
+    }
+
+    $scope.getControlMode = function() {
+      return configService.getSettingObject('controlMode').value;
+    }
+
+    $scope.resetAll = function() {
+      configService.applySettingsByKey({}, true);
+      if ($scope.tour.active == true) {
+        $scope.toggleTour();
+      }
+      d3PlotService.removeAllCarsFromList();
     }
 
     $scope.updateTourBox();
-
-    // $scope.applyQuickSettings = function(quicksettings_key) {
-    //   for (var i = 0; i < $scope.quickSettings.length; i++) {
-    //     if ($scope.quickSettings[i]['key'] == quicksettings_key) {
-    //       for (var j = 0; j < $scope.quickSettings[i]['settings'].length; j++) {
-    //         configService.applySettingByKey($scope.quickSettings[i]['settings'][j]['key'],
-    //           $scope.quickSettings[i]['settings'][j]['value'])
-    //       }
-    //       break;
-    //     }
-    //   }
-    // }
 
     $scope.changeTab = function(tab_name) {
       $scope.tab = tab_name;
