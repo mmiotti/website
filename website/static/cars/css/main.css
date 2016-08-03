@@ -532,6 +532,16 @@ button.empty_store {
 	margin-top: -1px;
 }
 
+.legend-dot.average {
+	width: 10px;
+	height: 10px;
+	border: 2px solid #000;
+	border-radius: 5px;
+	margin-left: 3px;
+	margin-right: 11px;
+	margin-top: 2px;
+}
+
 #credits_tab p {
 	line-height: 1.4em;
 }

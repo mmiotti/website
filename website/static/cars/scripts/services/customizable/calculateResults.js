@@ -28,8 +28,14 @@
 
       // loop through raw data and get results (data to plot)
     	var results = [];
+      var x, y;
+      var x_weighted = 0;
+      var y_weighted = 0;
+      var weight_sum = 0;
 
     	data.veh.forEach(function(item) {
+        x = calculateValueWrapper('xAxis', item);
+        y = calculateValueWrapper('yAxis', item);
     		results.push({
     			Make:  item.Make,
           Model:  item.Model,
@@ -43,11 +49,32 @@
           Sales: +item.Sales,
           Links: item.Links,
           Id: item.Id,
-    			X: calculateValueWrapper('xAxis', item),
-    			Y: calculateValueWrapper('yAxis', item),
+    			X: x,
+    			Y: y,
     			Area: configValues.area !== 'none' ? calculateValue('area', item) : 0,
     		});
+        x_weighted += x * item.Sales;
+        y_weighted += y * item.Sales;
+        weight_sum += (+item.Sales);
     	});
+
+      results.push({
+        Make: 'Average',
+        Model: 'of all cars shown',
+        Suffix: '',
+        Trim: '',
+        Class: 'Average',
+        Subclass: '',
+        Combined_Type: 'Average',
+        Powertrain: 'Average',
+        Horsepower: '',
+        Sales: 0,
+        Links: [],
+        Id: 'avg',
+        X: x_weighted/weight_sum,
+        Y: y_weighted/weight_sum,
+        Area: configValues.area !== 'none' ? calculateValue('area', item) : 0,
+      });
 
     	return results;
 

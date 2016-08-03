@@ -16,12 +16,14 @@
         'PHEV': '#a7052b',
         'BEV': '#f7cb00',
         'FCV': '#489fe1',
+        'Average': '#fff',
       },
       'Subclass': {
         'Subcompact': '#bbd8ff',
         'Compact': '#4c86d5',
         'Mid-size': '#0d2e5a',
         'Full-size': '#00050b',
+        'Average': '#fff',
       },
       // 'Class': {
       //   'Sedan/Hatchback': '#8cb6ef',
@@ -36,6 +38,7 @@
         'SUV': '#1f5093',
         'Pickup': '#8b8b8b',
         'Minivan': '#000000',
+        'Average': '#fff',
       },
     };
 

@@ -299,7 +299,7 @@
         max: 9,
         default: 3.1,
         stepSize: 0.1,
-        unit: "$/gal"
+        unit: "$/gallon"
       });
 
       conditions.push({
@@ -311,7 +311,7 @@
         max: 9,
         default: 3.3,
         stepSize: 0.1,
-        unit: "$/gal"
+        unit: "$/gallon"
       });
 
       conditions.push({
@@ -323,7 +323,7 @@
         max: 30,
         default: 12,
         stepSize: 1,
-        unit: "$/kWh"
+        unit: "¢/kWh"
       });
 
       conditions.push({

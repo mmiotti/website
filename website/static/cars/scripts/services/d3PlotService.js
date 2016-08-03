@@ -196,17 +196,11 @@
         .style('opacity','0.15')
         .on('mouseover', function(d) {
           // highlightHull(d)
-          $timeout(function() {
-            uiInfo.legend[d].highlight = true;
-            $rootScope.$broadcast('uiInfo:changed', uiInfo);
-          })
+          toggleLegendHighlight(d, true)
         })
         .on('mouseout', function(d) {
           // dehighlightHull(d)
-          $timeout(function() {
-            uiInfo.legend[d].highlight = false;
-            $rootScope.$broadcast('uiInfo:changed', uiInfo);
-          })
+          toggleLegendHighlight(d, false)
         });
 
       // draw shaded areas
@@ -237,14 +231,16 @@
         })
         .on('mouseover', function(d) {
           if (controlMode == 'mouse') {
-            return tooltipShow(xScale(d.X), yScale(d.Y), d);
+            toggleLegendHighlight(getLegendIndexByKey(d[configValues.legendColorField]), true)
+            tooltipShow(xScale(d.X), yScale(d.Y), d);
           } else {
             return;
           }
         })
         .on('mouseout', function(d) {
           if (controlMode == 'mouse') {
-            return tooltipHide();
+            toggleLegendHighlight(getLegendIndexByKey(d[configValues.legendColorField]), false)
+            tooltipHide();
           } else {
             return;
           }
@@ -290,6 +286,11 @@
         .attr("fill", "#fff")
         .style("pointer-events", "none");
 
+      svg.select('#circleavg')
+        // .attr('class', 'dataPointAvg')
+        .style('stroke-width','2px')
+        .style('stroke','#000')
+
       for (var i = 0; i < uiInfo.highlightedCars.length; i++) {
         addHighlightStyle(uiInfo.highlightedCars[i]['id'], i+1, configValues)
       }
@@ -302,6 +303,30 @@
         $rootScope.$broadcast('uiInfo:changed', uiInfo);
       })
 
+    }
+
+
+    function toggleLegendHighlight(index, value) {
+      if (index >= 0) {
+        $timeout(function() {
+          uiInfo.legend[index].highlight = value;
+          $rootScope.$broadcast('uiInfo:changed', uiInfo);
+        })
+      }
+    }
+
+
+    // returns the index (0, 1, 2...) of a legend item by the legend key
+    function getLegendIndexByKey(key) {
+      var index = -1;
+      uiInfo.legend.some(function(item) {
+        if (item.key == key) {
+          index = item.id;
+          return false;
+        }
+
+      })
+      return index;
     }
 
 
@@ -325,14 +350,16 @@
         .data(results)
         .on('mouseover', function(d) {
           if (controlMode == 'mouse') {
-            return tooltipShow(xScale(d.X), yScale(d.Y), d);
+            toggleLegendHighlight(getLegendIndexByKey(d[configValues.legendColorField]), true)
+            tooltipShow(xScale(d.X), yScale(d.Y), d);
           } else {
             return;
           }
         })
         .on('mouseout', function(d) {
           if (controlMode == 'mouse') {
-            return tooltipHide();
+            toggleLegendHighlight(getLegendIndexByKey(d[configValues.legendColorField]), false)
+            tooltipHide();
           } else {
             return;
           }
@@ -489,8 +516,8 @@
               d3.select("#target"+i)
                 .transition()
                 .duration(transitionSpeed)
-                .attr("transform", "translate("+xScale(xMin)+","+yValue+")")
-                .each("end", function(d) { console.log(d); d3.select("#target"+d).style("visibility", "hidden"); });
+                .attr("transform", "translate("+xScale(xMin)+","+yScale(yMin)+")")
+                .each("end", function(d) { d3.select("#target"+d).style("visibility", "hidden"); });
             } else {
               d3.select("#target"+i)
                 .style("visibility", "hidden")
@@ -605,16 +632,17 @@
           // if hull is part of legend
           if (i < legend.length) {
             colorKey = legend[i]['key']
-            pathId = legend[i]['id']
-            hull = convexHullService.calculateHull(results, configValues, colorKey);
+            // pathId = legend[i]['id']
+            pathId = i
+            hull = convexHullService.calculateHull(results, configValues, colorKey);          
           // otherwise, make hull empty (and make path invisible below)
           } else {
             hull = []
+            pathId = i
           }
 
           // draw area if at least three points are in hull
           if (hull.length >= 3) {     
-
             // initial draw (no transitions)
             if (isUpdate == false) {
               updateShadedAreaWithoutAnimation(pathId, hull, colorKey, configValues);
@@ -628,10 +656,8 @@
 
           // if hull consists of fewer than three points, hide area
           } else {
-
             svg.select('#path' + pathId)
               .style("visibility","hidden");
-
           }
 
         }
@@ -639,7 +665,7 @@
       } else {
 
         // disable all paths (i.e., all shaded areas)
-        svg.selectAll("path")
+        svg.selectAll("path.shadedArea")
           .style("visibility","hidden");
 
       }
@@ -648,20 +674,18 @@
 
 
     function updateShadedAreaWithoutAnimation(pathId, hull, colorKey, configValues) {
-
       svg.select('#path' + pathId)
         .attr("colorkey", colorKey)
         .attr('d', function(d) {
           return d3cardinalLine(hull) + 'Z'
         })
-        .style('fill',colorsAndStyles.getDataColorByKey(colorKey, configValues))
+        .style('fill', colorsAndStyles.getDataColorByKey(colorKey, configValues))
         .style("visibility","visible");
 
     }
 
 
     function updateShadedAreaAnimatingColor(pathId, hull, colorKey, configValues) {
-
       svg.select('#path' + pathId)
         .transition()
         .duration(transitionSpeed)
@@ -670,12 +694,10 @@
           return d3cardinalLine(hull) + 'Z'
         })
         .style('fill',colorsAndStyles.getDataColorByKey(colorKey, configValues))
-
     }
 
 
     function updateShadedAreaAnimatingVisibility(pathId, hull, colorKey, configValues) {
-     
       svg.select('#path' + pathId)
         .attr("colorkey", colorKey)
         .attr('d', function(d) {
@@ -685,12 +707,14 @@
         .transition()
         .duration(transitionSpeed)
         .style("visibility","visible");
-
     }
 
 
     // get circle radius
     function getCircleRadius(d, is_highlight, configValues) {
+      if (d.Id == 'avg') {
+        return 6;
+      }
       if (configValues.area != 'none') {
         return rScale(Math.sqrt(d.Area)) + (is_highlight ? 2 : 0)
       } else {
@@ -743,9 +767,11 @@
       var cx, cy;
 
       // highlight the circle that is selected
-      svg.select("#circle" + d.Id).select("circle")
-        .style("stroke", "#aaa")
-        .style("stroke-width", "2");
+      if (d.Id != 'avg') {
+        svg.select("#circle" + d.Id).select("circle")
+          .style("stroke", "#aaa")
+          .style("stroke-width", "2");
+      }
 
       // move around tooltip, and fill with information
       tooltip
@@ -763,10 +789,10 @@
         .text(d.Suffix + " " + d.Trim);
 
       tooltipInfoFirst
-        .text(d.Subclass + " " + d.Class);
+        .text(d.Id != 'avg' ? d.Subclass + " " + d.Class : '');
 
       tooltipInfoSecond
-        .text(d.Horsepower + " HP | " + d.Sales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'") + " Units Sold");
+        .text(d.Id != 'avg' ? d.Horsepower + " HP | " + d.Sales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'") + " Units Sold" : '');
         
       // for each circle that is "linked" to the one currently selected...
       for (var i = 0; i < d.Links.length; i++) {
@@ -804,6 +830,7 @@
           .style("visibility", "hidden");
 
       svg.selectAll("g.dataPoint").select("circle")
+        .filter(function(d) { return (d.Id !== 'avg')})
         .style("stroke-width", "0");
 
       svg.selectAll("line.linkLine")
@@ -914,7 +941,6 @@
       animateClick(d.Id)
 
       addHighlightStyle(d.Id, uiInfo.highlightedCars.length+1, configValues)
-      console.log(uiInfo.highlightedCars.length+1)
 
       uiInfo.highlightedCars.push({
         'id': d.Id,
