@@ -59,8 +59,8 @@
     	});
 
       results.push({
-        Make: 'Average',
-        Model: 'of all cars shown',
+        Make: 'Sales-weighted average',
+        Model: '',
         Suffix: '',
         Trim: '',
         Class: 'Average',
