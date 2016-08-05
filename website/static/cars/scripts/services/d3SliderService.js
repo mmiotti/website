@@ -32,32 +32,37 @@
           width = 150 - margin.left - margin.right,
           height = 40 - margin.bottom - margin.top;
 
+      // make 'this' available inside mouseover/mouseot and inside brushed()
+      var self = this;
+
+      // set up scale
       this.x = d3.scale.linear()
           .domain([condition.min, condition.max])
           .range([0, width])
           .clamp(true);
 
+      // set up brush framework, and trigger function brushed() on brush event
       this.brush = d3.svg.brush()
           .x(this.x)
           .extent([0, 0])
           .on("brush", brushed);
 
+      // set up svg
       this.svg = d3.select(element)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .on("mouseover", function(d) {
-          return that.svg.selectAll("text").style("visibility", "visible");
+          return self.svg.selectAll("text").style("visibility", "visible");
         })
         .on("mouseout", function(d) {
-          return that.svg.selectAll("text").style("visibility", "hidden");
+          return self.svg.selectAll("text").style("visibility", "hidden");
         })
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .style("cursor","default");
 
-      var that = this;
-
+      // append ticks
       this.svg.append("g")
           .attr("class", "x sliderAxis")
           .attr("transform", "translate(0," + 14 + ")")
@@ -71,6 +76,7 @@
         .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
           .attr("class", "halo");
 
+      // hide tick text
       this.svg.selectAll("text")
         .style("visibility", "hidden");
 
@@ -92,26 +98,19 @@
           .attr("transform", "translate(0," + 14 + ")")
           .attr("r", 9);
 
-      // make this available inside brushed()
-      var self = this;
-
+      // set value according to new location, and broadcast value to let slider directive know
       function brushed() {
 
         self.value = self.brush.extent()[0];
 
-
         // if not a programmatic event, update value to mouse position
         if (d3.event.sourceEvent) {
-
           self.value = self.x.invert(d3.mouse(this)[0]);
-
           // round value to nearest step. first, substract minimum value, then add that value again (after rounding). elegant, eh?
           if (condition.roundTo > 0) {
             self.value = Math.round((self.value-condition.min)/condition.roundTo)*condition.roundTo+condition.min;
           }
-
           self.brush.extent([self.value, self.value]);
-
         }
 
         self.handle.attr("cx", self.x(self.value));

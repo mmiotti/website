@@ -2,11 +2,11 @@
   'use strict';
 
   angular.module('interactiveCostCarbonApp')
-    .controller('mainCtrl', ['$scope', '$window', 'configService', 'dataService', 'd3PlotService', mainCtrl]);
+    .controller('mainCtrl', ['$scope', '$window', 'configService', 'dataService', 'mainPlot', 'tourInfo', mainCtrl]);
 
   // the main controller handles storing and loading settings, as well as downloading the svg as an image
   // other controller functions are part of the directives (costCarbonSpace and configSlider)
-  function mainCtrl($scope, $window, configService, dataService, d3PlotService) {
+  function mainCtrl($scope, $window, configService, dataService, mainPlot, tourInfo) {
 
     // initiate settings
     $scope.settings = configService.getSettings();
@@ -14,175 +14,128 @@
     // set initial tab
     $scope.tab = 'legend';
 
+    // when data is loaded, get vehicle list (used for search feature)
     $scope.$on('data:loaded', function(event) {
       $scope.vehicleList = dataService.getVehicleList();
     });
 
+    // check if list should be shown (search field is non-empty and has at least 2 characters)
     $scope.showList = function() {
       return ($scope.search && $scope.search.length >= 2);
     }
 
-    $scope.highlight = function(id) {
-      d3PlotService.triggerToggleCarOnList(id);
-    }
-
-    $scope.highlightDot = function(id) {
-      d3PlotService.highlightDot(id);
-    }
-
-    $scope.dehighlightDot = function(id) {
-      d3PlotService.dehighlightDot(id);
-    }
-
-    $scope.highlightHull = function(id) {
-      d3PlotService.highlightHull(id);
-    }
-
-    $scope.dehighlightHull = function(id) {
-      d3PlotService.dehighlightHull(id);
-    }
-
+    // clear search field
     $scope.clearSearch = function() {
       $scope.search = '';
     }
 
+    // add or remove entry from list of higlighted cars
+    $scope.toggleHighlight = function(id) {
+      mainPlot.triggerToggleCarOnList(id);
+    }
+
+    // highlight a car (that is in list of higlighted cars) in plot area
+    $scope.highlightDot = function(id) {
+      mainPlot.highlightDot(id);
+    }
+
+    // dehighlight a car (that is in list of higlighted cars) in plot area
+    $scope.dehighlightDot = function(id) {
+      mainPlot.dehighlightDot(id);
+    }
+
+    // highlight hull in plot area
+    $scope.highlightHull = function(id) {
+      mainPlot.highlightHull(id);
+    }
+
+    // dehighlight hull in plot area
+    $scope.dehighlightHull = function(id) {
+      mainPlot.dehighlightHull(id);
+    }
+
+    // set a specific control mode (mouse or touch)
+    $scope.setControlMode = function(value) {
+      configService.applySettingByKey('controlMode', value);
+    }
+
+    // get current control mode (used for setting highlight class in template)
+    $scope.getControlMode = function() {
+      return configService.getSettingObject('controlMode').value;
+    }
+
+    // reset all values
+    $scope.resetAll = function() {
+      configService.applySettingsByKey({}, true);
+      if ($scope.tour.active == true) {
+        $scope.toggleTour();
+      }
+      mainPlot.removeAllCarsFromList();
+    }
+
+    // change tab
+    $scope.changeTab = function(tab_name) {
+      $scope.tab = tab_name;
+    }
+
+    // set up tour object
     $scope.tour = {
       'title': '',
       'active': false,
       'index': 0,
-      'text': ''
     }
 
-    $scope.tour_data = [
-      {
-        'title': 'New here? Take the Tour!',
-      },
-      {
-        'title': 'New here? Take the Tour!',
-        'settings': {}
-      },
-      {
-        'title': 'The plot area',
-        'settings': {}
-      },
-      {
-        'title': 'The axes',
-        'settings': {}
-      },
-      {
-        'title': 'The targets',
-        'settings': {}
-      },
-      {
-        'title': 'Average conditions',
-        'settings': {}
-      },
-      {
-        'title': 'What does this tell us?',
-        'settings': {}
-      },
-      {
-        'title': 'Current fuel prices',
-        'settings': {
-          'price_Gasoline': 2.1,
-          'price_Diesel': 2.1
-        }
-      },
-      {
-        'title': 'Cleaner electricity',
-        'settings': {
-          'price_Gasoline': 2.1,
-          'price_Diesel': 2.1,
-          'electricity_ghg_fuel': 300,
-        }
-      },
-      {
-        'title': 'Back to default',
-        'settings': {}
-      },
-      {
-        'title': 'More tax refunds',
-        'settings': {
-          'refunds': 'both'
-        }
-      },
-      {
-        'title': 'No tax refunds',
-        'settings': {
-          'refunds': 'none'
-        }
-      },
-      {
-        'title': 'Filter by vehicle class',
-        'settings': {
-          'refunds': 'none',
-          'sizeFilter': 'compact',
-          'typeFilter': 'sedan',
-        }
-      },
-      {
-        'title': 'Done - but there\'s much more!',
-        'settings': {}
-      },
-    ]
+    // fetch tour data
+    $scope.tour_data = tourInfo.getTourData();
 
+    // update tour box (only update title text, for now)
     $scope.updateTourBox = function() {
       $scope.tour.title = $scope.tour_data[$scope.tour.index]['title'];
-      $scope.tour.text = $scope.tour_data[$scope.tour.index]['text'];
     }
 
+    $scope.updateTourBox();
+
+    // toggle tour (switch on or off)
     $scope.toggleTour = function() {
+      // if on/true, set to false. if off/false, set to true
       $scope.tour.active = ($scope.tour.active === false);
+      // if we're switching on, set index to 1. otherwise, set to 0
       if ($scope.tour.active == true) {
         $scope.tour.index = 1;
-      }
-      if ($scope.tour.active == false) {
+      } else {
         $scope.tour.index = 0;
       }
       $scope.updateTourBox()
-      d3PlotService.applyTourHighlights($scope.tour.index);
+      // trigger style changes in plot area
+      mainPlot.applyTourHighlights($scope.tour.index);
     }
 
+    // to go previous step of tour
     $scope.tourPrev = function() {
       $scope.tour.index = $scope.tour.index - 1;
       $scope.updateTourBox()
       $scope.applyTourStatus()
     }
 
+    // go to next step of tour
     $scope.tourNext = function() {
       $scope.tour.index = $scope.tour.index + 1;
       $scope.updateTourBox()
       $scope.applyTourStatus()
     }
 
+    // apply current tour status
     $scope.applyTourStatus = function(index) {
-      $scope.appDim = d3PlotService.getAppDimensions();
+      // update app dimensions (used for some of the highlight boxes in template)
+      // note: there are highlight features box in the template (through $scope) as well as in the plot area (through mainPlot)
+      $scope.appDim = mainPlot.getAppDimensions();
+      // set parameters
       if ($scope.tour_data[$scope.tour.index].hasOwnProperty('settings')) {
         configService.applySettingsByKey($scope.tour_data[$scope.tour.index]['settings'], true);
       }
-      d3PlotService.applyTourHighlights($scope.tour.index);
-    }
-
-    $scope.setControlMode = function(value) {
-      configService.applySettingByKey('controlMode', value);
-    }
-
-    $scope.getControlMode = function() {
-      return configService.getSettingObject('controlMode').value;
-    }
-
-    $scope.resetAll = function() {
-      configService.applySettingsByKey({}, true);
-      if ($scope.tour.active == true) {
-        $scope.toggleTour();
-      }
-      d3PlotService.removeAllCarsFromList();
-    }
-
-    $scope.updateTourBox();
-
-    $scope.changeTab = function(tab_name) {
-      $scope.tab = tab_name;
+      // trigger style changes in plot area
+      // note: there are highlight features box in the template (through $scope) as well as in the plot area (through mainPlot)
+      mainPlot.applyTourHighlights($scope.tour.index);
     }
 
   }

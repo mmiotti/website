@@ -14,7 +14,7 @@
         <div id="headerbar">
             <div id="headerbar-innerwrapper">
                 <div id="headerbar-logo">
-                    <span id="logo-title">My<span style="color: #a8df66;">Green</span>Car</span> <span id="logo-version">– 0.2.0</span>
+                    <span id="logo-title">My<span style="color: #a8df66;">Green</span>Car</span> <span id="logo-version">– 0.3.1</span>
                 </div>
 
                 <div id="headerbar-controlmenu">
@@ -52,19 +52,19 @@
                     <span id="tourbox_progress"><span id="tourbox_progress_inner" ng-style="{width: (tour.index-1)*100/(tour_data.length-2)+'%'}"></span></span>
                     <a id="tourbox_prev" ng-click="tourPrev()" ng-show="tour.index > 1">&lt; Previous</a>
                     <a id="tourbox_next" ng-click="tourNext()" ng-show="tour.index < tour_data.length - 1">Next &gt;</a>
-                    <span class="tourbox_text" ng-if="tour.index == 1">This tour will take your through the basics of the MyGreenCar web app. <span class="highlight">To start, click the 'Next &gt;' button</span> below.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 2">The plot area shows more than 100 popular new car models sold in the U.S. in 2014, plus some future ones. You can <span class="highlight">move your mouse (touch control mode: finger) over each point</span> to get more information. If you do that, you'll sometimes see <span class="highlight">grey lines</span> connecting the car to others; these lines indicate other versions (trims) of the same model. The car <span class="highlight">colors</span> represent different technologies, as indicated by the legend below. The <span class="highlight">shaded areas</span> encompass all cars of a given technology.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 3">The <span class="highlight">x axis</span> represents the combined costs of the vehicle purchasing price (minus federal tax refunds where applicable), fuel or charging costs, and regular maintenance costs, broken down on each mile driven. The <span class="highlight">y axis</span> represents the greenhouse gas emissions per mile driven, including emissions from the production and distribution of the fuel and of the car itself.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 4">In the lower area of the chart, you will notice some <span class="highlight">horizontal lines</span>. These represent <span class="highlight">greenhouse gas emission targets</span> that are estimated to be consistent with the goal of limiting the global mean temperature increase to 2°C. Moving your mouse (touch control mode: finger) over a target will tell you which year it corresponds to.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 5">The result you see on the left corresponds to the <span class="highlight">default parameter values</span>. The default parameter values are set to represent the <span class="highlight">average U.S.</span> driving behavior, the average U.S. electricity mix, and 10-year average fuel and electricity prices for the U.S.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 6">We note that <span class="highlight">all cars with alternative powertrains emit less</span> than their gasoline combustion engine counterparts. The emission savings can be 30% and more. However, <span class="highlight">no car reaches the 2040 target</span>. We also see that electric vehicles are not more expensive, and sometimes even cheaper, than gasoline powered cars. This is in part because of federal tax refunds of up to $7,500 per car, and in part because <span class="highlight">electric vehicles have low fuel and maintenance costs</span>.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 7">With the <span class="highlight">current (May 2016), relatively low gasoline and diesel prices</span>, gasoline powererd cars looks slightly better in comparison when compared to hybrid and electric cars. The difference compared to the default values is not that large, however. Tipp: switch back between 10-year average and current fuel prices by using the 'Previous' and 'Next' buttons below.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 8">The average kWh produced in California emits less than half of the greenhouse gas emissions than the average kWh in the U.S., and it shows. If we apply a <span class="highlight">relatively clean electricity mix</span>, such as the one found in California, the advantage in emissions of electric vehicles becomes much larger. <span class="highlight">Electric vehicles now surpass the 2040 target</span>.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 1">This tour will take your through the basics of the MyGreenCar web app. <span class="highlight">To start, click 'Next'</span> below.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 2">The plot area shows more than 100 popular new car models sold in the U.S. in 2014, plus some future ones. <span class="highlight">Move over each data point</span> (choose between mouse control and touch control in the toolbar) to get more information. You'll find some data points connected by <span class="highlight">grey lines</span>; these indicate other versions (trims) of the same model. Data point <span class="highlight">colors</span> represent different technologies, as indicated by the legend below. The <span class="highlight">shaded areas</span> encompass all cars of a given technology.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 3">The <span class="highlight">x axis</span> shows the cost of each vehicle per mile driven. This combines the vehicle purchasing price (minus federal tax refunds where applicable) without tax, fuel/charging costs, and regular maintenance costs. The <span class="highlight">y axis</span> shows the greenhouse gas emissions of each vehicle per mile driven. This combines emissions from the production and distribution of both the car and its fuel, meaning that <span class="highlight">we include things like emissions from electricity generation and battery production</span>.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 4">Near the bottom of the chart, you will notice some <span class="highlight">horizontal lines</span>. These indicate estimated <span class="highlight">greenhouse gas emission targets</span> that the average car on the road (not sold) must meet in the coming decades to be consistent with limiting global warming to 2°C. Moving over a target line will tell you which year it corresponds to.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 5">The graph you see now on the left corresponds to the <span class="highlight">default parameter values</span> in our model. The default parameters values are set to represent the <span class="highlight">average U.S.</span> driving behavior, the average U.S. electricity mix, and 10-year average fuel and electricity prices for the U.S.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 6">Our results show that <span class="highlight">you don't have to pay more for a low-carbon-emitting vehicle</span>. Many electric vehicles are the same price, or cheaper, than similar gasoline cars. The average greenhouse gas emissions of all cars shown here are more than 50% higher than the 2030 climate target, with no internal combustion vehicles meeting the target. Most hybrid and electric vehicles, on the other hand, already meet the 2030 goal today, with today's electricity mix.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 7">With the <span class="highlight">current (May 2016) low gasoline and diesel prices</span>, the cost of gasoline powered cars goes down slightly compared to hybrid and electric ones. But not that much, as you can see by switching between current fuel prices (shown now) and the long-term average prices (shown previously) by using the 'Previous' and 'Next' buttons below.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 8">Greenhouse gas emissions from electricity production in California are less than half the U.S. average, and it shows. If we apply a <span class="highlight">relatively clean electricity mix</span>, such California's, the emission reduction advantage of electric vehicles becomes much larger. <span class="highlight">Emissions from electric vehicles drop below even the 2040 climate target</span>.</span>
                     <span class="tourbox_text" ng-if="tour.index == 9">Back to the <span class="highlight">default values</span>, for now.</span>
                     <span class="tourbox_text" ng-if="tour.index == 10">In addition to the federal tax refunds for plug-in hybrids and electric vehicles, we can simulate a best-case scenario for electric vehicles by adding <span class="highlight">state tax refunds</span>, which are available in some states. Here, we add those of <span class="highlight">California</span>. Electric vehicles are now substantially cheaper than their combustion engine counterparts.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 11">Once we <span class="highlight">turn off the federal tax refunds</span> that can be found on electric vehicles, they become substantially more expensive. Some specific electric vehicles, such as the Nissan Leaf, however, are still comparable in price compared to vehicle of the same class, even without any refunds. Again, this is because <span class="highlight">electric vehicles have very low operational (fuel and maintenance) costs</span>.</span>
+                    <span class="tourbox_text" ng-if="tour.index == 11">Once we <span class="highlight">turn off the federal tax refunds</span> are today available for electric vehicles, they become substantially more expensive. Nevertheless, some specific electric vehicles, such as the Nissan Leaf, are still comparable in costs to vehicles of the same class. This is because <span class="highlight">electric vehicles have very low operational (fuel and maintenance) costs</span>.</span>
                     <span class="tourbox_text" ng-if="tour.index == 12">To verify that, we can <span class="highlight">filter</span> cars such that <span class="highlight">only compact cars</span> (not including compact SUVs or pickups) remain fully visible.</span>
-                    <span class="tourbox_text" ng-if="tour.index == 13">This concludes the introductory tour. Was that fun? <span class="highlight">Go to the 'Custom Parameters' tab and start playing around</span> with the different parameters yourself!</span>
+                    <span class="tourbox_text" ng-if="tour.index == 13">This concludes the introductory tour, but <span class="highlight">there's much more to explore</span>. Click on the <span class="highlight">'Custom Parameters' tab</span> to see what the future of transportation could look like, and how different cars stack up against climate targets and each other. Finally, note that you can reset all parameters to their defaults with the reset button on the toolbar above.</span>
                 </div>
 
             </div>
@@ -77,7 +77,7 @@
                 <span id="clear-search" ng-show="showList()" ng-click="clearSearch()">X</span>
 
                 <div ng-show="showList()">
-                    <p class="quicksetting-paragraph" ng-repeat="item in vehicleList | filter:search" ng-click="highlight(item.id)">{{item.name}}</p>
+                    <p class="quicksetting-paragraph" ng-repeat="item in vehicleList | filter:search" ng-click="toggleHighlight(item.id)">{{item.name}}</p>
                 </div>
 
             </div>
@@ -88,7 +88,7 @@
 
                 <p class="highlighted-car-entry" ng-repeat="car in uiInfo.highlightedCars" ng-mouseover="highlightDot(car.id)" ng-mouseleave="dehighlightDot(car.id)">
                     <span class="highlighted-dot">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} {{car.trim}} ({{car.powertrain}})
-                    <span class="highlighted-clear" ng-click="highlight(car.id)">X</span>
+                    <span class="highlighted-clear" ng-click="toggleHighlight(car.id)">X</span>
                 </p>
 
             </div>
@@ -104,11 +104,8 @@
             </div>
 
             <!--<div class="group" ng-show="quickSettings && tab == 'settings'" style="padding-bottom: 5px;">
-
                 <h1>Quick Apply Background Conditions</h1>
-
                 <p class="quicksetting-paragraph" ng-repeat="quickSetting in quickSettings" ng-click="applyQuickSettings(quickSetting.key)"> {{quickSetting.title}} </p>
-
             </div>-->
 
             <div class="group" ng-repeat="settingGroup in settings | filter: { showIf: tab }">
@@ -159,17 +156,19 @@
     </div>
     {% endraw %}
 
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>-->
-    <script src="{{ url_for('static', filename='cars/scripts/angular.min.js') }}"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <!-- <script src="{{ url_for('static', filename='cars/scripts/angular.min.js') }}"></script> -->
     <script src="{{ url_for('static', filename='cars/scripts/app.js') }}"></script>
     <script src="{{ url_for('static', filename='cars/scripts/services/d3Service.js') }}"></script>
-    <script src="{{ url_for('static', filename='cars/scripts/services/customizable/calculateResults.js') }}"></script>
-    <script src="{{ url_for('static', filename='cars/scripts/services/customizable/getConfigOptions.js') }}"></script>
-    <script src="{{ url_for('static', filename='cars/scripts/services/customizable/getCsvList.js') }}"></script>
-    <script src="{{ url_for('static', filename='cars/scripts/services/customizable/processCsvData.js') }}"></script>
-    <script src="{{ url_for('static', filename='cars/scripts/services/customizable/colorsAndStyles.js') }}"></script>
-    <script src="{{ url_for('static', filename='cars/scripts/services/convexHullService.js') }}"></script>
-    <script src="{{ url_for('static', filename='cars/scripts/services/d3PlotService.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/tools/convexHullService.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/custom/calculateResults.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/custom/getConfigOptions.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/custom/getCsvList.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/custom/processCsvData.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/custom/legendAndColors.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/custom/tourInfo.js') }}"></script>
+    <script src="{{ url_for('static', filename='cars/scripts/services/custom/mainPlot.js') }}"></script>
     <script src="{{ url_for('static', filename='cars/scripts/services/d3SliderService.js') }}"></script>
     <script src="{{ url_for('static', filename='cars/scripts/services/configService.js') }}"></script>
     <script src="{{ url_for('static', filename='cars/scripts/services/dataService.js') }}"></script>

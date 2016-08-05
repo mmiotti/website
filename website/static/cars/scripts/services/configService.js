@@ -52,7 +52,7 @@
     }
 
     // get the setting object of a given key
-    // not very elegant currently, may need to update
+    // not very elegant currently because it needs a double forEach loop; may need to update
     function getSettingObject(key) {
 
       var returnItem = {};
@@ -70,8 +70,8 @@
     }
 
     
-    // get the object of the currently selected option for a given key
-    // not very elegant currently, may need to update
+    // get the object of the currently selected option for a given key (only for 'isSelect' type setting objects)
+    // not very elegant currently because it needs a double forEach loop; may need to update
     function getCurrentOptionObject(key, object) {
 
       // if settings object from which to fetch option object is undefined, use current settings
@@ -160,6 +160,8 @@
         });
       });
 
+      // set some stuff manually that is currently not set through user settings 
+      // (usually settings that are hidden/deactived)
       configValues['inventory_source'] = 'GREET';
       configValues['shadedAreas'] = 'linear';
       configValues['trim'] = 'Trim1';

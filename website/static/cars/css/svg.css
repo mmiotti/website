@@ -1,3 +1,7 @@
+#frame {
+  fill: #fff;
+}
+
 .dot {
 	opacity: 0.8;
 }
@@ -46,4 +50,55 @@
 .axis text {
   font-family: sans-serif;
   font-size: 15px;
+}
+
+#tooltip {
+  position: absolute;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 3px;
+  color: #fff;
+  padding: 5px 10px;
+  width: 220px;
+}
+
+#tooltip-subtitle {
+  color: #bbb;
+}
+
+#tooltip-firstline {
+  color: #888;
+  padding-top: 3px;
+  display: block;
+}
+
+#tooltip-secondline,
+#tooltip-thirdline {
+  color: #888;
+  display: block;
+}
+
+.target line {
+  stroke: #000;
+  stroke-width: 1;
+  stroke-dasharray: 5,5;
+}
+
+.target text {
+  font-size: 15px;
+}
+
+#click-animation-circle {
+  fill: #f00;
+}
+
+.link-line {
+  stroke: #aaa;
+  stroke-width: 1.5;
+  visibility: hidden;
+}
+
+#circleavg {
+  stroke-width: 2px;
+  stroke: #000;
 }

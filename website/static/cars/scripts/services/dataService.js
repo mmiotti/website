@@ -33,10 +33,12 @@
 
   		  }, function(error, rows) {
 
+          // process raw data, and store into data variable
   		  	data[file] = processCsvData.process(file, rows);
-
+          // increase the load counter
   		  	loadComplete++;
 
+          // once all files are loaded, broadcast this to main controller and cost carbon space directive
           if (loadComplete === files.length) {
   		      $rootScope.$broadcast('data:loaded');
             console.log("Time to process all csv files: " + Math.round(performance.now() - t0) + " milliseconds.");

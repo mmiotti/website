@@ -35,7 +35,8 @@
 
           }
 
-          // note: if this is placed within the new-vs-old IF clause above, it won't trigger when settings are loaded from the storage system, because in that case, the old values are equal to the new ones. Currently not sure why.
+          // update handle position
+          // note: if this is placed within the new-vs-old IF clause above, it won't trigger when settings are loaded from the storage system, because in that case, the old values are equal to the new ones (currently not sure why).
           sliderInstance.updateHandle(newVals.value);
 
         }, true);

@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('interactiveCostCarbonApp')
-    .directive('costCarbonSpace', ['$window', 'd3PlotService', 'configService', 'dataService', costCarbonSpace]);
+    .directive('costCarbonSpace', ['$window', 'mainPlot', 'configService', 'dataService', costCarbonSpace]);
 
-  function costCarbonSpace($window, d3PlotService, configService, dataService) {
+  function costCarbonSpace($window, mainPlot, configService, dataService) {
     return {
 
       // for element <cost-carbon-space>
@@ -13,21 +13,24 @@
       // set up link function for this directive. 
       link: function(scope, element, attrs) {
 
-        // load data into dataService. could also be put into controller, but in theory, data could be loaded before link function is run (not really in practice, though)
+        // load data into dataService.
+        // could also be put into controller, but in theory, data could be loaded before link function is run (not really in practice, though)
         dataService.loadData();
 
         // set up cost carbon plot
-        d3PlotService.initiate(element[0]);
+        mainPlot.initiate(element[0]);
 
-        // the data (see controller) is not immediately available. once data is loaded, calculate results and render plot
+        // once data is loaded, calculate results and render plot
         scope.$on('data:loaded', function(event) {
 
-          d3PlotService.renderPlot(
+          mainPlot.renderPlot(
             dataService.getResults()
           );
           // store current data of model filter, to be used for comparison when variable 'settings' changes
           // this is a bit of a hack, but works well for now
+          // note: changing the model filters is turned off for now
           scope.previousModelFilter = configService.getCurrentOptionObject('modelFilter');
+
         })
 
         // when window is resized, "refresh" so that watch (below) is triggered
@@ -42,14 +45,15 @@
 
           }, function() {
 
-            return d3PlotService.renderPlot(
+            return mainPlot.renderPlot(
               dataService.getResults()
             );
 
           }
         );
 
-        // when uiinfo is changed, update scope (and thus view)
+        // when uiInfo is changed, update scope (and thus view)
+        // uiInfo contains the legend (uiInfo.legend) and the list of highlighted cars (uiInfo.higlightedCars)
         // note: angular only broadcasts events to scopes of which it knows they subscribed to that event, so it's relatively efficient
         scope.$on('uiInfo:changed', function(event, data) {
           
@@ -69,12 +73,12 @@
             // pass new values to config service
             configService.setSettings(newVals);
 
+            // if model filter changed, data needs to be reloaded entirely (which then triggers plot update below as well)
             if (scope.previousModelFilter.key !== configService.getCurrentOptionObject('modelFilter').key) {
-              // reload data (which then triggers plot update below as well)
               dataService.loadData();
+            // otherwise, trigger plot-update function with new results, but without reloading data
             } else {
-              // trigger plot-update function with new results, but without reloading data
-              d3PlotService.updatePlot(
+              mainPlot.updatePlot(
                 dataService.getResults()
               );
             }
