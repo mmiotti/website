@@ -37,16 +37,16 @@
       {
         'title': 'Current fuel prices',
         'settings': {
-          'price_Gasoline': 2.1,
-          'price_Diesel': 2.1
+          'price_Gasoline': '2.2',
+          'price_Diesel': '2.4'
         }
       },
       {
         'title': 'Cleaner electricity',
         'settings': {
-          'price_Gasoline': 2.1,
-          'price_Diesel': 2.1,
-          'electricity_ghg_fuel': 300,
+          'price_Gasoline': '2.2',
+          'price_Diesel': '2.4',
+          'electricity_ghg_fuel': '299',
         }
       },
       {
@@ -54,13 +54,13 @@
         'settings': {}
       },
       {
-        'title': 'Best price-case for electric vehicles',
+        'title': 'Best price scenario for electric vehicles',
         'settings': {
           'refunds': 'both'
         }
       },
       {
-        'title': 'Worst price-case for electric vehicles',
+        'title': 'Worst price scenario for electric vehicles',
         'settings': {
           'refunds': 'none'
         }

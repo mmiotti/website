@@ -189,13 +189,13 @@ button.empty_store {
 }
 
 #tourbox_marker_xaxis {
-	left: 60px;
+	left: 80px;
 	height: 60px;
 }
 
 #tourbox_marker_yaxis {
-	left: 0;
-	width: 60px;
+	left: 20;
+	width: 80px;
 	top: 60px;
 }
 

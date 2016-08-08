@@ -86,6 +86,7 @@
 
 .target text {
   font-size: 15px;
+  cursor: default;
 }
 
 #click-animation-circle {

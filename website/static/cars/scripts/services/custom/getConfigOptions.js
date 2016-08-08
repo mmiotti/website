@@ -290,91 +290,231 @@
           ]
       });
 
-      conditions.push({
-        isSlider: true,
-        key: "price_Gasoline",
-        title: "Gasoline price",
-        help: "The price of non-premium gasoline in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $4.47/gallon, the lowest monthly average $1.86/gallon.",
-        min: 1,
-        max: 9,
-        default: 3.1,
-        stepSize: 0.1,
-        unit: "$/gallon"
-      });
+      // conditions.push({
+      //   isSlider: true,
+        // key: "price_Gasoline",
+        // title: "Gasoline price",
+        // help: "The price of non-premium gasoline in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $4.47/gallon, the lowest monthly average $1.86/gallon.",
+      //   min: 1,
+      //   max: 9,
+      //   default: 3.1,
+      //   stepSize: 0.1,
+      //   unit: "$/gallon"
+      // });
 
       conditions.push({
-        isSlider: true,
-        key: "price_Diesel",
-        title: "Diesel price",
-        help: "The price of diesel in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $5.17/gallon, the lowest monthly average $1.94/gallon.",
-        min: 1,
-        max: 9,
-        default: 3.3,
-        stepSize: 0.1,
-        unit: "$/gallon"
+          isSelect: true,
+          key: "price_Gasoline",
+          title: "Gasoline price",
+          help: "The price of non-premium gasoline in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $4.47/gallon, the lowest monthly average $1.86/gallon.",
+          default: '3.1',
+          options: [
+              {
+                  'key': '1.9',
+                  'title': '10-year monthly low (1.8 $/gallon)'
+              },
+              {
+                  'key': '2.4',
+                  'title': 'Current (August 2016) (2.2 $/gallon)'
+              },
+              {
+                  'key': '3.1',
+                  'title': '10-year U.S. Average (3.3 $/gallon)'
+              },
+              {
+                  'key': '4.5',
+                  'title': '10-year monthly high (5.1 $/gallon)'
+              }
+          ]
       });
 
-      conditions.push({
-        isSlider: true,
-        key: "price_Electricity",
-        title: "Electricity price",
-        help: "The price of electricity at the outlet in cents / kWh. The highest monthly inflation-corrected average during the past 10 years was 13.3 cents / kWh, the lowest monthly average was 10.3 cents / kWh.",
-        min: 0,
-        max: 30,
-        default: 12,
-        stepSize: 1,
-        unit: "¢/kWh"
-      });
+      // conditions.push({
+      //   isSlider: true,
+      //   key: "price_Diesel",
+      //   title: "Diesel price",
+      //   help: "The price of diesel in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $5.17/gallon, the lowest monthly average $1.94/gallon.",
+      //   min: 1,
+      //   max: 9,
+      //   default: 3.3,
+      //   stepSize: 0.1,
+      //   unit: "$/gallon"
+      // });
 
       conditions.push({
-        isSlider: true,
-        key: "electricity_ghg_veh",
-        title: "Electricity (industrial)",
-        help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
-        min: 0,
-        max: 1000,
-        default: 620,
-        stepSize: 20,
-        unit: "gCO₂/kWh"
+          isSelect: true,
+          key: "price_Diesel",
+          title: "Diesel price",
+          help: "The price of diesel in $/gallon. The highest monthly inflation-corrected average during the past 10 years was $5.17/gallon, the lowest monthly average $1.94/gallon.",
+          default: '3.3',
+          options: [
+              {
+                  'key': '1.9',
+                  'title': '10-year monthly low (1.9 $/gallon)'
+              },
+              {
+                  'key': '2.4',
+                  'title': 'Current (August 2016) (2.4 $/gallon)'
+              },
+              {
+                  'key': '3.3',
+                  'title': '10-year U.S. Average (3.3 $/gallon)'
+              },
+              {
+                  'key': '5.1',
+                  'title': '10-year monthly high (5.1 $/gallon)'
+              }
+          ]
       });
 
-      conditions.push({
-        isSlider: true,
-        key: "electricity_ghg_fuel",
-        title: "Electricity (charging)",
-        help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
-        min: 0,
-        max: 1000,
-        default: 620,
-        stepSize: 20,
-        unit: "gCO₂/kWh"
-      });
+      // conditions.push({
+      //   isSlider: true,
+      //   key: "price_Electricity",
+      //   title: "Electricity price",
+      //   help: "The price of electricity at the outlet in cents / kWh. The highest monthly inflation-corrected average during the past 10 years was 13.3 cents / kWh, the lowest monthly average was 10.3 cents / kWh.",
+      //   min: 0,
+      //   max: 30,
+      //   default: 12,
+      //   stepSize: 1,
+      //   unit: "¢/kWh"
+      // });
 
       conditions.push({
-        isSlider: true,
-        key: "price_H2",
-        title: "Hydrogen price",
-        help: "The price of hydrogen in $ / kg.",
-        min: 0,
-        max: 12,
-        default: 4,
-        stepSize: 1,
-        unit: "$/kg"
+          isSelect: true,
+          key: "price_Electricity",
+          title: "Electricity price",
+          help: "The price of electricity at the outlet in cents / kWh. The highest monthly inflation-corrected average during the past 10 years was 13.3 cents / kWh, the lowest monthly average was 10.3 cents / kWh.",
+          default: '12',
+          options: [
+              {
+                  'key': '8',
+                  'title': '10-year average Idaho (8 ¢/kWh)'
+              },
+              {
+                  'key': '12',
+                  'title': '10-year U.S. Average (12 ¢/kWh)'
+              },
+              {
+                  'key': '16',
+                  'title': '10-year average California (16 ¢/kWh)'
+              },
+              {
+                  'key': '35',
+                  'title': '10-year average Hawaii (35 ¢/kWh)'
+              }
+          ]
+      });
+
+      // conditions.push({
+      //   isSlider: true,
+      //   key: "electricity_ghg_veh",
+      //   title: "Electricity (industrial)",
+      //   help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
+      //   min: 0,
+      //   max: 1000,
+      //   default: 620,
+      //   stepSize: 20,
+      //   unit: "gCO₂/kWh"
+      // });
+
+      conditions.push({
+          isSelect: true,
+          key: 'electricity_ghg_veh',
+          default: '620',
+          title: "Electricity (vehicle)",
+          help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
+          options: [
+              {
+                  'key': '40',
+                  'title': '100% solar (40 gCO₂/kWh)'
+              },
+              {
+                  'key': '299',
+                  'title': 'California average (299 gCO₂/kWh)'
+              },
+              {
+                  'key': '620',
+                  'title': 'U.S. average (620 gCO₂/kWh)'
+              }
+          ]
+      });
+
+      // conditions.push({
+      //   isSlider: true,
+      //   key: "electricity_ghg_fuel",
+      //   title: "Electricity (charging)",
+      //   help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
+      //   min: 0,
+      //   max: 1000,
+      //   default: 620,
+      //   stepSize: 20,
+      //   unit: "gCO₂/kWh"
+      // });
+
+      conditions.push({
+          isSelect: true,
+          key: 'electricity_ghg_fuel',
+          default: '620',
+          title: "Electricity (fuels)",
+          help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
+          options: [
+              {
+                  'key': '40',
+                  'title': '100% solar (40 gCO₂/kWh)'
+              },
+              {
+                  'key': '299',
+                  'title': 'California average (299 gCO₂/kWh)'
+              },
+              {
+                  'key': '620',
+                  'title': 'U.S. average (620 gCO₂/kWh)'
+              }
+          ]
+      });
+
+      // conditions.push({
+      //   isSlider: true,
+      //   key: "price_H2",
+      //   title: "Hydrogen price",
+      //   help: "The price of hydrogen in $ / kg.",
+      //   min: 0,
+      //   max: 12,
+      //   default: 4,
+      //   stepSize: 1,
+      //   unit: "$/kg"
+      // });
+
+      conditions.push({
+          isSelect: true,
+          key: "price_H2",
+          title: "Hydrogen price",
+          help: "The price of hydrogen in $ / kg.",
+          default: '4',
+          options: [
+              {
+                  'key': '4',
+                  'title': 'Estimate for steam methane reforming (4 $/kg)'
+              },
+              {
+                  'key': '8',
+                  'title': 'Estimate for electrolysis (8 $/kg)'
+              },
+          ]
       });
 
       conditions.push({
           'isSelect': true,
           'key': 'hydrogen_pathway',
           'default': 'H2_Gas_SMR',
-          'title': 'Hydrogen production',
+          'title': 'Hydrogen emissions',
           'options': [
               {
                   'key': 'H2_Gas_SMR',
-                  'title': 'Steam Methane Reforming'
+                  'title': 'Estimate for steam methane reforming'
               },
               {
                   'key': 'H2_Gas_Electrolysis',
-                  'title': 'Electrolysis'
+                  'title': 'Estimate for electrolysis'
               },
           ]
       });
@@ -398,27 +538,6 @@
         stepSize: 5,
         unit: "%"
       });
-
-      // patterns.push({
-      //     'isSelect': true,
-      //     'key': 'drivecycle',
-      //     'default': 'Combined',
-      //     'title': 'Drivecycle',
-      //     'options': [
-      //         {
-      //             'key': 'Combined',
-      //             'title': 'Combined (55/45)'
-      //         },
-      //         {
-      //             'key': 'City',
-      //             'title': 'City (FTP75)'
-      //         },
-      //         {
-      //             'key': 'Highway',
-      //             'title': 'Highway (HWFET)'
-      //         }
-      //     ]
-      // });
 
       patterns.push({
         isSlider: true,

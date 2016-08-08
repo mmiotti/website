@@ -57,8 +57,8 @@ Toyota Highlander,Toyota,Highlander,,146127,ICEV,ICEV,4134,4509,SUV,Mid-size,,,,
 Kia Soul,Kia,Soul,,145316,ICEV,ICEV,2714,2879,Sedan/Hatchback,Compact,,,,,,,,,,14900,20500,Base,Base,4dr Hatchback,14900,24,30,,,6-spd manual w/overdrive,4,130
 Kia Optima,Kia,Optima,,145244,ICEV,ICEV,3237,3468,Sedan/Hatchback,Mid-size,,,,,,,,,,21500,35300,LX,LX,4dr Sedan,21500,23,34,,,6-spd automatic w/overdrive,4,192
 Kia Optima,Kia,Optima,,145244,ICEV,ICEV,3237,3468,Sedan/Hatchback,Mid-size,,,,,,,,,,21500,35300,SX Turbo,SX Turbo,4dr Sedan,27500,20,31,,,6-spd automatic w/overdrive,4,274
-BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,54900,i,i,4dr Rear-wheel Drive Sedan,32750,24,36,,,8-spd automatic w/overdrive,4,180
-BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,54900,i,i,2dr Rear-wheel Drive Convertible,54900,20,30,,,8-spd automatic w/overdrive,6,300
+BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,54900,320i,i,4dr Rear-wheel Drive Sedan,32750,24,36,,,8-spd automatic w/overdrive,4,180
+BMW 3-Series/4-Series,BMW,3-Series/4-Series,,142232,ICEV,ICEV,3295,4125,Sedan/Hatchback,Compact,Executive,,,Gasoline_Premium,,,,,,32750,54900,435i,i,2dr Rear-wheel Drive Convertible,54900,20,30,,,8-spd automatic w/overdrive,6,300
 Chevrolet Impala,Chevrolet,Impala,,140280,ICEV,ICEV,3679,3785,Sedan/Hatchback,Full-size,,,,,,,,,,26860,35905,LS ECO,LS ECO,4dr Sedan,29135,25,35,,,6-spd automatic w/overdrive,4,182
 Chevrolet Impala,Chevrolet,Impala,,140280,ICEV,ICEV,3679,3785,Sedan/Hatchback,Full-size,,,,,,,,,,26860,35905,LT w/2LT,LT w/2LT,4dr Sedan,30085,19,29,,,6-spd automatic w/overdrive,6,305
 Nissan Versa,Nissan,Versa,,139781,ICEV,ICEV,2437,2498,Sedan/Hatchback,Subcompact,,,,,,,,,,11990,16890,1.6 S+,1.6 S+,4dr Sedan,13790,31,40,,,Xtronic 2-spd CVT w/overdrive,4,109
@@ -150,8 +150,8 @@ Chrysler 300,Chrysler,300,,53382,ICEV,ICEV,3961,4513,Sedan/Hatchback,Full-size,l
 Chrysler 300,Chrysler,300,,53382,ICEV,ICEV,3961,4513,Sedan/Hatchback,Full-size,luxury,,,,,,,,,31395,48900,SRT8 Core,SRT8 Core,4dr Rear-wheel Drive Sedan,44900,14,23,,,5-spd automatic w/overdrive,8,470
 Mazda 6,Mazda,6,,53224,ICEV,ICEV,3183,3232,Sedan/Hatchback,Mid-size,,,,,,,,,,20990,29695,i Grand Touring,i Grand Touring,4dr Sedan,29695,26,38,,,6-spd automatic w/overdrive,4,184
 Mazda 6,Mazda,6,,53224,ICEV,ICEV,3183,3232,Sedan/Hatchback,Mid-size,,,,,,,,,,20990,29695,i Sport,i Sport,4dr Sedan,20990,25,37,,,6-spd manual w/overdrive,4,184
-BMW 5-Series,BMW,5-Series,,52704,ICEV,ICEV,3814,5060,Sedan/Hatchback,Mid-size ,luxury,,,Gasoline_Premium,,,,,,49500,51800,i,i,4dr Rear-wheel Drive Sedan,49500,23,34,,,8-spd automatic w/overdrive,4,240
-BMW 5-Series,BMW,5-Series,,52704,ICEV,ICEV,3814,5060,Sedan/Hatchback,Mid-size ,luxury,,,Gasoline_Premium,,,,,,49500,51800,i xDrive,i xDrive,4dr All-wheel Drive Sedan,66200,16,24,,,8-spd automatic w/overdrive,8,445
+BMW 5-Series,BMW,5-Series,,52704,ICEV,ICEV,3814,5060,Sedan/Hatchback,Mid-size ,luxury,,,Gasoline_Premium,,,,,,49500,51800,528i,i,4dr Rear-wheel Drive Sedan,49500,23,34,,,8-spd automatic w/overdrive,4,240
+BMW 5-Series,BMW,5-Series,,52704,ICEV,ICEV,3814,5060,Sedan/Hatchback,Mid-size ,luxury,,,Gasoline_Premium,,,,,,49500,51800,550i,i xDrive,4dr All-wheel Drive Sedan,66200,16,24,,,8-spd automatic w/overdrive,8,445
 Ford Taurus,Ford,Taurus,,52395,ICEV,ICEV,4035,4341,Sedan/Hatchback,Full-size,,,,,,,,,,26780,39980,SE,SE,4dr Front-wheel Drive Sedan,26780,19,29,,,6-spd automatic w/overdrive,6,288
 Ford Taurus,Ford,Taurus,,52395,ICEV,ICEV,4035,4341,Sedan/Hatchback,Full-size,,,,,,,,,,26780,39980,SHO,SHO,4dr All-wheel Drive Sedan,39980,17,25,,,6-spd automatic w/overdrive,6,365
 Subaru Legacy,Subaru,Legacy,,52270,ICEV,ICEV,3315,3545,Sedan/Hatchback,Mid-size,,,,,,,,,,20295,28895,2.5i Premium,2.5i Premium,4dr All-wheel Drive Sedan,23295,24,32,,,Lineartronic 6-spd CVT w/overdrive,4,173

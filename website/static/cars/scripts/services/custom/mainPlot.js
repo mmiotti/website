@@ -650,10 +650,14 @@
       if (d.Id == 'avg') {
         return 6;
       }
+      // if we're scaling the circle radius according to an independent variable
       if (configValues.area != 'none') {
         return rScale(Math.sqrt(d.Area)) + (is_highlight ? 2 : 0)
+      // if the circle radius is the same for all points, scale it with the graph size
       } else {
-        return Math.max(5, Math.round((width+height)/150)) + (is_highlight ? 2 : 0);
+        var min_radius = 5;
+        var max_radius = 12;
+        return Math.max(min_radius, Math.min(Math.round((width+height)/150), max_radius)) + (is_highlight ? 2 : 0);
       }
     }
 
@@ -663,7 +667,6 @@
       if (is_highlight) {
         return '#f00';
       } else {
-        // var configValues
         return legendAndColors.getDataColor(d, configValues);
       }
     }
