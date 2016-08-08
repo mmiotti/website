@@ -1,0 +1,105 @@
+#frame {
+  fill: #fff;
+}
+
+.dot {
+	opacity: 0.8;
+}
+
+.axis,
+.sliderAxis {
+  font: 10px sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.sliderAxis .domain {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .3;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+
+.sliderAxis .halo {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+
+.sliderAxis text {
+	font-size: 15px;
+}
+
+.slider .handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: .5;
+  stroke-width: 1.25px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+#tooltip {
+  position: absolute;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 3px;
+  color: #fff;
+  padding: 5px 10px;
+  width: 220px;
+}
+
+#tooltip-subtitle {
+  color: #bbb;
+}
+
+#tooltip-firstline {
+  color: #888;
+  padding-top: 3px;
+  display: block;
+}
+
+#tooltip-secondline,
+#tooltip-thirdline {
+  color: #888;
+  display: block;
+}
+
+.target line {
+  stroke: #000;
+  stroke-width: 1;
+  stroke-dasharray: 5,5;
+}
+
+.target text {
+  font-size: 15px;
+  cursor: default;
+}
+
+#click-animation-circle {
+  fill: #f00;
+}
+
+.link-line {
+  stroke: #aaa;
+  stroke-width: 1.5;
+  visibility: hidden;
+}
+
+#circleavg {
+  stroke-width: 2px;
+  stroke: #000;
+}
