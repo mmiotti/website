@@ -420,7 +420,8 @@
           isSelect: true,
           key: 'electricity_ghg_veh',
           default: '620',
-          title: "Electricity (vehicle)",
+          title: "Electricity emissions",
+          unit: "for vehicle production",
           help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
           options: [
               {
@@ -454,7 +455,8 @@
           isSelect: true,
           key: 'electricity_ghg_fuel',
           default: '620',
-          title: "Electricity (fuels)",
+          title: "Electricity emissions",
+          unit: "for fuels and charging",
           help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
           options: [
               {
