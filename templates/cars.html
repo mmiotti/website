@@ -113,7 +113,7 @@
                 <h1>{{settingGroup.title}}</h1>
 
                 <div class="interface-group" ng-repeat="setting in settingGroup.settings">
-                    <span class="config-title">{{setting.title}} <span ng-if="setting.isSlider" class="config-unit"><br>in {{setting.unit}}</span></span>
+                    <span class="config-title">{{setting.title}} <span ng-if="setting.isSlider" class="config-unit"><br>in {{setting.unit}}</span></span><span ng-if="setting.isSelect && setting.unit" class="config-unit"><br>{{setting.unit}}</span></span>
                     <span class="additional-info-wrapper" ng-if="setting.help">
                         <span class="additional-info-inner-wrapper">
                             <span class="additional-info-icon">?</span>
