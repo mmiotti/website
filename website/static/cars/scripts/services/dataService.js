@@ -69,7 +69,7 @@
 
       data.veh.forEach(function(item) {
         list.push({
-          name:  item.Make + ' ' + item.Model + (item.Suffix ? ' ' + item.Suffix : '') + (item.Trim1_Name ? ' ' + item.Trim1_Name : ''),
+          name:  item.Make + ' ' + item.Model + (item.Suffix ? ' ' + item.Suffix : '') + ' |' + (item.Trim1_Name ? ' ' + item.Trim1_Name : ''),
           id: item.Id,
         });
       });

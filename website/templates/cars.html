@@ -87,7 +87,8 @@
                 <h1>Highlighted Cars</h1>
 
                 <p class="highlighted-car-entry" ng-repeat="car in uiInfo.highlightedCars" ng-mouseover="highlightDot(car.id)" ng-mouseleave="dehighlightDot(car.id)">
-                    <span class="highlighted-dot">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} {{car.trim}} ({{car.powertrain}})
+                    <span class="highlighted-dot">{{car.index}}</span> {{car.make}} {{car.model}} {{car.suffix}} | {{car.trim}}
+                    <!-- ({{car.powertrain}}) -->
                     <span class="highlighted-clear" ng-click="toggleHighlight(car.id)">X</span>
                 </p>
 

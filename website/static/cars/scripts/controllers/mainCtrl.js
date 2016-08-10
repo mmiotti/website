@@ -21,7 +21,7 @@
 
     // check if list should be shown (search field is non-empty and has at least 2 characters)
     $scope.showList = function() {
-      return ($scope.search && $scope.search.length >= 2);
+      return ($scope.search && $scope.search.length >= 3);
     }
 
     // clear search field

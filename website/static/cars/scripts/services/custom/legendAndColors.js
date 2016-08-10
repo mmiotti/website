@@ -13,7 +13,7 @@
 
       'Combined_Type': {
         'ICEV': '#000',
-        'ICEV_Diesel': '#777',
+        'ICEV_Diesel': '#888',
         'HEV': '#e64d71',
         'PHEV': '#a7052b',
         'BEV': '#f7cb00',

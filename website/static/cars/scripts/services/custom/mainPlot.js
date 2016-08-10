@@ -107,7 +107,7 @@
       // calculate width, height, and padding of figure
       width = appDim.width;
       height = appDim.height;
-      padding = {top: 40, right: 27, bottom: 60, left: 80};
+      padding = {top: 40, right: 17, bottom: 60, left: 80};
 
       // set scales
       updateScales(results, configValues);
@@ -741,8 +741,8 @@
 
     // hide or show tooltip
     function tooltipToggle(X, Y, d) {
-
       if (tooltip.style("visibility") == "visible" && prevTooltipId == d.Id) {
+      // if ((tooltip.style("visibility") == "visible" && prevTooltipId == d.Id) || d.Make !== 'Your') {
         tooltipHide();
       } else {
         tooltipShow(X, Y, d);
@@ -754,6 +754,10 @@
 
     // show tooltip, highlight selected dot, and show link lines
     function tooltipShow(X, Y, d) {
+
+      // if (d.Make !== 'Your') {
+      //   return;
+      // }
 
       var cx, cy;
 
@@ -786,7 +790,7 @@
         .text(d.Id != 'avg' ? d.Horsepower + " HP | " + Math.round(d.Weight) + " kg" : '');
 
       tooltipInfoThird
-        .text(d.Id != 'avg' ? d.Sales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'") + " sales in 2014 (all trims)" : '');
+        .text(d.Id != 'avg' && d.Sales > 0 ? d.Sales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'") + " sales in 2014 (all trims)" : '');
         
       // for each circle that is "linked" to the one currently selected...
       for (var i = 0; i < d.Links.length; i++) {

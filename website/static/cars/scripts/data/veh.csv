@@ -23,8 +23,8 @@ Chevrolet Cruze,Chevrolet,Cruze,,273060,ICEV,ICEV,3005,3471,Sedan/Hatchback,Comp
 Chevrolet Cruze,Chevrolet,Cruze,,273060,ICEV,ICEV,3005,3471,Sedan/Hatchback,Compact,,,,,,,,,,17520,23805,LS Auto,LS Auto,4dr Sedan,18705,22,35,,,6-spd automatic w/overdrive,4,138
 Toyota RAV4,Toyota,RAV4,,266514,ICEV,ICEV,3435,3610,SUV,Compact,,,,,,,,,,23550,29720,LE,LE,4dr Front-wheel Drive,23550,24,31,,,6-spd automatic w/overdrive,4,176
 Toyota RAV4,Toyota,RAV4,,266514,ICEV,ICEV,3435,3610,SUV,Compact,,,,,,,,,,23550,29720,LE AWD,LE,4dr All-wheel Drive,24950,22,29,,,6-spd automatic w/overdrive,4,176
-Ford Fusion,Ford,Fusion,,259905,ICEV,ICEV,3431,3681,Sedan/Hatchback,Mid-size,,,,,,,,,,21970,32600,S,S,4dr Front-wheel Drive Sedan,21970,22,34,,,6-spd automatic w/overdrive,4,175
-Ford Fusion,Ford,Fusion,,259905,ICEV,ICEV,3431,3681,Sedan/Hatchback,Mid-size,,,,,,,,,,21970,32600,Titanium,Titanium,4dr All-wheel Drive Sedan,32600,22,31,,,6-spd automatic w/overdrive,4,231
+Your Car,Your,Car,,0,ICEV,ICEV,3431,3681,Sedan/Hatchback,Mid-size,,,,,,,,,,21970,32600,Base Edition,Base,4dr Front-wheel Drive Sedan,21970,22,34,,,6-spd automatic w/overdrive,4,175
+Your Car,Your,Car,,0,ICEV,ICEV,3431,3681,Sedan/Hatchback,Mid-size,,,,,,,,,,21970,32600,Luxury Edition,Luxury,4dr All-wheel Drive Sedan,32600,22,31,,,6-spd automatic w/overdrive,4,230
 Chevrolet Equinox,Chevrolet,Equinox,,242242,ICEV,ICEV,3758,3993,SUV,Mid-size,,,,,,,,,,24440,33400,LS,LS,Front-wheel Drive Sport Utility,24440,22,32,,,6-spd automatic w/overdrive,4,182
 Chevrolet Equinox,Chevrolet,Equinox,,242242,ICEV,ICEV,3758,3993,SUV,Mid-size,,,,,,,,,,24440,33400,LS AWD,LS,All-wheel Drive Sport Utility,26190,20,29,,,6-spd automatic w/overdrive,4,182
 Hyundai Elantra,Hyundai,Elantra,,222023,ICEV,ICEV,2773,2923,Sedan/Hatchback,Compact,,,,,,,,,,17200,21700,SE,SE,4dr Sedan,17200,27,37,,,6-spd manual w/overdrive,4,145
@@ -179,7 +179,7 @@ Chevrolet Cruze Diesel,Chevrolet,Cruze,Diesel,0,ICEV,ICEV_Diesel,3471,,Sedan/Hat
 Volkswagen Passat TDI,Volkswagen,Passat,TDI,0,ICEV,ICEV_Diesel,3393,,Sedan/Hatchback,Mid-size,,,,Diesel,,,,,,26675,33395,SEL Premium,2.0L TDI SEL Premium,4dr Sedan,33395,30,40,,,6-spd auto-shift manual w/overdrive,4,140
 Chevrolet Volt,Chevrolet,Volt,,18805,PHEV,PHEV,3786,,Sedan/Hatchback,Compact,,7500,1500,Gasoline_Premium,,16.5,,0,,34185,34185,Base,Base,4dr Hatchback,34185,35,40,101,93,1-spd automatic,0,149
 Toyota Prius Plug-In,Toyota,Prius,Plug-In,13264,PHEV,PHEV,3165,,Sedan/Hatchback,Mid-size,,1500,2500,,,4.4,,0.14,,29990,34905,Base,Base,5dr Hatchback,29990,49,51,90,102,2-spd CVT w/overdrive,4,98
-Ford Fusion Energi,Ford,Fusion,Energi,11550,PHEV,PHEV,3913,,Sedan/Hatchback,Mid-size,,4007,1500,,,7.6,,0.14,,34700,36500,SE Luxury,SE Luxury,4dr Front-wheel Drive Sedan,34700,40,36,95,81,2-spd CVT w/overdrive,4,141
+Your Car,Your,Car,Plug-In Hybrid,0,PHEV,PHEV,3913,,Sedan/Hatchback,Mid-size,,4007,1500,,,7.6,,0.14,,34700,36500,Base+ Edition,Base+ Edition,4dr Front-wheel Drive Sedan,34700,40,36,95,81,2-spd CVT w/overdrive,4,140
 Ford C-Max Energi,Ford,C-Max,Energi,8433,PHEV,PHEV,3859,,Sedan/Hatchback,Compact,,4007,1500,,,7.6,,0.14,,31635,31635,SEL,SEL,4dr Hatchback,31635,40,36,95,81,2-spd CVT w/overdrive,4,141
 Nissan Leaf,Nissan,Leaf,,30200,BEV,BEV,3256,3340,Sedan/Hatchback,Compact,,7500,2500,,,24,,,,28980,35020,S,S,4dr Hatchback,28980,126,101,,,1-spd automatic,0,107
 Tesla Model S,Tesla,Model S,,16550,BEV,BEV,4647,,Sedan/Hatchback,Full-size,luxury,7500,2500,,,60,,,,69900,93400,Base,Base,4dr Sedan,69900,94,97,,,1-spd automatic,0,302
@@ -195,7 +195,7 @@ Toyota Prius,Toyota,Prius,,122776,HEV,HEV,3042,,Sedan/Hatchback,Mid-size,,,,,40,
 Toyota Prius C,Toyota,Prius,C,40570,HEV,HEV,2500,,Sedan/Hatchback,Subcompact,,,,,40,,,,,19080,23360,One,One,5dr Hatchback,19080,46,53,,,2-spd CVT w/overdrive,4,73
 Toyota Camry Hybrid,Toyota,Camry,Hybrid,39515,HEV,HEV,3420,3515,Sedan/Hatchback,Mid-size,,,,,40,,,,,26790,29980,LE,LE,4dr Sedan,26790,39,43,,,2-spd CVT w/overdrive,4,156
 Toyota Camry Hybrid,Toyota,Camry,Hybrid,39515,HEV,HEV,3420,3515,Sedan/Hatchback,Mid-size,,,,,40,,,,,26790,29980,SE,SE,4dr Sedan,27995,38,40,,,2-spd CVT w/overdrive,4,156
-Ford Fusion Hybrid,Ford,Fusion,Hybrid,35405,HEV,HEV,3615,,Sedan/Hatchback,Mid-size,,,,,40,,,,,26270,32600,S,S,4dr Front-wheel Drive Sedan,26270,41,44,,,2-spd CVT w/overdrive,4,141
+Your Car,Your,Car,Hybrid,0,HEV,HEV,3615,,Sedan/Hatchback,Mid-size,,,,,40,,,,,26270,32600,Base+ Edition,Base+ Edition,4dr Front-wheel Drive Sedan,26270,41,44,,,2-spd CVT w/overdrive,4,140
 Toyota Prius V,Toyota,Prius,V,30762,HEV,HEV,3274,,Sedan/Hatchback,Full-size,,,,,40,,,,,26750,30395,Two,Two,5dr Wagon,26750,40,44,,,2-spd CVT w/overdrive,4,98
 Hyundai Sonata Hybrid,Hyundai,Sonata,Hybrid,21052,HEV,HEV,3457,3578,Sedan/Hatchback,Mid-size,,,,,40,,,,,26000,30750,Base,Base,4dr Sedan,26000,36,40,,,6-spd automatic w/overdrive,4,159
 Ford C-Max Hybrid,Ford,C-Max,Hybrid,19162,HEV,HEV,3607,,Sedan/Hatchback,Compact,,,,,40,,,,,24170,27170,SE,SE,4dr Hatchback,24170,37,42,,,2-spd CVT w/overdrive,4,141

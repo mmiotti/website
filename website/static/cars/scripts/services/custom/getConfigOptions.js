@@ -315,11 +315,11 @@
               },
               {
                   'key': '2.4',
-                  'title': 'Current (August 2016) (2.2 $/gallon)'
+                  'title': 'Current / August 2016 (2.2 $/gallon)'
               },
               {
                   'key': '3.1',
-                  'title': '10-year U.S. Average (3.3 $/gallon)'
+                  'title': '10-year average U.S. (3.3 $/gallon)'
               },
               {
                   'key': '4.5',
@@ -353,11 +353,11 @@
               },
               {
                   'key': '2.4',
-                  'title': 'Current (August 2016) (2.4 $/gallon)'
+                  'title': 'Current / August 2016 (2.4 $/gallon)'
               },
               {
                   'key': '3.3',
-                  'title': '10-year U.S. Average (3.3 $/gallon)'
+                  'title': '10-year average U.S. (3.3 $/gallon)'
               },
               {
                   'key': '5.1',
@@ -391,7 +391,7 @@
               },
               {
                   'key': '12',
-                  'title': '10-year U.S. Average (12 ¢/kWh)'
+                  'title': '10-year average U.S. (12 ¢/kWh)'
               },
               {
                   'key': '16',
@@ -406,41 +406,6 @@
 
       // conditions.push({
       //   isSlider: true,
-      //   key: "electricity_ghg_veh",
-      //   title: "Electricity (industrial)",
-      //   help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
-      //   min: 0,
-      //   max: 1000,
-      //   default: 620,
-      //   stepSize: 20,
-      //   unit: "gCO₂/kWh"
-      // });
-
-      conditions.push({
-          isSelect: true,
-          key: 'electricity_ghg_veh',
-          default: '620',
-          title: "Electricity emissions",
-          unit: "for vehicle production",
-          help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
-          options: [
-              {
-                  'key': '40',
-                  'title': '100% solar (40 gCO₂/kWh)'
-              },
-              {
-                  'key': '299',
-                  'title': 'California average (299 gCO₂/kWh)'
-              },
-              {
-                  'key': '620',
-                  'title': 'U.S. average (620 gCO₂/kWh)'
-              }
-          ]
-      });
-
-      // conditions.push({
-      //   isSlider: true,
       //   key: "electricity_ghg_fuel",
       //   title: "Electricity (charging)",
       //   help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
@@ -448,7 +413,7 @@
       //   max: 1000,
       //   default: 620,
       //   stepSize: 20,
-      //   unit: "gCO₂/kWh"
+      //   unit: "gCO₂eq/kWh"
       // });
 
       conditions.push({
@@ -460,16 +425,59 @@
           help: "GHG emission intensity of electricity production and distribution for the electricity used to charge vehicles and to produce fuels.",
           options: [
               {
-                  'key': '40',
-                  'title': '100% solar (40 gCO₂/kWh)'
+                  'key': '24',
+                  'title': '100% low-carbon (24 gCO₂eq/kWh)'
               },
               {
                   'key': '299',
-                  'title': 'California average (299 gCO₂/kWh)'
+                  'title': 'California average (299 gCO₂eq/kWh)'
               },
               {
                   'key': '620',
-                  'title': 'U.S. average (620 gCO₂/kWh)'
+                  'title': 'U.S. average (620 gCO₂eq/kWh)'
+              },
+              {
+                  'key': '857',
+                  'title': 'Midwest (MRO) mix (857 gCO₂eq/kWh)'
+              }
+          ]
+      });
+
+      // conditions.push({
+      //   isSlider: true,
+      //   key: "electricity_ghg_veh",
+      //   title: "Electricity (industrial)",
+      //   help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
+      //   min: 0,
+      //   max: 1000,
+      //   default: 620,
+      //   stepSize: 20,
+      //   unit: "gCO₂eq/kWh"
+      // });
+
+      conditions.push({
+          isSelect: true,
+          key: 'electricity_ghg_veh',
+          default: '620',
+          title: "Electricity emissions",
+          unit: "for vehicle production",
+          help: "GHG emission intensity of electricity production and distribution for the electricity used to produce the vehicles.",
+          options: [
+              {
+                  'key': '24',
+                  'title': '100% low-carbon (24 gCO₂eq/kWh)'
+              },
+              {
+                  'key': '299',
+                  'title': 'California average (299 gCO₂eq/kWh)'
+              },
+              {
+                  'key': '620',
+                  'title': 'U.S. average (620 gCO₂eq/kWh)'
+              },
+              {
+                  'key': '857',
+                  'title': 'Midwest (MRO) mix (857 gCO₂eq/kWh)'
               }
           ]
       });

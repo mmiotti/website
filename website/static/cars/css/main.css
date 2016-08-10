@@ -68,10 +68,10 @@ button.empty_store {
 }
 
 #interface-bar {
-	width: 360px;
+	width: 370px;
 	float: right;
 	height: 100%;
-	padding: 40px 25px 25px 0;
+	padding: 40px 25px 25px 10px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;

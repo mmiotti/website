@@ -94,7 +94,7 @@
 }
 
 .link-line {
-  stroke: #aaa;
+  stroke: #999;
   stroke-width: 1.5;
   visibility: hidden;
 }
