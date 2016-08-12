@@ -101,6 +101,10 @@ button.empty_store {
 	transition: background-color 0.3s, height 0.3s;
 }
 
+#tourbox:hover {
+	background-color: #93d14a;
+}
+
 #tourbox_clickbox {
 	position: absolute;
 	top: 0;
@@ -368,10 +372,14 @@ button.empty_store {
 
 .quicksetting-paragraph {
 	/*border:1px solid #aaa;*/
-	background-color:#ddd;
+	background-color: #ddd;
 	border-radius: 3px;
 	padding: 5px 7px;
 	cursor: pointer;
+}
+
+.quicksetting-paragraph:hover {
+	background-color: #ccc;
 }
 
 #uploadBox {
@@ -431,9 +439,9 @@ button.empty_store {
 	cursor: pointer;
 }
 
-/*#headerbar-controlmenu a:hover {
-	background-color: #666;
-}*/
+#headerbar-controlmenu a:hover {
+	background-color: #555;
+}
 
 #reset-all {
 	border-radius: 4px;
@@ -477,6 +485,10 @@ button.empty_store {
 	border-top: 1px solid #444;
 	border-right: 1px solid #444;
 	border-left: 1px solid #444;
+}
+
+#headerbar-menu a:hover {
+	background-color: #555;
 }
 
 #headerbar-menu a.active {
